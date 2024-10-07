@@ -7,7 +7,7 @@
 #include <string.h>
 #include <ctype.h>
 
-/*                                       Prototipo das funcoes                             */
+      /*                                       Prototipo das funcoes                             */
 
 
 
