@@ -1,5 +1,7 @@
 #include "biblioteca.h"
 
+
+
 int main() {
   setlocale(LC_ALL, "portuguese");
   int bemvindo = 0, sair = 0, verificar = 0, tentar_novamente = 0; // variaveis de controle
@@ -14,8 +16,7 @@ int main() {
 
   FILE *ler = fopen("usuarios.txt", "r"); // LER ARQUIVO TXT
     char linha[2550]; // VARIAVEL QUE ARMAZENA TEMPORARIAMENTE OS CADASTROS DO TXT
-    while (fgets(linha, 2550, ler) !=
-           NULL) { // LOOP QUE LE SEPARADAMENTE OS CADASRTOS SEPARADOS POR \n
+    while (fgets(linha, 2550, ler) != NULL) { // LOOP QUE LE SEPARADAMENTE OS CADASRTOS SEPARADOS POR \n
       contador_username = 0;
       contador_senha = 0;
       PT = 0; // CONTADOR DE PONTO E VÍRGULA
@@ -82,7 +83,8 @@ int main() {
     if (resposta[0] == '1'){ // Criar conta
       bemvindo = 1;
       verificar = 0;
-      
+
+
       while (1){  //  CADASTRO DE USERNAME      
         printf("\nDigite seu username (máximo 16 carácteres): ");
         fgets(usuarios[NV].username, sizeof(usuarios[NV].username), stdin);
@@ -93,8 +95,8 @@ int main() {
           break;
         }
       }
-      
-      while (verificar == 0){
+
+      while (verificar == 0){ // funcao cria senha (?)
         tentar_novamente = 0;
         comparador_senha = 1;
         printf("Digite sua senha (máximo 14 caractéres): ");
@@ -137,10 +139,13 @@ int main() {
                   tentar_novamente = 1;
                 }
               }
+
             }              
           }          
         }
       }       
+
+
       verificar = 0;
       while (verificar == 0){
         printf("Deseja confirmar o cadastro? [S/N]: ");
@@ -152,24 +157,21 @@ int main() {
           verificar = 1;
         }
       }
-      if (confirmar[0] == 's' || confirmar[0] == 'S') {
-        FILE *escreve = fopen("usuarios.txt", "a"); // Abre para adicionar ao final do arquivo
-        if (escreve != NULL) {
-          fprintf(escreve, "+;%s;%s;\n", usuarios[NV].username, usuarios[NV].senha); // Grava o username e a senha
-          fclose(escreve);
-          contador_cadastros++;  // Incrementa o contador de cadastros
-          puts("Cadastro realizado com sucesso!\n");
-        } 
-        else{
-          puts("Erro ao abrir o arquivo para gravação.\n");
-        }
-      } 
+      if (confirmar[0] == 's' || confirmar[0] == 'S'){
+        NV++;
+        FILE *escreve = fopen("usuarios.txt", "a"); // SALVA O CADASTRO NO TXT
+        fprintf(
+        escreve, "+;%s;%s;\n", usuarios[NV].username, usuarios[NV].senha); // ADICIONA O %X E ESCREVE O USUARIO[NV].XXXX
+        fclose(escreve);
+        contador_cadastros++;  
+        puts("Cadastro realizado com sucesso!\n");
+      }
       else{
         puts("Conta cancelada com sucesso!\n");
       }
     }
 
     // continuar o login aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-
   }  
+
 }
