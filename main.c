@@ -113,7 +113,7 @@ int main() {
         printf("Deseja confirmar o cadastro? [S/N]: ");
         fgets(confirmar, sizeof(confirmar), stdin);
         
-        if (confirma_cadastro(confirmar) == 0){
+        if (confirma_cadastro(confirmar) == 0){ // verifica o input do usuario
           break;
         }
       }
