@@ -83,3 +83,13 @@ int verifica_senha(char senha[]){
     }          
   }
 }
+
+int confirma_cadastro(char confirmar[]){
+  if (strlen(confirmar) > 2 ||confirmar[0] != 'S' && confirmar[0] != 's' && confirmar[0] != 'N' && confirmar[0] != 'n'){
+    puts("Resposta inválida!\n");
+    return 1;
+  }
+  else{
+    return 0;
+  }
+}

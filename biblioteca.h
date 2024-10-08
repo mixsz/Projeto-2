@@ -17,5 +17,6 @@ typedef struct cadastro {
 
 int verifica_username(char username[], int NV, Cadastro *usuarios);
 int verifica_senha(char senha[]);
+int confirma_cadastro(char confirmar[]);
 
 #endif

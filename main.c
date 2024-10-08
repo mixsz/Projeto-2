@@ -13,9 +13,12 @@ int main() {
 
 
   FILE *ler = fopen("usuarios.txt", "r"); // LER ARQUIVO TXT
-    char linha[2550]; // VARIAVEL QUE ARMAZENA TEMPORARIAMENTE OS CADASTROS DO TXT
-    while (fgets(linha, 2550, ler) !=
-           NULL) { // LOOP QUE LE SEPARADAMENTE OS CADASRTOS SEPARADOS POR \n
+  char linha[2550]; // VARIAVEL QUE ARMAZENA TEMPORARIAMENTE OS CADASTROS DO TXT
+  if (ler == NULL){
+    puts("Arquivo 'usuarios.txt' não encontrado, favor criá-lo para continuar!");
+  }
+  else{
+    while (fgets(linha, 2550, ler) !=NULL) { // LOOP QUE LE SEPARADAMENTE OS CADASRTOS SEPARADOS POR \n
       contador_username = 0;
       contador_senha = 0;
       PT = 0; // CONTADOR DE PONTO E VÍRGULA
@@ -25,30 +28,31 @@ int main() {
           contador_cadastros++;
         }
       }
-
-      for (i = 0; i < strlen(linha); i++) {
-        if (linha[i] == ';') {
-          PT++;
-        } else if (linha[i] == '+') {
-          continue;
-        } else {
-          switch (PT) {
-          case 1:
-            usuarios[contador_cadastros - 1].username[contador_username] = linha[i]; // COLOCA O USERNAME NO VETOR
-            usuarios[contador_cadastros - 1].username[contador_username + 1] = '\0'; // TIRA LIXOS QUE FICAM NO FINAL DO VETOR
-            contador_username++;
-            break;
-          case 2:
-            usuarios[contador_cadastros - 1].senha[contador_senha] = linha[i];
-            usuarios[contador_cadastros - 1].senha[contador_senha + 1] = '\0';
-            contador_senha++;
-            break;
-
-          default:
-            break;
+  
+        for (i = 0; i < strlen(linha); i++) {
+          if (linha[i] == ';') {
+            PT++;
+          } else if (linha[i] == '+') {
+            continue;
+          } else {
+            switch (PT) {
+            case 1:
+              usuarios[contador_cadastros - 1].username[contador_username] = linha[i]; // COLOCA O USERNAME NO VETOR
+              usuarios[contador_cadastros - 1].username[contador_username + 1] = '\0'; // TIRA LIXOS QUE FICAM NO FINAL DO VETOR
+              contador_username++;
+              break;
+            case 2:
+              usuarios[contador_cadastros - 1].senha[contador_senha] = linha[i];
+              usuarios[contador_cadastros - 1].senha[contador_senha + 1] = '\0';
+              contador_senha++;
+              break;
+  
+            default:
+              break;
+            }
           }
-        }
-      }   
+        }   
+      }
     }
     printf( "%s\n", usuarios[0].username);
     printf( "%s\n", usuarios[0].senha);  
@@ -81,14 +85,13 @@ int main() {
     }
     if (resposta[0] == '1'){ // Criar conta
       bemvindo = 1;
-      verificar = 0;
-
+      
       while (1){  //  CADASTRO DE USERNAME      
         printf("\nDigite seu username (máximo 16 carácteres): ");
         fgets(usuarios[NV].username, sizeof(usuarios[NV].username), stdin);
         usuarios[NV].username[strcspn(usuarios[NV].username, "\n")] = '\0';
-
-        if (verifica_username(usuarios[NV].username, NV, usuarios) == 0) { // = 0 -> usuario valido
+        
+        if (verifica_username(usuarios[NV].username, NV, usuarios) == 0) { // se for = 0 -> username valido
           puts("Username cadastrado!\n");
           break;
         }
@@ -99,25 +102,23 @@ int main() {
         comparador_senha = 1;
         printf("Digite sua senha (máximo 14 caractéres): ");
         fgets(usuarios[NV].senha, sizeof(usuarios[NV].senha), stdin);  
-
-        if (verifica_senha(usuarios[NV].senha) == 0) { // = 0 -> senha valida
+        
+        if (verifica_senha(usuarios[NV].senha) == 0) { // se for = 0 -> senha valida
           puts("Senha cadastrada!\n");
           break;
         }
       }       
 
-      while (verificar == 0){
+      while (1){
         printf("Deseja confirmar o cadastro? [S/N]: ");
         fgets(confirmar, sizeof(confirmar), stdin);
-        if (strlen(confirmar) > 2 ||confirmar[0] != 'S' && confirmar[0] != 's' && confirmar[0] != 'N' && confirmar[0] != 'n'){
-          puts("Resposta inválida!\n");
-        }
-        else{
-          verificar = 1;
+        
+        if (confirma_cadastro(confirmar) == 0){
+          break;
         }
       }
       if (confirmar[0] == 's' || confirmar[0] == 'S') {
-        FILE *escreve = fopen("usuarios.txt", "a"); // Abre para adicionar ao final do arquivo
+        FILE *escreve = fopen("usuarios.txt", "a"); // Abre TXT para adicionar nova conta no final do arquivo
         if (escreve != NULL) {
           fprintf(escreve, "+;%s;%s;\n", usuarios[NV].username, usuarios[NV].senha); // Grava o username e a senha
           fclose(escreve);
@@ -125,7 +126,7 @@ int main() {
           puts("Cadastro realizado com sucesso!\n");
         } 
         else{
-          puts("Erro ao abrir o arquivo para gravação.\n");
+          puts("Erro ao abrir o arquivo TXT.\n");
         }
       } 
       else{
