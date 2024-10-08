@@ -7,7 +7,15 @@
 #include <string.h>
 #include <ctype.h>
 
-      /*                                       Prototipo das funcoes                             */
+typedef struct cadastro {
+  char username[30];
+  char senha[25];
+  int pontuacao1;
+} Cadastro;
+
+/*                                       Prototipo das funcoes                             */
+
+int verifica_username(char username[], int NV, Cadastro *usuarios);
 
 
 

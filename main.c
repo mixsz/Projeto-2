@@ -1,11 +1,5 @@
 #include "biblioteca.h"
 
-typedef struct cadastro {
-  char username[20];
-  char senha[15];
-  int pontuacao1;
-} Cadastro;
-
 int main() {
   setlocale(LC_ALL, "portuguese");
   int bemvindo = 0, sair = 0, verificar = 0, tentar_novamente = 0; // variaveis de controle
@@ -17,7 +11,7 @@ int main() {
   char confirma_senha[15];
   int comparador_senha = 1, username_existente = 0;
 
-  
+
   FILE *ler = fopen("usuarios.txt", "r"); // LER ARQUIVO TXT
     char linha[2550]; // VARIAVEL QUE ARMAZENA TEMPORARIAMENTE OS CADASTROS DO TXT
     while (fgets(linha, 2550, ler) !=
@@ -31,7 +25,7 @@ int main() {
           contador_cadastros++;
         }
       }
-  
+
       for (i = 0; i < strlen(linha); i++) {
         if (linha[i] == ';') {
           PT++;
@@ -49,7 +43,7 @@ int main() {
             usuarios[contador_cadastros - 1].senha[contador_senha + 1] = '\0';
             contador_senha++;
             break;
-            
+
           default:
             break;
           }
@@ -65,9 +59,9 @@ int main() {
       fprintf(escreve1, "\n");}
       fclose(escreve1);  
 
-  
+
   while (sair != 1){
-    
+
     int NV = contador_cadastros; // Novo Cadastro
     printf("1 - Criar conta \n");
     printf("2 - Acessar conta\n");
@@ -80,7 +74,7 @@ int main() {
       printf("\nDigite a opção desejada: ");
     }
     fgets(resposta, sizeof(resposta), stdin);
-    
+
     if (resposta[0] != '1' && resposta[0] != '2' && resposta[0] != '3' || strlen(resposta) > 2){
       puts("Resposta inválida!\n");
       bemvindo = 1;
@@ -88,45 +82,18 @@ int main() {
     if (resposta[0] == '1'){ // Criar conta
       bemvindo = 1;
       verificar = 0;
-      while (verificar == 0){
+
+      while (1){  //  CADASTRO DE USERNAME      
         printf("\nDigite seu username (máximo 16 carácteres): ");
         fgets(usuarios[NV].username, sizeof(usuarios[NV].username), stdin);
-        
-        if (strlen(usuarios[NV].username) > 17) { // username maior 16 + \n invalido!
-          puts("Este username atingiu o máximo de carácteres!");
-          continue;
-        } 
-        else if(strlen(usuarios[NV].username) < 4){ 
-          puts("O username precisa ter no mínimo 3 carácteres!");
-        }
-        else {
-          for (i = 0; i < strlen(usuarios[NV].username); i++) {
-            if (usuarios[NV].username[i] == ' ') {
-              puts("O username não deve conter espaços !");
-              break;
-            }
-            else if (usuarios[NV].username[i] == '\n') {
-              usuarios[NV].username[i] = '\0';
-            }
-          } 
-          username_existente = 0;
+        usuarios[NV].username[strcspn(usuarios[NV].username, "\n")] = '\0';
 
-          for (i = 0; i < NV; i++){
-            if (strcmp(usuarios[i].username, usuarios[NV].username) == 0){
-              username_existente += 1;
-            }
-          }
-
-          if (username_existente > 0){
-            puts("Esse username já está sendo utilizado!");
-          }
-          else{
-            puts("Username cadastrado!\n");
-            verificar = 1;
-          }
+        if (verifica_username(usuarios[NV].username, NV, usuarios) == 0) { // = 0 -> usuario valido
+          puts("Username cadastrado!\n");
+          break;
         }
       }
-      verificar = 0;
+
       while (verificar == 0){
         tentar_novamente = 0;
         comparador_senha = 1;
@@ -155,7 +122,7 @@ int main() {
                 }
                 fgets(confirma_senha, sizeof(confirma_senha), stdin);
                 confirma_senha[strcspn(confirma_senha, "\n")] = '\0'; // TIRANDO O \n PRA PODER COMPARAR AS SENHAS
-                
+
                 if (strcmp(confirma_senha, "CANCELAR") == 0 || strcmp(confirma_senha, "cancelar") == 0){
                   comparador_senha = 0;
                   puts("");
@@ -185,20 +152,24 @@ int main() {
           verificar = 1;
         }
       }
-      if (confirmar[0] == 's' || confirmar[0] == 'S'){
-        FILE *escreve = fopen("usuarios.txt", "a"); // SALVA O CADASTRO NO TXT
-        fprintf(
-        escreve, "+;%s;%s;\n", usuarios[NV].username, usuarios[NV].senha); // ADICIONA O %X E ESCREVE O USUARIO[NV].XXXX
-        fclose(escreve);
-        contador_cadastros++;  
-        puts("Cadastro realizado com sucesso!\n");
-      }
+      if (confirmar[0] == 's' || confirmar[0] == 'S') {
+        FILE *escreve = fopen("usuarios.txt", "a"); // Abre para adicionar ao final do arquivo
+        if (escreve != NULL) {
+          fprintf(escreve, "+;%s;%s;\n", usuarios[NV].username, usuarios[NV].senha); // Grava o username e a senha
+          fclose(escreve);
+          contador_cadastros++;  // Incrementa o contador de cadastros
+          puts("Cadastro realizado com sucesso!\n");
+        } 
+        else{
+          puts("Erro ao abrir o arquivo para gravação.\n");
+        }
+      } 
       else{
         puts("Conta cancelada com sucesso!\n");
       }
     }
-    
+
     // continuar o login aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-    
+
   }  
 }
