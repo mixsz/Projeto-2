@@ -2,14 +2,14 @@
 
 int main() {
   setlocale(LC_ALL, "portuguese");
-  int bemvindo = 0, sair = 0, verificar = 0, tentar_novamente = 0; // variaveis de controle
+  int bemvindo = 0, sair = 0, permissao_acesso = 0, tentar_novamente = 0, verif_username = 0; // variaveis de controle
   int PT = 0; // contador de ponto e vírgula
   int i, j;
   int contador_username, contador_senha, contador_cadastros;
   Cadastro usuarios[10];
   char resposta[10], confirmar[10];
-  char confirma_senha[15];
-  int comparador_senha = 1, username_existente = 0;
+  char confirma_senha[15], usernamelogin[30], senhalogin[25];
+  int comparador_senha = 1, username_existente = 0, id_username;
 
 
   FILE *ler = fopen("usuarios.txt", "r"); // LER ARQUIVO TXT
@@ -132,7 +132,42 @@ int main() {
       }
     }
 
-    // continuar o login aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+    
+    if (resposta[0] == '2'){
+      while (1){
+        printf("\nDigite seu username: ");
+        fgets(usernamelogin, sizeof(usernamelogin), stdin);
+        usernamelogin[strcspn(usernamelogin, "\n")] = '\0';
+
+        if (strcmp(usernamelogin, "CANCELAR") == 0 || strcmp(usernamelogin, "cancelar") == 0){
+          puts("");
+          bemvindo = 1;
+          break;              // ele volta ao menu principal 
+        }
+        for (i = 0; i < NV; i++){
+          if (strcmp(usernamelogin, usuarios[i].username) == 0) { 
+            id_username = i;          // pega o i e passa para o id pra facilitar no rastreamento de senha
+            verif_username = 1;
+            break;
+          }
+        }       
+        printf("Digite sua senha: ");
+        fgets(senhalogin, sizeof(senhalogin), stdin);
+        senhalogin[strcspn(senhalogin, "\n")] = '\0';
+        if (strcmp(senhalogin, usuarios[id_username].senha) == 0 && verif_username == 1){ // senha e nome compativeis
+          permissao_acesso = 1; // o usuario pode prosseguir
+          puts("");
+          break;
+        }
+        else{
+          puts("\nNome do usuário ou senha incorreto!"); //volta ao inicio do loop
+          puts("Tente novamente ou digite 'CANCELAR' para voltar!");
+        }
+      }
+      if (permissao_acesso == 1){
+        puts("MENU");
+      }
+    }
 
   }  
 }
