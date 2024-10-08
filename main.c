@@ -97,9 +97,7 @@ int main() {
         }
       }
 
-      while (1){
-        tentar_novamente = 0;
-        comparador_senha = 1;
+      while (1){ // CADASTRO DE SENHA
         printf("Digite sua senha (máximo 14 caractéres): ");
         fgets(usuarios[NV].senha, sizeof(usuarios[NV].senha), stdin);  
         
@@ -109,11 +107,11 @@ int main() {
         }
       }       
 
-      while (1){
+      while (1){ // VERIFICA INPUT DE CONFIRMAÇÃO DE CADASTRO
         printf("Deseja confirmar o cadastro? [S/N]: ");
         fgets(confirmar, sizeof(confirmar), stdin);
         
-        if (confirma_cadastro(confirmar) == 0){
+        if (confirma_cadastro(confirmar) == 0){ // só saira do loop se o input for s ou n
           break;
         }
       }
@@ -126,7 +124,7 @@ int main() {
           puts("Cadastro realizado com sucesso!\n");
         } 
         else{
-          puts("Erro ao abrir o arquivo TXT.\n");
+          puts("Erro ao abrir o arquivo TXT!\n");
         }
       } 
       else{
