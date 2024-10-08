@@ -34,3 +34,52 @@ int verifica_username(char username[30], int NV, Cadastro *usuarios){
     }
   }      
 }
+
+int verifica_senha(char senha[]){
+  int tentar_novamente = 0;
+  int comparador_senha = 1;
+  int i;
+  char confirma_senha[25];
+  
+  if (strlen(senha) > 15) { // senha maior que 14 + \n invalida!
+    puts("A senha atingiu o máximo de carácteres!\n");
+    return 1;
+  }
+  else if(strlen(senha) < 7){
+    puts("A senha precisa ter no mínimo 6 carácteres!\n");
+    return 1;
+  }
+  else { 
+    for (i = 0; i < strlen(senha); i++) {
+      if (senha[i] == ' ') {
+        puts("A senha não deve conter espaços!\n");
+        return 1;
+      }
+      else if (senha[i] == '\n') {
+        while (comparador_senha == 1){
+          senha[i] = '\0';
+          if (tentar_novamente == 0){
+            printf("Confirme sua senha: ");
+          }
+          else{
+            printf("Tente novamente ou digite 'CANCELAR' para voltar: ");
+          }
+          fgets(confirma_senha, sizeof(confirma_senha), stdin);
+          confirma_senha[strcspn(confirma_senha, "\n")] = '\0'; // TIRANDO O \n PRA PODER COMPARAR AS SENHAS
+
+          if (strcmp(confirma_senha, "CANCELAR") == 0 || strcmp(confirma_senha, "cancelar") == 0){
+            comparador_senha = 0;
+            puts("");
+          }
+          else if (strcmp(confirma_senha, senha) == 0){
+            return 0;
+          }    
+          else{
+            puts("As senhas não são iguais!\n");
+            tentar_novamente = 1;
+          }
+        }
+      }              
+    }          
+  }
+}

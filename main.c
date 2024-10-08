@@ -94,54 +94,18 @@ int main() {
         }
       }
 
-      while (verificar == 0){
+      while (1){
         tentar_novamente = 0;
         comparador_senha = 1;
         printf("Digite sua senha (máximo 14 caractéres): ");
-        fgets(usuarios[NV].senha, sizeof(usuarios[NV].senha), stdin);
-        if (strlen(usuarios[NV].senha) > 15) { // senha maior que 14 + \n invalida!
-          puts("A senha atingiu o máximo de carácteres!\n");
-        }
-        else if(strlen(usuarios[NV].senha) < 7){
-          puts("A senha precisa ter no mínimo 6 carácteres!\n");
-        }
-        else { 
-          for (i = 0; i < strlen(usuarios[NV].senha); i++) {
-            if (usuarios[NV].senha[i] == ' ') {
-              puts("A senha não deve conter espaços!\n");
-              break;
-            }
-            else if (usuarios[NV].senha[i] == '\n') {
-              while (comparador_senha == 1){
-                usuarios[NV].senha[i] = '\0';
-                if (tentar_novamente == 0){
-                  printf("Confirme sua senha: ");
-                }
-                else{
-                  printf("Tente novamente ou digite 'CANCELAR' para voltar: ");
-                }
-                fgets(confirma_senha, sizeof(confirma_senha), stdin);
-                confirma_senha[strcspn(confirma_senha, "\n")] = '\0'; // TIRANDO O \n PRA PODER COMPARAR AS SENHAS
+        fgets(usuarios[NV].senha, sizeof(usuarios[NV].senha), stdin);  
 
-                if (strcmp(confirma_senha, "CANCELAR") == 0 || strcmp(confirma_senha, "cancelar") == 0){
-                  comparador_senha = 0;
-                  puts("");
-                }
-                else if (strcmp(confirma_senha, usuarios[NV].senha) == 0){
-                  puts("Senha cadastrada!\n");
-                  verificar = 1;
-                  comparador_senha = 0;
-                }    
-                else{
-                  puts("As senhas não são iguais!\n");
-                  tentar_novamente = 1;
-                }
-              }
-            }              
-          }          
+        if (verifica_senha(usuarios[NV].senha) == 0) { // = 0 -> senha valida
+          puts("Senha cadastrada!\n");
+          break;
         }
       }       
-      verificar = 0;
+
       while (verificar == 0){
         printf("Deseja confirmar o cadastro? [S/N]: ");
         fgets(confirmar, sizeof(confirmar), stdin);

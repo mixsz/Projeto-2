@@ -16,7 +16,6 @@ typedef struct cadastro {
 /*                                       Prototipo das funcoes                             */
 
 int verifica_username(char username[], int NV, Cadastro *usuarios);
-
-
+int verifica_senha(char senha[]);
 
 #endif
