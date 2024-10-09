@@ -84,15 +84,36 @@ int verifica_senha(char senha[]){
   }
 }
 
-int confirma_cadastro(char confirmar[]){
-  if (strlen(confirmar) > 2 ||confirmar[0] != 'S' && confirmar[0] != 's' && confirmar[0] != 'N' && confirmar[0] != 'n'){
-    puts("Resposta inválida!\n");
-    return 1;
+void confirma_cadastro(int NV, Cadastro *usuarios, int *contador_cadastros){
+  char confirmar[10];
+  while (1){
+    printf("Deseja confirmar o cadastro? [S/N]: ");
+    fgets(confirmar, sizeof(confirmar), stdin);
+    
+    if (strlen(confirmar) > 2 ||confirmar[0] != 'S' && confirmar[0] != 's' && confirmar[0] != 'N' && confirmar[0] != 'n'){
+      puts("Resposta inválida!\n");
+    }
+    else{
+      break;
+    }
   }
+  if (confirmar[0] == 's' || confirmar[0] == 'S') {
+    FILE *escreve = fopen("usuarios.txt", "a"); // Abre TXT para adicionar nova conta no final do arquivo
+    if (escreve != NULL) {
+      fprintf(escreve, "+;%s;%s;\n", usuarios[NV].username, usuarios[NV].senha); // Grava o username e a senha
+      fclose(escreve);
+      *contador_cadastros++;  // Incrementa o contador de cadastros
+      puts("Cadastro realizado com sucesso!\n");
+    } 
+    else{
+      puts("Erro ao abrir o arquivo TXT!\n");
+    }
+  } 
   else{
-    return 0;
+    puts("Conta cancelada com sucesso!\n");
   }
 }
+
 
 int login(int *bemvindo,int *id_username, int NV, Cadastro *usuarios){
   char usernamelogin[30], senhalogin[20];

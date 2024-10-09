@@ -106,30 +106,7 @@ int main() {
           break;
         }
       }       
-
-      while (1){ // VERIFICA INPUT DE CONFIRMAÇÃO DE CADASTRO
-        printf("Deseja confirmar o cadastro? [S/N]: ");
-        fgets(confirmar, sizeof(confirmar), stdin);
-
-        if (confirma_cadastro(confirmar) == 0){ // só saira do loop se o input for s ou n
-          break;
-        }
-      }
-      if (confirmar[0] == 's' || confirmar[0] == 'S') {
-        FILE *escreve = fopen("usuarios.txt", "a"); // Abre TXT para adicionar nova conta no final do arquivo
-        if (escreve != NULL) {
-          fprintf(escreve, "+;%s;%s;\n", usuarios[NV].username, usuarios[NV].senha); // Grava o username e a senha
-          fclose(escreve);
-          contador_cadastros++;  // Incrementa o contador de cadastros
-          puts("Cadastro realizado com sucesso!\n");
-        } 
-        else{
-          puts("Erro ao abrir o arquivo TXT!\n");
-        }
-      } 
-      else{
-        puts("Conta cancelada com sucesso!\n");
-      }
+      confirma_cadastro(NV, usuarios, &contador_cadastros); // confirma o cadastro e escreve no txt
     }
 
 
