@@ -134,40 +134,15 @@ int main() {
 
     
     if (resposta[0] == '2'){
-      while (1){
-        printf("\nDigite seu username: ");
-        fgets(usernamelogin, sizeof(usernamelogin), stdin);
-        usernamelogin[strcspn(usernamelogin, "\n")] = '\0';
-
-        if (strcmp(usernamelogin, "CANCELAR") == 0 || strcmp(usernamelogin, "cancelar") == 0){
-          puts("");
-          bemvindo = 1;
-          break;              // ele volta ao menu principal 
-        }
-        for (i = 0; i < NV; i++){
-          if (strcmp(usernamelogin, usuarios[i].username) == 0) { 
-            id_username = i;          // pega o i e passa para o id pra facilitar no rastreamento de senha
-            verif_username = 1;
-            break;
-          }
-        }       
-        printf("Digite sua senha: ");
-        fgets(senhalogin, sizeof(senhalogin), stdin);
-        senhalogin[strcspn(senhalogin, "\n")] = '\0';
-        if (strcmp(senhalogin, usuarios[id_username].senha) == 0 && verif_username == 1){ // senha e nome compativeis
-          permissao_acesso = 1; // o usuario pode prosseguir
-          puts("");
-          break;
-        }
-        else{
-          puts("\nNome do usuário ou senha incorreto!"); //volta ao inicio do loop
-          puts("Tente novamente ou digite 'CANCELAR' para voltar!");
-        }
-      }
+      id_username = -1; // o id sera iniciado como -1 pois n existira o indice -1 no vetor
+      permissao_acesso = login(&bemvindo, &id_username, NV, usuarios); // se for 1 significa que o user logou!
+      
       if (permissao_acesso == 1){
-        puts("MENU");
+        printf("%s",usuarios[id_username].username);
+        printf("%s",usuarios[id_username].senha);
       }
-    }
 
+      
+    } // fim resposta = 2    
   }  
 }
