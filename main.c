@@ -9,7 +9,7 @@ int main() {
   Cadastro usuarios[10];
   char resposta[10], confirmar[10];
   char confirma_senha[15], usernamelogin[30], senhalogin[25];
-  int comparador_senha = 1, username_existente = 0, id_username;
+  int comparador_senha = 1, username_existente = 0, id_username, menu = 1;
 
 
   FILE *ler = fopen("usuarios.txt", "r"); // LER ARQUIVO TXT
@@ -109,17 +109,22 @@ int main() {
       confirma_cadastro(NV, usuarios, &contador_cadastros); // confirma o cadastro e escreve no txt
     }
 
-
     if (resposta[0] == '2'){
       id_username = -1; // o id sera iniciado como -1 pois n existira o indice -1 no vetor
       permissao_acesso = login(&bemvindo, &id_username, NV, usuarios); // se for 1 significa que o user logou!
 
       if (permissao_acesso == 1){
-        printf("%s",usuarios[id_username].username);
-        printf("%s",usuarios[id_username].senha);
+        while (menu == 1){
+          puts("oi");
+        }
       }
 
-
+  
     } // fim resposta = 2    
+
+    if (resposta[0] == '3'){ // sai do programa
+      puts("\nTenha um ótimo dia!\n");
+      sair = 1;
+    }
   }  
 }
