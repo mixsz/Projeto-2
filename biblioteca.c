@@ -84,7 +84,7 @@ int verifica_senha(char senha[]){
   }
 }
 
-void confirma_cadastro(int NV, Cadastro *usuarios, int *contador_cadastros){
+void confirma_cadastro(int NV, Cadastro *usuarios){
   char confirmar[10];
   while (1){
     printf("Deseja confirmar o cadastro? [S/N]: ");
@@ -102,7 +102,6 @@ void confirma_cadastro(int NV, Cadastro *usuarios, int *contador_cadastros){
     if (escreve != NULL) {
       fprintf(escreve, "+;%s;%s;\n", usuarios[NV].username, usuarios[NV].senha); // Grava o username e a senha
       fclose(escreve);
-      *contador_cadastros++;  // Incrementa o contador de cadastros
       puts("Cadastro realizado com sucesso!\n");
     } 
     else{
@@ -130,6 +129,7 @@ int login(int *bemvindo,int *id_username, int NV, Cadastro *usuarios){
       return 0;              // ele volta ao menu principal 
     }
     for (i = 0; i < NV; i++){
+      printf("%s\n", usuarios[i].username);
       if (strcmp(usernamelogin, usuarios[i].username) == 0) { 
         *id_username = i;          // pega o i e passa para o id pra facilitar no rastreamento de senha
         verif_username = 1;

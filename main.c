@@ -6,10 +6,10 @@ int main() {
   int PT = 0; // contador de ponto e vírgula
   int i, j;
   int contador_username, contador_senha, contador_cadastros;
-  Cadastro usuarios[10];
-  char resposta[10], confirmar[10];
-  char confirma_senha[15], usernamelogin[30], senhalogin[25];
-  int comparador_senha = 1, username_existente = 0, id_username, menu = 1;
+  Cadastro usuarios[16];
+  char resposta[10], opcao[10];
+  char confirma_senha[15];
+  int id_username, menu = 1, oi = 1;
 
 
   FILE *ler = fopen("usuarios.txt", "r"); // LER ARQUIVO TXT
@@ -63,10 +63,11 @@ int main() {
       fprintf(escreve1, "\n");}
       fclose(escreve1);  
 
+      int NV = contador_cadastros; // Novo Cadastro
 
   while (sair != 1){
 
-    int NV = contador_cadastros; // Novo Cadastro
+
     printf("1 - Criar conta \n");
     printf("2 - Acessar conta\n");
     printf("3 - Sair\n");
@@ -86,40 +87,54 @@ int main() {
     if (resposta[0] == '1'){ // Criar conta
       bemvindo = 1;
 
-      while (1){  //  CADASTRO DE USERNAME      
-        printf("\nDigite seu username (máximo 16 carácteres): ");
-        fgets(usuarios[NV].username, sizeof(usuarios[NV].username), stdin);
-        usuarios[NV].username[strcspn(usuarios[NV].username, "\n")] = '\0';
-
-        if (verifica_username(usuarios[NV].username, NV, usuarios) == 0) { // se for = 0 -> username valido
-          puts("Username cadastrado!\n");
-          break;
-        }
+      if (NV >= 15){
+        puts("Número máximo de contas atingido!\n");
       }
+      else{
+        while (1){//  CADASTRO DE USERNAME      
+            printf("\nDigite seu username (máximo 16 carácteres): ");
+            fgets(usuarios[NV].username, sizeof(usuarios[NV].username), stdin);
+            usuarios[NV].username[strcspn(usuarios[NV].username, "\n")] = '\0';
 
-      while (1){ // CADASTRO DE SENHA
-        printf("Digite sua senha (máximo 14 caractéres): ");
-        fgets(usuarios[NV].senha, sizeof(usuarios[NV].senha), stdin);  
+            if (verifica_username(usuarios[NV].username, NV, usuarios) == 0) { // se for = 0 -> username valido
+              puts("Username cadastrado!\n");
+              break;
+            }
+          }
 
-        if (verifica_senha(usuarios[NV].senha) == 0) { // se for = 0 -> senha valida
-          puts("Senha cadastrada!\n");
-          break;
-        }
-      }       
-      confirma_cadastro(NV, usuarios, &contador_cadastros); // confirma o cadastro e escreve no txt
+          while (1){ // CADASTRO DE SENHA
+            printf("Digite sua senha (máximo 14 caractéres): ");
+            fgets(usuarios[NV].senha, sizeof(usuarios[NV].senha), stdin);  
+
+            if (verifica_senha(usuarios[NV].senha) == 0) { // se for = 0 -> senha valida
+              puts("Senha cadastrada!\n");
+              usuarios[NV].ficha = 10; // inicia a conta com 10 fichas
+              usuarios[NV].pontuacao1 = 0; // inicia a conta com 0 pontos
+              break;
+            }
+          }       
+          confirma_cadastro(NV, usuarios); // confirma o cadastro e escreve no txt
+          NV++; // adiciona um novo cadastro
+      }
     }
 
     if (resposta[0] == '2'){
       id_username = -1; // o id sera iniciado como -1 pois n existira o indice -1 no vetor
       permissao_acesso = login(&bemvindo, &id_username, NV, usuarios); // se for 1 significa que o user logou!
-
       if (permissao_acesso == 1){
         while (menu == 1){
-          puts("oi");
+          puts("cuzin");
+          if (oi == 1) { // dar oi na primeira vez da mensagem
+            printf("Olá Sr(a) %s! Digite a opção desejada: ",usuarios[id_username].username);
+            oi = 0;
+          } else {
+            printf("Digite a opção desejada: ");
+          }
+          fgets(opcao,sizeof(opcao),stdin);
         }
       }
 
-  
+
     } // fim resposta = 2    
 
     if (resposta[0] == '3'){ // sai do programa
