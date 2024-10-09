@@ -40,7 +40,7 @@ int verifica_senha(char senha[]){
   int comparador_senha = 1;
   int i;
   char confirma_senha[25];
-  
+
   if (strlen(senha) > 15) { // senha maior que 14 + \n invalida!
     puts("A senha atingiu o máximo de carácteres!\n");
     return 1;
@@ -91,5 +91,40 @@ int confirma_cadastro(char confirmar[]){
   }
   else{
     return 0;
+  }
+}
+
+int login(int *bemvindo,int *id_username, int NV, Cadastro *usuarios){
+  char usernamelogin[30], senhalogin[20];
+  int i, verif_username;
+  while (1){
+    verif_username = 0;
+    printf("\nDigite seu username: ");
+    fgets(usernamelogin, sizeof(usernamelogin), stdin);
+    usernamelogin[strcspn(usernamelogin, "\n")] = '\0';
+
+    if (strcmp(usernamelogin, "CANCELAR") == 0 || strcmp(usernamelogin, "cancelar") == 0){
+      puts("");
+      *bemvindo = 1;
+      return 0;              // ele volta ao menu principal 
+    }
+    for (i = 0; i < NV; i++){
+      if (strcmp(usernamelogin, usuarios[i].username) == 0) { 
+        *id_username = i;          // pega o i e passa para o id pra facilitar no rastreamento de senha
+        verif_username = 1;
+        break;
+      }
+    }       
+    printf("Digite sua senha: ");
+    fgets(senhalogin, sizeof(senhalogin), stdin);
+    senhalogin[strcspn(senhalogin, "\n")] = '\0';
+    if (strcmp(senhalogin, usuarios[*id_username].senha) == 0 && verif_username == 1){ // senha e nome compativeis
+      puts("");
+      return 1; // o usuario pode prosseguir      
+    }
+    else{
+      puts("\nNome do usuário ou senha incorreto!"); //volta ao inicio do loop
+      puts("Tente novamente ou digite 'CANCELAR' para voltar!");
+    }
   }
 }

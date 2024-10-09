@@ -28,7 +28,7 @@ int main() {
           contador_cadastros++;
         }
       }
-  
+
         for (i = 0; i < strlen(linha); i++) {
           if (linha[i] == ';') {
             PT++;
@@ -46,7 +46,7 @@ int main() {
               usuarios[contador_cadastros - 1].senha[contador_senha + 1] = '\0';
               contador_senha++;
               break;
-  
+
             default:
               break;
             }
@@ -85,12 +85,12 @@ int main() {
     }
     if (resposta[0] == '1'){ // Criar conta
       bemvindo = 1;
-      
+
       while (1){  //  CADASTRO DE USERNAME      
         printf("\nDigite seu username (máximo 16 carácteres): ");
         fgets(usuarios[NV].username, sizeof(usuarios[NV].username), stdin);
         usuarios[NV].username[strcspn(usuarios[NV].username, "\n")] = '\0';
-        
+
         if (verifica_username(usuarios[NV].username, NV, usuarios) == 0) { // se for = 0 -> username valido
           puts("Username cadastrado!\n");
           break;
@@ -100,7 +100,7 @@ int main() {
       while (1){ // CADASTRO DE SENHA
         printf("Digite sua senha (máximo 14 caractéres): ");
         fgets(usuarios[NV].senha, sizeof(usuarios[NV].senha), stdin);  
-        
+
         if (verifica_senha(usuarios[NV].senha) == 0) { // se for = 0 -> senha valida
           puts("Senha cadastrada!\n");
           break;
@@ -110,7 +110,7 @@ int main() {
       while (1){ // VERIFICA INPUT DE CONFIRMAÇÃO DE CADASTRO
         printf("Deseja confirmar o cadastro? [S/N]: ");
         fgets(confirmar, sizeof(confirmar), stdin);
-        
+
         if (confirma_cadastro(confirmar) == 0){ // só saira do loop se o input for s ou n
           break;
         }
@@ -132,42 +132,17 @@ int main() {
       }
     }
 
-    
+
     if (resposta[0] == '2'){
-      while (1){
-        printf("\nDigite seu username: ");
-        fgets(usernamelogin, sizeof(usernamelogin), stdin);
-        usernamelogin[strcspn(usernamelogin, "\n")] = '\0';
+      id_username = -1; // o id sera iniciado como -1 pois n existira o indice -1 no vetor
+      permissao_acesso = login(&bemvindo, &id_username, NV, usuarios); // se for 1 significa que o user logou!
 
-        if (strcmp(usernamelogin, "CANCELAR") == 0 || strcmp(usernamelogin, "cancelar") == 0){
-          puts("");
-          bemvindo = 1;
-          break;              // ele volta ao menu principal 
-        }
-        for (i = 0; i < NV; i++){
-          if (strcmp(usernamelogin, usuarios[i].username) == 0) { 
-            id_username = i;          // pega o i e passa para o id pra facilitar no rastreamento de senha
-            verif_username = 1;
-            break;
-          }
-        }       
-        printf("Digite sua senha: ");
-        fgets(senhalogin, sizeof(senhalogin), stdin);
-        senhalogin[strcspn(senhalogin, "\n")] = '\0';
-        if (strcmp(senhalogin, usuarios[id_username].senha) == 0 && verif_username == 1){ // senha e nome compativeis
-          permissao_acesso = 1; // o usuario pode prosseguir
-          puts("");
-          break;
-        }
-        else{
-          puts("\nNome do usuário ou senha incorreto!"); //volta ao inicio do loop
-          puts("Tente novamente ou digite 'CANCELAR' para voltar!");
-        }
-      }
       if (permissao_acesso == 1){
-        puts("MENU");
+        printf("%s",usuarios[id_username].username);
+        printf("%s",usuarios[id_username].senha);
       }
-    }
 
+
+    } // fim resposta = 2    
   }  
 }
