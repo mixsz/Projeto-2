@@ -66,7 +66,7 @@ int main() {
       int NV = contador_cadastros; // Novo Cadastro
 
   while (sair != 1){
-
+    printf("%d\n",NV);
 
     printf("1 - Criar conta \n");
     printf("2 - Acessar conta\n");
@@ -113,8 +113,10 @@ int main() {
               break;
             }
           }       
-          confirma_cadastro(NV, usuarios); // confirma o cadastro e escreve no txt
-          NV++; // adiciona um novo cadastro
+          if(confirma_cadastro(NV, usuarios) == 1){ // confirma o cadastro e escreve no txt
+            NV++; // adiciona um novo cadastro
+            contador_cadastros++;
+          }
       }
     }
 

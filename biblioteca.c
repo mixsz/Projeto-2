@@ -84,7 +84,7 @@ int verifica_senha(char senha[]){
   }
 }
 
-void confirma_cadastro(int NV, Cadastro *usuarios){
+int confirma_cadastro(int NV, Cadastro *usuarios){
   char confirmar[10];
   while (1){
     printf("Deseja confirmar o cadastro? [S/N]: ");
@@ -103,13 +103,16 @@ void confirma_cadastro(int NV, Cadastro *usuarios){
       fprintf(escreve, "+;%s;%s;\n", usuarios[NV].username, usuarios[NV].senha); // Grava o username e a senha
       fclose(escreve);
       puts("Cadastro realizado com sucesso!\n");
+      return 1;
     } 
     else{
       puts("Erro ao abrir o arquivo TXT!\n");
+      return 0;
     }
   } 
   else{
     puts("Conta cancelada com sucesso!\n");
+    return 0;
   }
 }
 
