@@ -117,7 +117,7 @@ int confirma_cadastro(int NV, Cadastro *usuarios){
 }
 
 
-int login(int *bemvindo,int *id_username, int NV, Cadastro *usuarios){
+int login(int *bemvindo,int *id_usuario, int NV, Cadastro *usuarios){
   char usernamelogin[30], senhalogin[20];
   int i, verif_username;
   while (1){
@@ -134,7 +134,7 @@ int login(int *bemvindo,int *id_username, int NV, Cadastro *usuarios){
     for (i = 0; i < NV; i++){
       printf("%s\n", usuarios[i].username);
       if (strcmp(usernamelogin, usuarios[i].username) == 0) { 
-        *id_username = i;          // pega o i e passa para o id pra facilitar no rastreamento de senha
+        *id_usuario = i;          // pega o i e passa para o id pra facilitar no rastreamento de senha
         verif_username = 1;
         break;
       }
@@ -142,13 +142,32 @@ int login(int *bemvindo,int *id_username, int NV, Cadastro *usuarios){
     printf("Digite sua senha: ");
     fgets(senhalogin, sizeof(senhalogin), stdin);
     senhalogin[strcspn(senhalogin, "\n")] = '\0';
-    if (strcmp(senhalogin, usuarios[*id_username].senha) == 0 && verif_username == 1){ // senha e nome compativeis
-      puts("");
+    if (strcmp(senhalogin, usuarios[*id_usuario].senha) == 0 && verif_username == 1){ // senha e nome compativeis
       return 1; // o usuario pode prosseguir      
     }
     else{
       puts("\nNome do usuário ou senha incorreto!"); //volta ao inicio do loop
       puts("Tente novamente ou digite 'CANCELAR' para voltar!");
+    }
+  }
+}
+
+void deseja_continuar(char username[], int *menu, int *sair){
+  char continuar[10];
+  while (1){
+    printf("\nQuer continuar? [S/N]: ");
+    fgets(continuar, sizeof(continuar), stdin);
+    if (continuar[0] == 's' && strlen(continuar) == 2 || continuar[0] == 'S' && strlen(continuar) == 2){
+      break;
+    }
+    else if (continuar[0] == 'n' && strlen(continuar) == 2|| continuar[0] == 'N'&& strlen(continuar) == 2){
+      printf("\nAté mais %s!\n", username);
+      *menu = 0;
+      *sair = 1;
+      break;
+    }
+    else{
+      puts("Resposta inválida!\n");
     }
   }
 }

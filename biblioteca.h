@@ -19,6 +19,7 @@ typedef struct cadastro {
 int verifica_username(char username[], int NV, Cadastro *usuarios);
 int verifica_senha(char senha[]);
 int confirma_cadastro(int NV, Cadastro *usuarios);
-int login(int *bemvindo,int *id_username, int NV, Cadastro *usuarios);
+int login(int *bemvindo,int *id_usuario, int NV, Cadastro *usuarios);
+void deseja_continuar(char nome[], int *menu, int *sair);
 
 #endif

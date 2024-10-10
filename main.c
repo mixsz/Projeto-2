@@ -9,7 +9,7 @@ int main() {
   Cadastro usuarios[16];
   char resposta[10], opcao[10];
   char confirma_senha[15];
-  int id_username, menu = 1, oi = 1;
+  int id_usuario, menu = 1, oi = 1;
 
 
   FILE *ler = fopen("usuarios.txt", "r"); // LER ARQUIVO TXT
@@ -121,20 +121,56 @@ int main() {
     }
 
     if (resposta[0] == '2'){
-      id_username = -1; // o id sera iniciado como -1 pois n existira o indice -1 no vetor
-      permissao_acesso = login(&bemvindo, &id_username, NV, usuarios); // se for 1 significa que o user logou!
+      id_usuario = -1; // o id sera iniciado como -1 pois n existira o indice -1 no vetor
+      permissao_acesso = login(&bemvindo, &id_usuario, NV, usuarios); // se for 1 significa que o user logou!
       if (permissao_acesso == 1){
         while (menu == 1){
-          puts("cuzin");
-          if (oi == 1) { // dar oi na primeira vez da mensagem
-            printf("Olá Sr(a) %s! Digite a opção desejada: ",usuarios[id_username].username);
-            oi = 0;
-          } else {
-            printf("Digite a opção desejada: ");
+          puts("\n1. Sla");
+          puts("2. Slaaaa");
+          puts("3. Slaaewf");
+          puts("4. Slweferg");
+          puts("");
+           while (1){
+            if (oi == 1) { // dar oi na primeira vez da mensagem
+              printf("Olá %s! Digite a opção desejada: ",usuarios[id_usuario].username);
+              oi = 0;
+            } else {
+              printf("Digite a opção desejada: ");
+            }
+            fgets(opcao,sizeof(opcao),stdin);
+            if (opcao[0] != '1' && opcao[0] != '2' && opcao[0] != '3' && opcao[0] != '4' || strlen(opcao) > 2){
+               puts("Resposta inválida!\n");
+            }
+            else{
+              break;
+            }
           }
-          fgets(opcao,sizeof(opcao),stdin);
-        }
-      }
+          if (opcao[0] == '1'){
+            
+            puts("\nRAFAEL");
+            deseja_continuar(usuarios[id_usuario].username, &menu, &sair);
+            
+          }
+          if (opcao[0] == '2'){
+            
+            puts("\nTESTA");
+            deseja_continuar(usuarios[id_usuario].username, &menu, &sair);
+            
+          }
+          if (opcao[0] == '3'){
+            
+            puts("\nRAFAEL");
+            deseja_continuar(usuarios[id_usuario].username, &menu, &sair);
+            
+          }
+          if (opcao[0] == '4'){
+            
+            puts("\nTESTA");
+            deseja_continuar(usuarios[id_usuario].username, &menu, &sair);
+            
+          }
+        } // fim do loop menu
+      } // fim do permissao = 1
 
 
     } // fim resposta = 2    
