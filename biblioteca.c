@@ -466,8 +466,8 @@ int adivinhe_numero(int *fichas, int *pontuacao){
 }
 
 int pedra_papel_tesoura(int *fichas, int *pontuacao){
-  char selecionar[10],tutorial[10], objeto_user[10], objeto_casa_char[10];
-  int catalogo = 1;
+  char selecionar[10],tutorial[10], objeto_user[10], qualquer_coisa[10];
+  int catalogo = 1, comeco = 1, pt_casa = 0, pt_user = 0;
   int *objeto_casa;
   while(1){
     if (catalogo == 1){
@@ -481,7 +481,7 @@ int pedra_papel_tesoura(int *fichas, int *pontuacao){
       puts("Resposta inválida!\n");
       catalogo = 0;
     }
-    else if(selecionar[0] == 3){
+    else if(selecionar[0] == '3'){
       return 1;
     }
     else if(selecionar[0] == '2'){
@@ -502,40 +502,77 @@ int pedra_papel_tesoura(int *fichas, int *pontuacao){
       }
     }
     else if(selecionar[0] == '1'){
-      puts("\n Iniciando o DUELO melhor de 3!\n");
-      while (1){
-        puts("1. Pedra");
-        puts("2. Papel");
-        puts("3. Tesoura");
-        puts("Faça sua escolha: ");
+      puts("\nINICIANDO O DUELO MELHOR DE 3!\n");
+      while (pt_casa < 2 && pt_user < 2){
+        printf("VOCÊ %d VS CASA %d\n\n", pt_user, pt_casa);
+        if(comeco == 1){
+          puts("1 - Pedra");
+          puts("2 - Papel");
+          puts("3 - Tesoura\n");
+          printf("FAÇA SUA ESCOLHA: ");
+        }
+        else{
+          printf("FAÇA SUA ESCOLHA CORRETAMENTE: ");
+        }
+        comeco = 1;
         fgets(objeto_user,sizeof(objeto_user),stdin);
+        objeto_user[strcspn(objeto_user, "\n")] = 0;
         if(verifica_input(objeto_user) == 1){
           puts("Esse objeto não existe!\n");
+          comeco = 0;
         }
         else{
           if (objeto_user[0] != '1' && objeto_user[0] != '2' && objeto_user[0] != '3'){
             puts("Esse objeto não existe!\n");
-          }
-          objeto_casa = gera_numeros(1,3);
-          if (objeto_casa[0] == 1){
-            puts("A CASA ESCOLHEU PEDRA!\n");
-          }
-          else if(objeto_casa[0] == 2){
-            puts("A CASA ESCOLHEU PAPEL!\n");
+            comeco = 0;
           }
           else{
-            puts("A CASA ESCOLHEU TESOURA!\n");
-          }          
-          // if (sprint(objeto_casa) == objeto_user[0]){
-          //   puts("A RODADA DEU EMPATE!\n");
-          // }
+            objeto_casa = gera_numeros(1,3);
+            if (objeto_casa[0] == 1){
+              puts("\nA CASA ESCOLHEU PEDRA!\n");
+            }
+            else if(objeto_casa[0] == 2){
+              puts("\nA CASA ESCOLHEU PAPEL!\n");
+            }
+            else{
+              puts("\nA CASA ESCOLHEU TESOURA!\n");
+            }  
+            if (atof(objeto_user) == objeto_casa[0]){
+              puts("EMPATE NA RODADA!\n");
+            }
+            else if (atof(objeto_user) == 1 && objeto_casa[0] == 3){
+              puts("VOCÊ GANHOU A RODADA!\n");
+              pt_user += 1;
+            }
+            else if (atof(objeto_user) == 2 && objeto_casa[0] == 1){
+              puts("VOCÊ GANHOU A RODADA!\n");
+              pt_user += 1;
+            }
+            else if (atof(objeto_user) == 3 && objeto_casa[0] == 2){
+              puts("VOCÊ GANHOU A RODADA!\n");
+              pt_user += 1;
+            }
+            else{
+              puts("VOCÊ PERDEU A RODADA!\n");
+              pt_casa += 1;
+            }
+            printf("PREPARADO PARA A PRÓXIMA RODADA? ");
+            fgets(qualquer_coisa,sizeof(qualquer_coisa),stdin);
+            if (qualquer_coisa[0] == 's' || qualquer_coisa[0] == 'S'){
+              puts("\nPRÓXIMA RODADA COMEÇANDO!");
+            }
+            else{
+              puts("\nNÃO IMPORTA, PRÓXIMA RODADA COMEÇANDO!"); // continua talvez no print do que o user escolheu
+            } // continuar a logica, falta implementar se o usuario perdeu ou ganhou!
+          }
         }
+      }
     }
   }
 }
 
 void exibe_tutorial2(){
-  puts("\nO objetivo do jogo é ganhar 2 rodadas contra a casa escolhendo um dos três objeto: pedra, papel ou tesoura.\n\nCada objeto vence o outro:");
+  puts("\nO objetivo do jogo é ganhar 2 rodadas contra a casa escolhendo um dos três objeto: pedra, papel ou tesoura.\n\nCada objeto vence o outro:\n");
   puts("-Pedra vence tesoura");
   puts("-Tesoura vence papel");
   puts("-Papel vence pedra");
