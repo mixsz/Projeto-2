@@ -194,7 +194,7 @@ void exibe_tutorial1(){
   puts("-O normal gera um número aleatório entre 1 e 50.");
   puts("-O dificil gera um número aleatório entre 1 e 100.");
   puts("-O impossível gera um número aleatório entre 1 e 1000.");
-  puts("\nVocê possui 4 tentativas para acertar o número gerado no modo Normal e 6 no Difícil.");
+  puts("\nVocê possui 4 tentativas para acertar o número gerado no modo Normal e 5 no Difícil.");
   puts("No modo Impossível, você possui 8 tentativas.");
   
 }
@@ -214,8 +214,8 @@ int adivinhe_numero(int *fichas){
   while (1){
     if (catalogo == 1){
       puts("\n1 - Normal (+1 ficha)");
-      puts("2 - Dificíl (+3 fichas)");
-      puts("3 - IMPOSSÍVEL (+5 fichas)");
+      puts("2 - Dificíl (+2 fichas)");
+      puts("3 - IMPOSSÍVEL (+3 fichas)");
       puts("4 - Como jogar?");
       puts("5 - Voltar");    
     }
@@ -294,13 +294,13 @@ int adivinhe_numero(int *fichas){
       return 0;
     }
     else if (strlen(selecionar) == 2 && selecionar[0] == '2'){
-      vidas = 6;
+      vidas = 5;
       puts("\nVocê selecionou a dificuldade dificíl.");
       random = gera_numeros(1, 100);
       puts("O número foi gerado entre 1 a 100!\n");
       while (vidas > 0){
         numero = 0;
-        if (vidas != 6){
+        if (vidas != 5){
           if (vidas == 1){
             puts("(1 vida restante)\n");
           }
@@ -358,8 +358,8 @@ int adivinhe_numero(int *fichas){
         *fichas -= 1;
       }
       else{
-        puts("Você recebeu 3 fichas como recompensa!");
-        *fichas += 3;
+        puts("Você recebeu 2 fichas como recompensa!");
+        *fichas += 2;
       }
       free(random); // libera memoria
       return 0;
@@ -429,8 +429,8 @@ int adivinhe_numero(int *fichas){
         *fichas -= 1;
       }
       else{
-        *fichas += 5;
-        puts("Você recebeu 5 fichas como recompensa!");
+        *fichas += 3;
+        puts("Você recebeu 3 fichas como recompensa!");
       }
       free(random); // libera memoria
       return 0;

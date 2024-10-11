@@ -133,6 +133,8 @@ int main() {
             puts("3. Slaaewf");
             puts("4. Slweferg");
             puts("X. Consultar fichas");
+            puts("X. Como jogar?");
+            puts("X. Sair");
             puts("");
             while (1){
               if (oi == 1) { // dar oi na primeira vez da mensagem
