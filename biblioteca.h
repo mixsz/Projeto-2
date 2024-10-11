@@ -25,6 +25,8 @@ int* gera_numeros(int quantidade, int numero_maximo);
 int verifica_input(char adivinha[]); 
 int adivinhe_numero(int *fichas, int *pontuacao);
 void exibe_tutorial1();
+int pedra_papel_tesoura(int *fichas, int *pontuacao);
+void exibe_tutorial2();
 
 
 #endif

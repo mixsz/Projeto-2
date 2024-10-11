@@ -104,22 +104,21 @@ int main() {
                 puts("Username cadastrado!\n");
                 break;
               }
+          }
+          while (1){ // CADASTRO DE SENHA
+            printf("Digite sua senha (máximo 14 caractéres): ");
+            fgets(usuarios[*NV].senha, sizeof(usuarios[*NV].senha), stdin);  
+
+            if (verifica_senha(usuarios[*NV].senha) == 0) { // se for = 0 -> senha valida
+              puts("Senha cadastrada!\n");
+              usuarios[*NV].ficha = 10; // inicia a conta com 10 fichas
+              usuarios[*NV].vitoria1 = 0; // inicia a conta com 0 pontos
+              break;
             }
-  
-            while (1){ // CADASTRO DE SENHA
-              printf("Digite sua senha (máximo 14 caractéres): ");
-              fgets(usuarios[*NV].senha, sizeof(usuarios[*NV].senha), stdin);  
-  
-              if (verifica_senha(usuarios[*NV].senha) == 0) { // se for = 0 -> senha valida
-                puts("Senha cadastrada!\n");
-                usuarios[*NV].ficha = 10; // inicia a conta com 10 fichas
-                usuarios[*NV].vitoria1 = 0; // inicia a conta com 0 pontos
-                break;
-              }
-            }       
-            if(confirma_cadastro(*NV, usuarios) == 1){ // confirma o cadastro e escreve no txt
-              contador_cadastros++;
-            }
+          }       
+          if(confirma_cadastro(*NV, usuarios) == 1){ // confirma o cadastro e escreve no txt
+            contador_cadastros++;       
+          }
         }
       }
   
@@ -128,9 +127,8 @@ int main() {
         permissao_acesso = login(&bemvindo, &id_usuario, *NV, usuarios); // se for 1 significa que o user logou!
         if (permissao_acesso == 1){
           while (menu == 1){
-           
             puts("\n1. Adivinhe o número!");
-            puts("2. Slaaaa");
+            puts("2. Pedra, papel, tesoura");
             puts("3. Slaaewf");
             puts("4. Slweferg");
             puts("X. Consultar fichas");
@@ -160,9 +158,10 @@ int main() {
           }
           if (opcao[0] == '2'){
             
-            puts("\nTESTA");
-            deseja_continuar(usuarios[id_usuario].username, &menu, &sair);
-            
+            if(pedra_papel_tesoura(&usuarios[id_usuario].ficha,&usuarios[id_usuario].vitoria1) == 0){
+                deseja_continuar(usuarios[id_usuario].username, &menu, &sair);  
+            }
+           
           }
           if (opcao[0] == '3'){
             

@@ -464,3 +464,154 @@ int adivinhe_numero(int *fichas, int *pontuacao){
     }
   }
 }
+
+int pedra_papel_tesoura(int *fichas, int *pontuacao){
+  char selecionar[10],tutorial[10], objeto_user[10], objeto_casa_char[10];
+  int catalogo = 1;
+  int *objeto_casa;
+  while(1){
+    if (catalogo == 1){
+      puts("\n1. Jogar");
+      puts("2. Como jogar?");
+      puts("3. Voltar\n");
+    }
+    printf("Digite a opção desejada: ");
+    fgets(selecionar,sizeof(selecionar),stdin);           
+    if (selecionar[0] != '1' && selecionar[0] != '2' && selecionar[0] != '3' || strlen(selecionar) > 2){
+      puts("Resposta inválida!\n");
+      catalogo = 0;
+    }
+    else if(selecionar[0] == 3){
+      return 1;
+    }
+    else if(selecionar[0] == '2'){
+      exibe_tutorial2();
+      while(1){
+        printf("\nDeseja jogar? [S/N]: ");
+        fgets(tutorial,sizeof(tutorial),stdin);
+        if (strlen(tutorial) == 2 && tutorial[0] == 'n' || tutorial[0] == 'N'){
+          return 1;
+        }
+        else if (strlen(tutorial) == 2 && tutorial[0] == 's' || tutorial[0] == 'S'){
+          catalogo = 1;
+          break;
+        }
+        else{
+          puts("Resposta inválida!");
+        }
+      }
+    }
+    else if(selecionar[0] == '1'){
+      puts("\n Iniciando o DUELO melhor de 3!\n");
+      while (1){
+        puts("1. Pedra");
+        puts("2. Papel");
+        puts("3. Tesoura");
+        puts("Faça sua escolha: ");
+        fgets(objeto_user,sizeof(objeto_user),stdin);
+        if(verifica_input(objeto_user) == 1){
+          puts("Esse objeto não existe!\n");
+        }
+        else{
+          if (objeto_user[0] != '1' && objeto_user[0] != '2' && objeto_user[0] != '3'){
+            puts("Esse objeto não existe!\n");
+          }
+          objeto_casa = gera_numeros(1,3);
+          if (objeto_casa[0] == 1){
+            puts("A CASA ESCOLHEU PEDRA!\n");
+          }
+          else if(objeto_casa[0] == 2){
+            puts("A CASA ESCOLHEU PAPEL!\n");
+          }
+          else{
+            puts("A CASA ESCOLHEU TESOURA!\n");
+          }          
+          // if (sprint(objeto_casa) == objeto_user[0]){
+          //   puts("A RODADA DEU EMPATE!\n");
+          // }
+        }
+    }
+  }
+}
+
+void exibe_tutorial2(){
+  puts("\nO objetivo do jogo é ganhar 2 rodadas contra a casa escolhendo um dos três objeto: pedra, papel ou tesoura.\n\nCada objeto vence o outro:");
+  puts("-Pedra vence tesoura");
+  puts("-Tesoura vence papel");
+  puts("-Papel vence pedra");
+  puts("\nObs: Caso o obeto escolhido seja o mesmo que o da casa, o jogo continua e ninguem pontuará na rodada.");
+}
+// void binario(Cadastro *usuarios){
+//   FILE *file3;
+//   int numbers[15], i;
+//   for (i = 0; i < 15; i++){
+//     numbers[i] = usuarios[i].vitoria1;
+//   }
+//   file3 = fopen("numbers.bin", "wb"); 
+//   if (file3 == NULL) {
+//       puts("Erro ao abrir o arquivo 'numbers.bin'!\n");
+//   }
+//   size_t result = fwrite(numbers, sizeof(int), 15, file3);
+//   if (result != 15) {
+//     puts("Erro ao abrir o arquivo 'numbers.bin'!\n");
+//   }
+//   fclose(file3);
+  
+//    FILE *file4;
+  
+//    file4 = fopen("numbers.bin", "rb");
+//    if (file4 == NULL) {
+//      puts("Erro ao abrir o arquivo 'numbers.bin'!\n");
+//    }
+  
+//    size_t result2 = fread(numbers, sizeof(int), 15, file4);
+//    if (result2 != 15) {
+//      puts("Erro ao abrir o arquivo 'numbers.bin'!\n");
+//    } else {
+//        for (int i = 0; i < 15; i++) {
+//            printf("Number %d: %d\n", i + 1, numbers[i]);
+//        }
+//    }
+  
+//    fclose(file4);
+// }
+
+// main:
+
+// ///////////////
+// FILE *file2;
+// int numbers[10];
+// for (i = 0; i < 10; i++){
+//   numbers[i] = usuarios[i].vitoria1;
+// }
+// file2 = fopen("numbers.bin", "wb"); 
+// if (file2 == NULL) {
+//     perror("Error opening file");
+//     return 1;
+// }
+// size_t result = fwrite(numbers, sizeof(int), 10, file2);
+// if (result != 10) {
+//     perror("Error writing to file");
+//     return 1;
+// }
+// fclose(file2);
+
+//  FILE *file;
+
+//  file = fopen("numbers.bin", "rb");
+//  if (file == NULL) {
+//      perror("Error opening file");
+//      return 1;
+//  }
+
+//  size_t result2 = fread(numbers, sizeof(int), 10, file);
+//  if (result2 != 10) {
+//      perror("Error reading file");
+//  } else {
+//      for (int i = 0; i < 10; i++) {
+//          printf("Number %d: %d\n", i + 1, numbers[i]);
+//      }
+//  }
+
+//  fclose(file);
+// //////////////
