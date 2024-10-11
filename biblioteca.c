@@ -348,7 +348,7 @@ int adivinhe_numero(int *fichas, int *pontuacao){
           }
           else{
             puts("\nPARABÉNS! VOCÊ CONSEGUIU ADIVINHAR O NÚMERO! :D");
-            printf("Total de chutes: %d\n\n", 4 - vidas);            
+            printf("Total de chutes: %d\n\n", 5 - vidas);            
             vitoria = 1;
             *pontuacao += 1;
             break;
@@ -420,7 +420,7 @@ int adivinhe_numero(int *fichas, int *pontuacao){
           }
           else{
             puts("\nPARABÉNS! VOCÊ CONSEGUIU ADIVINHAR O NÚMERO! :D");
-            printf("Total de chutes: %d\n\n", 4 - vidas);   
+            printf("Total de chutes: %d\n\n", 8 - vidas);   
             vitoria = 1;
             *pontuacao += 1;
             break;

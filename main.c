@@ -113,7 +113,7 @@ int main() {
               if (verifica_senha(usuarios[*NV].senha) == 0) { // se for = 0 -> senha valida
                 puts("Senha cadastrada!\n");
                 usuarios[*NV].ficha = 10; // inicia a conta com 10 fichas
-                usuarios[*NV].pontuacao1 = 0; // inicia a conta com 0 pontos
+                usuarios[*NV].vitoria1 = 0; // inicia a conta com 0 pontos
                 break;
               }
             }       
@@ -128,6 +128,7 @@ int main() {
         permissao_acesso = login(&bemvindo, &id_usuario, *NV, usuarios); // se for 1 significa que o user logou!
         if (permissao_acesso == 1){
           while (menu == 1){
+           
             puts("\n1. Adivinhe o número!");
             puts("2. Slaaaa");
             puts("3. Slaaewf");
@@ -153,7 +154,7 @@ int main() {
             }
           }
           if (opcao[0] == '1'){
-            if(adivinhe_numero(&usuarios[id_usuario].ficha,&usuarios[id_usuario].pontuacao1) == 0){
+            if(adivinhe_numero(&usuarios[id_usuario].ficha,&usuarios[id_usuario].vitoria1) == 0){
               deseja_continuar(usuarios[id_usuario].username, &menu, &sair);  
             }
           }
