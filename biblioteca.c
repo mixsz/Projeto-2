@@ -188,6 +188,16 @@ int* gera_numeros(int quantidade, int numero_maximo){
   return random;
 }
 
+void exibe_tutorial1(){ 
+  puts("\nO objetivo do jogo é adivinhar o número gerado aleatório dentro de uma faixa específica, dependendo do nível de dificuldade escolhido pelo jogador.\n");
+  puts("Existem 3 níveis de dificuldade:");
+  puts("-O normal gera um número aleatório entre 1 e 50.");
+  puts("-O dificil gera um número aleatório entre 1 e 100.");
+  puts("-O impossível gera um número aleatório entre 1 e 1000.");
+  puts("\nVocê possui 4 tentativas para acertar o número gerado no modo Normal e 6 no Difícil.");
+  puts("No modo Impossível, você possui 8 tentativas.");
+  
+}
 int verifica_input(char palavra[]) { // verifica se o input e valido
   for (int i = 0; i < strlen(palavra); i++) {
     if (!isdigit(palavra[i])) {
@@ -205,7 +215,7 @@ int adivinhe_numero(int *fichas){
     if (catalogo == 1){
       puts("\n1 - Normal (+1 ficha)");
       puts("2 - Dificíl (+3 fichas)");
-      puts("3 - Impossível (+5 fichas)");
+      puts("3 - IMPOSSÍVEL (+5 fichas)");
       puts("4 - Como jogar?");
       puts("5 - Voltar");    
     }
@@ -265,8 +275,9 @@ int adivinhe_numero(int *fichas){
             }
           }
           else{
-            puts("PARABÉNS! VOCÊ CONSEGUIU ADIVINHAR O NÚMERO! :D");
-            printf("Total de chutes: %d\n", 4 - vidas);            
+            puts("\nPARABÉNS! VOCÊ CONSEGUIU ADIVINHAR O NÚMERO! :D");
+            printf("Total de chutes: %d\n\n", 4 - vidas); 
+            vitoria = 1;
             break;
           }
         }
@@ -277,17 +288,19 @@ int adivinhe_numero(int *fichas){
       }
       else{
         *fichas += 1;
+        puts("Você recebeu 1 ficha como recompensa!");
       }
+      free(random); // libera memoria
       return 0;
     }
     else if (strlen(selecionar) == 2 && selecionar[0] == '2'){
-      vidas = 4;
+      vidas = 6;
       puts("\nVocê selecionou a dificuldade dificíl.");
       random = gera_numeros(1, 100);
       puts("O número foi gerado entre 1 a 100!\n");
       while (vidas > 0){
         numero = 0;
-        if (vidas != 4){
+        if (vidas != 6){
           if (vidas == 1){
             puts("(1 vida restante)\n");
           }
@@ -333,8 +346,9 @@ int adivinhe_numero(int *fichas){
             }
           }
           else{
-            puts("PARABÉNS! VOCÊ CONSEGUIU ADIVINHAR O NÚMERO! :D");
-            printf("Total de chutes: %d\n", 4 - vidas);            
+            puts("\nPARABÉNS! VOCÊ CONSEGUIU ADIVINHAR O NÚMERO! :D");
+            printf("Total de chutes: %d\n\n", 4 - vidas);            
+            vitoria = 1;
             break;
           }
         }
@@ -344,18 +358,20 @@ int adivinhe_numero(int *fichas){
         *fichas -= 1;
       }
       else{
+        puts("Você recebeu 3 fichas como recompensa!");
         *fichas += 3;
       }
+      free(random); // libera memoria
       return 0;
     }
     else if (strlen(selecionar) == 2 && selecionar[0] == '3'){
-      vidas = 10;
-      puts("\nVocê selecionou a dificuldade dificíl.");
+      vidas = 8;
+      puts("\nVocê selecionou a dificuldade IMPOSSÍVEL.");
       random = gera_numeros(1, 1000);
-      puts("O número foi gerado entre 1 a 100!\n");
+      puts("O número foi gerado entre 1 a 1000!\n");
       while (vidas > 0){
         numero = 0;
-        if (vidas != 10){
+        if (vidas != 8){
           if (vidas == 1){
             puts("(1 vida restante)\n");
           }
@@ -401,8 +417,9 @@ int adivinhe_numero(int *fichas){
             }
           }
           else{
-            puts("PARABÉNS! VOCÊ CONSEGUIU ADIVINHAR O NÚMERO! :D");
-            printf("Total de chutes: %d\n", 4 - vidas);            
+            puts("\nPARABÉNS! VOCÊ CONSEGUIU ADIVINHAR O NÚMERO! :D");
+            printf("Total de chutes: %d\n\n", 4 - vidas);   
+            vitoria = 1;
             break;
           }
         }
@@ -412,18 +429,14 @@ int adivinhe_numero(int *fichas){
         *fichas -= 1;
       }
       else{
-        *fichas += 3;
-      }      
+        *fichas += 5;
+        puts("Você recebeu 5 fichas como recompensa!");
+      }
+      free(random); // libera memoria
       return 0;
     }
     else if (strlen(selecionar) == 2 && selecionar[0] == '4'){
-      puts("\nO objetivo do jogo é adivinhar o número gerado aleatório dentro de uma faixa específica, dependendo do nível de dificuldade escolhido pelo jogador.\n");
-      puts("Existem 3 níveis de dificuldade:");
-      puts("-O normal gera um número aleatório entre 1 e 50.");
-      puts("-O dificil gera um número aleatório entre 1 e 100.");
-      puts("-O impossível gera um número aleatório entre 1 e 1000.");
-      puts("\nVocê possui 4 tentativas para acertar o número gerado nos modos Normal e Difícil.");
-      puts("No modo Impossível, você possui 8 tentativas.");
+      exibe_tutorial1();
       while(1){
         printf("\nDeseja jogar? [S/N]: ");
         fgets(tutorial,sizeof(tutorial),stdin);

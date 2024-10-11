@@ -24,5 +24,7 @@ void deseja_continuar(char username[], int *menu, int *sair);
 int* gera_numeros(int quantidade, int numero_maximo);
 int verifica_input(char adivinha[]); 
 int adivinhe_numero(int *fichas);
+void exibe_tutorial1();
+
 
 #endif

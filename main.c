@@ -132,7 +132,7 @@ int main() {
             puts("2. Slaaaa");
             puts("3. Slaaewf");
             puts("4. Slweferg");
-            puts("X. Visualizar fichas");
+            puts("X. Consultar fichas");
             puts("");
             while (1){
               if (oi == 1) { // dar oi na primeira vez da mensagem
