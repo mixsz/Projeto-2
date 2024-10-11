@@ -1,4 +1,4 @@
-#include "biblioteca.h"
+      #include "biblioteca.h"
 
 int verifica_username(char username[30], int NV, Cadastro *usuarios){ 
   int i, username_existente = 0; 
@@ -188,7 +188,7 @@ int* gera_numeros(int quantidade, int numero_maximo){
   return random;
 }
 
-void exibe_tutorial1(){ 
+void exibe_tutorial1(){ // apenas visual
   puts("\nO objetivo do jogo é adivinhar o número gerado aleatório dentro de uma faixa específica, dependendo do nível de dificuldade escolhido pelo jogador.\n");
   puts("Existem 3 níveis de dificuldade:");
   puts("-O normal gera um número aleatório entre 1 e 50.");
@@ -198,7 +198,7 @@ void exibe_tutorial1(){
   puts("No modo Impossível, você possui 8 tentativas.");
   
 }
-int verifica_input(char palavra[]) { // verifica se o input e valido
+int verifica_input(char palavra[]) { // verifica se o input e um numero
   for (int i = 0; i < strlen(palavra); i++) {
     if (!isdigit(palavra[i])) {
         return 1;
@@ -207,10 +207,10 @@ int verifica_input(char palavra[]) { // verifica se o input e valido
   return 0;
 }
 
-int adivinhe_numero(int *fichas){
+int adivinhe_numero(int *fichas, int *pontuacao){
   char selecionar[10], tutorial[10], adivinha[10];
   int catalogo = 1, vidas, i, erro = 0, numero = 0, vitoria = 0;
-  int *random;
+  int *random; // ponteiro que armazenara o numero gerado aleatoriamente
   while (1){
     if (catalogo == 1){
       puts("\n1 - Normal (+1 ficha)");
@@ -242,8 +242,8 @@ int adivinhe_numero(int *fichas){
         adivinha[strcspn(adivinha, "\n")] = '\0';       
         if(verifica_input(adivinha) == 1){
           if (erro == 0){
-            puts("A PRÓXIMA GRAÇA VOCÊ PERDERÁ UMA VIDA!\n");
-            erro += 1;
+            puts("A PRÓXIMA GRAÇA VOCÊ PERDERÁ UMA VIDA!\n"); // se o user colocar letras ou caracteres especiais
+            erro += 1; // na proxima vez que ele colocar algo invalido ele perde uma vida
           }
           else{
             if (erro == 1){
@@ -251,7 +251,7 @@ int adivinhe_numero(int *fichas){
               vidas -= 1;
             }
             else{
-              puts("EU AVISEI! VOCÊ PERDEU OUTRA VIDA!");
+              puts("EU AVISEI! VOCÊ PERDEU OUTRA VIDA!"); // e aqui mais uma vida...
             }
           }
         }        
@@ -278,6 +278,7 @@ int adivinhe_numero(int *fichas){
             puts("\nPARABÉNS! VOCÊ CONSEGUIU ADIVINHAR O NÚMERO! :D");
             printf("Total de chutes: %d\n\n", 4 - vidas); 
             vitoria = 1;
+            *pontuacao += 1;
             break;
           }
         }
@@ -349,6 +350,7 @@ int adivinhe_numero(int *fichas){
             puts("\nPARABÉNS! VOCÊ CONSEGUIU ADIVINHAR O NÚMERO! :D");
             printf("Total de chutes: %d\n\n", 4 - vidas);            
             vitoria = 1;
+            *pontuacao += 1;
             break;
           }
         }
@@ -420,6 +422,7 @@ int adivinhe_numero(int *fichas){
             puts("\nPARABÉNS! VOCÊ CONSEGUIU ADIVINHAR O NÚMERO! :D");
             printf("Total de chutes: %d\n\n", 4 - vidas);   
             vitoria = 1;
+            *pontuacao += 1;
             break;
           }
         }

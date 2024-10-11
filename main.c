@@ -153,7 +153,7 @@ int main() {
             }
           }
           if (opcao[0] == '1'){
-            if(adivinhe_numero(&usuarios[id_usuario].ficha) == 0){
+            if(adivinhe_numero(&usuarios[id_usuario].ficha,&usuarios[id_usuario].pontuacao1) == 0){
               deseja_continuar(usuarios[id_usuario].username, &menu, &sair);  
             }
           }
