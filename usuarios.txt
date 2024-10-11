@@ -4,4 +4,3 @@
 +;aaaaaaaaa;123123;
 +;aoba;123123;
 +;testedeponteiro;123123;
-+;alo;123123;

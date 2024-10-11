@@ -128,10 +128,11 @@ int main() {
         permissao_acesso = login(&bemvindo, &id_usuario, *NV, usuarios); // se for 1 significa que o user logou!
         if (permissao_acesso == 1){
           while (menu == 1){
-            puts("\n1. Sla");
+            puts("\n1. Adivinhe o número!");
             puts("2. Slaaaa");
             puts("3. Slaaewf");
             puts("4. Slweferg");
+            puts("X. Visualizar fichas");
             puts("");
             while (1){
               if (oi == 1) { // dar oi na primeira vez da mensagem
@@ -150,16 +151,9 @@ int main() {
             }
           }
           if (opcao[0] == '1'){
-            
-            numero_usuario = gera_numeros(10, 100);
-            numero_casa = gera_numeros(10, 100);
-            for (i = 0; i < 10; i++){
-              printf("user %d\n", numero_usuario[i]);
-              printf("casa %d\n", numero_casa[i]);
-            }           
-            deseja_continuar(usuarios[id_usuario].username, &menu, &sair);
-            free(numero_usuario);
-            free(numero_casa);            
+            if(adivinhe_numero(&usuarios[id_usuario].ficha) == 0){
+              deseja_continuar(usuarios[id_usuario].username, &menu, &sair);  
+            }
           }
           if (opcao[0] == '2'){
             
@@ -189,5 +183,5 @@ int main() {
       puts("\nTenha um ótimo dia!\n");
       sair = 1;
     }
-  }  
+  }
 }

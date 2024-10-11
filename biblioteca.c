@@ -155,7 +155,7 @@ int login(int *bemvindo,int *id_usuario, int NV, Cadastro *usuarios){
 void deseja_continuar(char username[], int *menu, int *sair){
   char continuar[10];
   while (1){
-    printf("\nQuer continuar? [S/N]: ");
+    printf("\nDeseja retornar ao menu? [S/N]: ");
     fgets(continuar, sizeof(continuar), stdin);
     if (continuar[0] == 's' && strlen(continuar) == 2 || continuar[0] == 'S' && strlen(continuar) == 2){
       break;
@@ -167,7 +167,7 @@ void deseja_continuar(char username[], int *menu, int *sair){
       break;
     }
     else{
-      puts("Resposta inválida!\n");
+      puts("Resposta inválida!");
     }
   }
 }
@@ -186,4 +186,265 @@ int* gera_numeros(int quantidade, int numero_maximo){
     random[i] = rand() % numero_maximo + 1; // inclui o numero maximo
   }
   return random;
+}
+
+int verifica_input(char palavra[]) { // verifica se o input e valido
+  for (int i = 0; i < strlen(palavra); i++) {
+    if (!isdigit(palavra[i])) {
+        return 1;
+    }
+  }
+  return 0;
+}
+
+int adivinhe_numero(int *fichas){
+  char selecionar[10], tutorial[10], adivinha[10];
+  int catalogo = 1, vidas, i, erro = 0, numero = 0, vitoria = 0;
+  int *random;
+  while (1){
+    if (catalogo == 1){
+      puts("\n1 - Normal (+1 ficha)");
+      puts("2 - Dificíl (+3 fichas)");
+      puts("3 - Impossível (+5 fichas)");
+      puts("4 - Como jogar?");
+      puts("5 - Voltar");    
+    }
+    printf("\nSelecione a dificuldade: ");
+    fgets(selecionar,sizeof(selecionar),stdin);
+    
+    if (strlen(selecionar) == 2 && selecionar[0] == '1'){ // modo normal
+      vidas = 4;
+      puts("\nVocê selecionou a dificuldade normal.");
+      random = gera_numeros(1, 50);
+      puts("O número foi gerado entre 1 a 50!\n");
+      while (vidas > 0){
+        numero = 0;
+        if (vidas != 4){
+          if (vidas == 1){
+            puts("(1 vida restante)\n");
+          }
+          else{
+            printf("(%d vidas restantes)\n\n", vidas);
+          }
+        }
+        printf("QUE NÚMERO EU SOU? ");
+        fgets(adivinha,sizeof(adivinha),stdin);
+        adivinha[strcspn(adivinha, "\n")] = '\0';       
+        if(verifica_input(adivinha) == 1){
+          if (erro == 0){
+            puts("A PRÓXIMA GRAÇA VOCÊ PERDERÁ UMA VIDA!\n");
+            erro += 1;
+          }
+          else{
+            if (erro == 1){
+              puts("EU AVISEI! VOCÊ PERDEU UMA VIDA!");
+              vidas -= 1;
+            }
+            else{
+              puts("EU AVISEI! VOCÊ PERDEU OUTRA VIDA!");
+            }
+          }
+        }        
+        else if (verifica_input(adivinha) == 0){
+          if (atof(adivinha) != random[0]){
+            if (atof(adivinha) > 50){
+              puts("\nO NÚMERO MAXIMO É 50!");
+              vidas -= 1;
+            }
+            else if (atof(adivinha) < 1){
+              puts("\nO NÚMERO MÍNIMO É 1!");
+              vidas -= 1;
+            }
+            else if (atof(adivinha) > random[0]){
+              vidas -= 1;
+              puts("\nO NÚMERO É MENOOOOOOOOR!");
+            }
+            else if (atof(adivinha) < random[0]){
+              puts("\nO NÚMERO É MAIOOOOOOOR!");
+              vidas -= 1;
+            }
+          }
+          else{
+            puts("PARABÉNS! VOCÊ CONSEGUIU ADIVINHAR O NÚMERO! :D");
+            printf("Total de chutes: %d\n", 4 - vidas);            
+            break;
+          }
+        }
+      }
+      if (vitoria == 0){
+        printf("\nQUE PENA! VOCÊ PERDEU!\nO NÚMERO ERA %d :(\n", random[0]);
+        *fichas -= 1;
+      }
+      else{
+        *fichas += 1;
+      }
+      return 0;
+    }
+    else if (strlen(selecionar) == 2 && selecionar[0] == '2'){
+      vidas = 4;
+      puts("\nVocê selecionou a dificuldade dificíl.");
+      random = gera_numeros(1, 100);
+      puts("O número foi gerado entre 1 a 100!\n");
+      while (vidas > 0){
+        numero = 0;
+        if (vidas != 4){
+          if (vidas == 1){
+            puts("(1 vida restante)\n");
+          }
+          else{
+            printf("(%d vidas restantes)\n\n", vidas);
+          }
+        }
+        printf("QUE NÚMERO EU SOU? ");
+        fgets(adivinha,sizeof(adivinha),stdin);
+        adivinha[strcspn(adivinha, "\n")] = '\0';       
+        if(verifica_input(adivinha) == 1){
+          if (erro == 0){
+            puts("A PRÓXIMA GRAÇA VOCÊ PERDERÁ UMA VIDA!\n");
+            erro += 1;
+          }
+          else{
+            if (erro == 1){
+              puts("EU AVISEI! VOCÊ PERDEU UMA VIDA!");
+              vidas -= 1;
+            }
+            else{
+              puts("EU AVISEI! VOCÊ PERDEU OUTRA VIDA!");
+            }
+          }
+        }        
+        else if (verifica_input(adivinha) == 0){
+          if (atof(adivinha) != random[0]){
+            if (atof(adivinha) > 100){
+              puts("\nO NÚMERO MAXIMO É 100!");
+              vidas -= 1;
+            }
+            else if (atof(adivinha) < 1){
+              puts("\nO NÚMERO MÍNIMO É 1!");
+              vidas -= 1;
+            }
+            else if (atof(adivinha) > random[0]){
+              vidas -= 1;
+              puts("\nO NÚMERO É MENOOOOOOOOR!");
+            }
+            else if (atof(adivinha) < random[0]){
+              puts("\nO NÚMERO É MAIOOOOOOOR!");
+              vidas -= 1;
+            }
+          }
+          else{
+            puts("PARABÉNS! VOCÊ CONSEGUIU ADIVINHAR O NÚMERO! :D");
+            printf("Total de chutes: %d\n", 4 - vidas);            
+            break;
+          }
+        }
+      }
+      if (vitoria == 0){
+        printf("\nQUE PENA! VOCÊ PERDEU!\nO NÚMERO ERA %d :(\n", random[0]);
+        *fichas -= 1;
+      }
+      else{
+        *fichas += 3;
+      }
+      return 0;
+    }
+    else if (strlen(selecionar) == 2 && selecionar[0] == '3'){
+      vidas = 10;
+      puts("\nVocê selecionou a dificuldade dificíl.");
+      random = gera_numeros(1, 1000);
+      puts("O número foi gerado entre 1 a 100!\n");
+      while (vidas > 0){
+        numero = 0;
+        if (vidas != 10){
+          if (vidas == 1){
+            puts("(1 vida restante)\n");
+          }
+          else{
+            printf("(%d vidas restantes)\n\n", vidas);
+          }
+        }
+        printf("QUE NÚMERO EU SOU? ");
+        fgets(adivinha,sizeof(adivinha),stdin);
+        adivinha[strcspn(adivinha, "\n")] = '\0';       
+        if(verifica_input(adivinha) == 1){
+          if (erro == 0){
+            puts("A PRÓXIMA GRAÇA VOCÊ PERDERÁ UMA VIDA!\n");
+            erro += 1;
+          }
+          else{
+            if (erro == 1){
+              puts("EU AVISEI! VOCÊ PERDEU UMA VIDA!");
+              vidas -= 1;
+            }
+            else{
+              puts("EU AVISEI! VOCÊ PERDEU OUTRA VIDA!");
+            }
+          }
+        }        
+        else if (verifica_input(adivinha) == 0){
+          if (atof(adivinha) != random[0]){
+            if (atof(adivinha) > 1000){
+              puts("\nO NÚMERO MAXIMO É 1000!");
+              vidas -= 1;
+            }
+            else if (atof(adivinha) < 1){
+              puts("\nO NÚMERO MÍNIMO É 1!");
+              vidas -= 1;
+            }
+            else if (atof(adivinha) > random[0]){
+              vidas -= 1;
+              puts("\nO NÚMERO É MENOOOOOOOOR!");
+            }
+            else if (atof(adivinha) < random[0]){
+              puts("\nO NÚMERO É MAIOOOOOOOR!");
+              vidas -= 1;
+            }
+          }
+          else{
+            puts("PARABÉNS! VOCÊ CONSEGUIU ADIVINHAR O NÚMERO! :D");
+            printf("Total de chutes: %d\n", 4 - vidas);            
+            break;
+          }
+        }
+      }
+      if (vitoria == 0){
+        printf("\nQUE PENA! VOCÊ PERDEU!\nO NÚMERO ERA %d :(\n", random[0]);
+        *fichas -= 1;
+      }
+      else{
+        *fichas += 3;
+      }      
+      return 0;
+    }
+    else if (strlen(selecionar) == 2 && selecionar[0] == '4'){
+      puts("\nO objetivo do jogo é adivinhar o número gerado aleatório dentro de uma faixa específica, dependendo do nível de dificuldade escolhido pelo jogador.\n");
+      puts("Existem 3 níveis de dificuldade:");
+      puts("-O normal gera um número aleatório entre 1 e 50.");
+      puts("-O dificil gera um número aleatório entre 1 e 100.");
+      puts("-O impossível gera um número aleatório entre 1 e 1000.");
+      puts("\nVocê possui 4 tentativas para acertar o número gerado nos modos Normal e Difícil.");
+      puts("No modo Impossível, você possui 8 tentativas.");
+      while(1){
+        printf("\nDeseja jogar? [S/N]: ");
+        fgets(tutorial,sizeof(tutorial),stdin);
+        if (strlen(tutorial) == 2 && tutorial[0] == 'n' || tutorial[0] == 'N'){
+          return 1;
+        }
+        else if (strlen(tutorial) == 2 && tutorial[0] == 's' || tutorial[0] == 'S'){
+          catalogo = 1;
+          break;
+        }
+        else{
+          puts("Resposta inválida!");
+        }
+      }
+    }
+    else if (strlen(selecionar) == 2 && selecionar[0] == '5'){
+      return 1;
+    }
+    else{
+      puts("Resposta inválida!");
+      catalogo = 0;
+    }
+  }
 }
