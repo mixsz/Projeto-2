@@ -171,3 +171,19 @@ void deseja_continuar(char username[], int *menu, int *sair){
     }
   }
 }
+
+int* gera_numeros(int quantidade, int numero_maximo){
+  int i;
+  int *random; // um ponteiro de inteiros ja que n tem como retornar array de int
+  random = malloc(quantidade * sizeof(int));  // aloca memoria de acordo com a quantidade
+
+  if (random == NULL) { // caso de um erro na alocacao de memoria!!
+      printf("Erro ao alocar memória.\n");
+      return NULL;
+  }
+  
+  for (i = 0; i < quantidade; i++){
+    random[i] = rand() % numero_maximo + 1; // inclui o numero maximo
+  }
+  return random;
+}

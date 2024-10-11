@@ -2,6 +2,7 @@
 
 int main() {
   setlocale(LC_ALL, "portuguese");
+  srand(time(NULL)); // inicializa o gerador de numeros aleatorios aqui para evitar repeticoes na funcao gera_numeros
   int bemvindo = 0, sair = 0, permissao_acesso = 0, tentar_novamente = 0, verif_username = 0; // variaveis de controle
   int PT = 0; // contador de ponto e vírgula
   int i, j;
@@ -11,6 +12,7 @@ int main() {
   char confirma_senha[15];
   int id_usuario, menu = 1, oi = 1;
   int *NV; // ponteiro para o indice numero de usuarios (da variavel contador_cadastros)
+  int *numero_usuario, *numero_casa; // ponteiros (int) usados para atribuir valores da funcao gera_numeros
 
   FILE *ler = fopen("usuarios.txt", "r"); // LER ARQUIVO TXT
   char linha[2550]; // VARIAVEL QUE ARMAZENA TEMPORARIAMENTE OS CADASTROS DO TXT
@@ -149,9 +151,15 @@ int main() {
           }
           if (opcao[0] == '1'){
             
-            puts("\nRAFAEL");
+            numero_usuario = gera_numeros(10, 100);
+            numero_casa = gera_numeros(10, 100);
+            for (i = 0; i < 10; i++){
+              printf("user %d\n", numero_usuario[i]);
+              printf("casa %d\n", numero_casa[i]);
+            }           
             deseja_continuar(usuarios[id_usuario].username, &menu, &sair);
-            
+            free(numero_usuario);
+            free(numero_casa);            
           }
           if (opcao[0] == '2'){
             
