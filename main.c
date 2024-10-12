@@ -112,7 +112,8 @@ int main() {
             if (verifica_senha(usuarios[*NV].senha) == 0) { // se for = 0 -> senha valida
               puts("Senha cadastrada!\n");
               usuarios[*NV].ficha = 10; // inicia a conta com 10 fichas
-              usuarios[*NV].vitoria1 = 0; // inicia a conta com 0 pontos
+              usuarios[*NV].vitoria1 = 0; 
+              usuarios[*NV].vitoria2 = 0;
               break;
             }
           }       
@@ -131,8 +132,8 @@ int main() {
             puts("2. Pedra, papel, tesoura");
             puts("3. Slaaewf");
             puts("4. Slweferg");
+            puts("X. Guia de fichas");
             puts("X. Consultar fichas");
-            puts("X. Como jogar?");
             puts("X. Sair");
             puts("");
             while (1){
@@ -158,7 +159,7 @@ int main() {
           }
           if (opcao[0] == '2'){
             
-            if(pedra_papel_tesoura(&usuarios[id_usuario].ficha,&usuarios[id_usuario].vitoria1) == 0){
+            if(pedra_papel_tesoura(&usuarios[id_usuario].ficha,&usuarios[id_usuario].vitoria2) == 0){
                 deseja_continuar(usuarios[id_usuario].username, &menu, &sair);  
             }
            

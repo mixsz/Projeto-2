@@ -11,6 +11,7 @@ typedef struct cadastro {
   char username[30];
   char senha[25];
   int vitoria1;
+  int vitoria2;
   int ficha;
 } Cadastro;
 
