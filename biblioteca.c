@@ -504,8 +504,8 @@ int pedra_papel_tesoura(int *fichas, int *pontuacao){
     else if(selecionar[0] == '1'){
       puts("\nINICIANDO O DUELO MELHOR DE 3!\n");
       while (pt_casa < 2 && pt_user < 2){
-        printf("VOCÊ %d VS CASA %d\n\n", pt_user, pt_casa);
         if(comeco == 1){
+          printf("VOCÊ %d VS CASA %d\n\n", pt_user, pt_casa);        
           puts("1 - Pedra");
           puts("2 - Papel");
           puts("3 - Tesoura\n");
@@ -527,46 +527,73 @@ int pedra_papel_tesoura(int *fichas, int *pontuacao){
             comeco = 0;
           }
           else{
+            if (objeto_user[0] == '1'){
+              puts("\nVocê escolheu PEDRA.");
+            }
+            else if(objeto_user[0] == '2'){
+              puts("\nVocê escolheu PAPEL.");
+            }
+            else{
+              puts("\nVocê escolheu TESOURA.");
+            }  
             objeto_casa = gera_numeros(1,3);
             if (objeto_casa[0] == 1){
-              puts("\nA CASA ESCOLHEU PEDRA!\n");
+              puts("A casa escolheu PEDRA.\n");
             }
             else if(objeto_casa[0] == 2){
-              puts("\nA CASA ESCOLHEU PAPEL!\n");
+              puts("A casa escolheu PAPEL.\n");
             }
             else{
-              puts("\nA CASA ESCOLHEU TESOURA!\n");
+              puts("A casa escolheu TESOURA.\n");
             }  
-            if (atof(objeto_user) == objeto_casa[0]){
+            if (atoi(objeto_user) == objeto_casa[0]){
               puts("EMPATE NA RODADA!\n");
             }
-            else if (atof(objeto_user) == 1 && objeto_casa[0] == 3){
-              puts("VOCÊ GANHOU A RODADA!\n");
-              pt_user += 1;
-            }
-            else if (atof(objeto_user) == 2 && objeto_casa[0] == 1){
-              puts("VOCÊ GANHOU A RODADA!\n");
-              pt_user += 1;
-            }
-            else if (atof(objeto_user) == 3 && objeto_casa[0] == 2){
-              puts("VOCÊ GANHOU A RODADA!\n");
+            else if (atoi(objeto_user) == 1 && objeto_casa[0] == 3 || atoi(objeto_user) == 3 && objeto_casa[0] == 2 || atoi(objeto_user) == 2 && objeto_casa[0] == 1){
+              if (pt_user == 0){
+                puts("VOCÊ GANHOU A RODADA!\n");
+              }
               pt_user += 1;
             }
             else{
-              puts("VOCÊ PERDEU A RODADA!\n");
+              if (pt_casa == 0){
+                puts("VOCÊ PERDEU A RODADA!\n");
+              }
               pt_casa += 1;
             }
-            printf("PREPARADO PARA A PRÓXIMA RODADA? ");
-            fgets(qualquer_coisa,sizeof(qualquer_coisa),stdin);
-            if (qualquer_coisa[0] == 's' || qualquer_coisa[0] == 'S'){
-              puts("\nPRÓXIMA RODADA COMEÇANDO!");
+            if (pt_casa != 2 && pt_user != 2){
+              while (1){
+                printf("PREPARADO PARA A PRÓXIMA RODADA? ");
+                fgets(qualquer_coisa,sizeof(qualquer_coisa),stdin);
+                if (qualquer_coisa[0] == 's' || qualquer_coisa[0] == 'S'){
+                  puts("PRÓXIMA RODADA COMEÇANDO...\n");
+                  break;
+                }
+                else if (qualquer_coisa[0] == 'n' || qualquer_coisa[0] == 'N'){
+                  puts("ENTÃO PREPARE-SE! PRÓXIMA RODADA COMEÇANDO...\n");
+                  break;
+                } 
+                else{
+                  puts("ISSO NÃO ESTÁ NO MEU VOCABULÁRIO!\n");                     
+                }// continuar a logica, falta implementar se o usuario perdeu ou ganhou!
+              }
             }
             else{
-              puts("\nNÃO IMPORTA, PRÓXIMA RODADA COMEÇANDO!"); // continua talvez no print do que o user escolheu
-            } // continuar a logica, falta implementar se o usuario perdeu ou ganhou!
+              if (pt_casa == 2){
+                puts("OH NÃO! VOCÊ PERDEU O DUELO!");
+                *fichas -= 1;
+              }
+              else{
+                puts("MUITO BEM! VOCÊ GANHOU O DUELO!");
+                *fichas += 1;
+                *pontuacao += 1;
+                puts("Você recebeu 1 ficha como recompensa!");
+              }
+            }
           }
         }
       }
+      return 0;
     }
   }
 }
