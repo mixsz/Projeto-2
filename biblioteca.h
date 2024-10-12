@@ -26,7 +26,7 @@ int verifica_input(char adivinha[]);
 int adivinhe_numero(int *fichas, int *pontuacao);
 void exibe_tutorial1();
 int pedra_papel_tesoura(int *fichas, int *pontuacao);
-void exibe_tutorial2();
+void exibe_tutorial2(); // funcao para exibir o tutorial de como jogar (apenas com prints)
 
 
 #endif
