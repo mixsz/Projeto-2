@@ -606,9 +606,10 @@ void exibe_tutorial2(){
   puts("\nObs: Caso o obeto escolhido seja o mesmo que o da casa, o jogo continua e ninguem pontuará na rodada.");
 }
 void exibe_tutorial3(){
-  puts("\nNeste jogo, seu objetivo é descobrir qual operador foi utilizado entre dois números:\nSoma (+)\nSubtração (-)\nMultiplicação (*)\nDivisão (/)\n");
-  puts("Dois números serão exibidos na tela, e o resultado de uma operação entre eles será mostrado!");
-  puts("Adivinhe corretamente o máximo de operações possível! Cada acerto equivale a 1 ponto!");
+  puts("\nNeste jogo, seu objetivo é descobrir qual operador utilizar:\nSoma (+)\nSubtração (-)\nMultiplicação (*)\nDivisão (/)\n");
+  puts("Os números serão exibidos na tela, e você deverá completar o sinal para operação.");
+  puts("Adivinhe o máximo de sinais que conseguir!\nCada acerto vale 1 ponto e a média para passar é 6.");
+  puts("Obs: O jogo fica mais dificíl conforme as rodadas passam.");
 }
 
 char verifica_resposta(){
