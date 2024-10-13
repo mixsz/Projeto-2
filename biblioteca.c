@@ -646,7 +646,10 @@ void numero_conforme_rodada(int *rodada, int **numero1, int **numero2, int **num
 
 void calculo (float *resultado,int *numero1, int *numero2, int *numero3, int *seleciona_operacao, int *numero4, int *rodada){
   int *operacao_secundaria;
+  int *n1_ajuda, *n2_ajuda; //numeros para o resultado nao ficar em decimal (se possivel) e dificultar a divisao
   operacao_secundaria = gera_numeros(1,4);
+  n1_ajuda = gera_numeros(1,100);
+  n2_ajuda = gera_numeros(1,100);
   if (seleciona_operacao[0] == 1){
     if (*rodada < 7){
       if (operacao_secundaria[0] == 1){
@@ -663,8 +666,8 @@ void calculo (float *resultado,int *numero1, int *numero2, int *numero3, int *se
          printf("%d * %d(?)%d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
       }
       else{
-         *resultado = (float)numero1[0] + (float)numero2[0] * 20 / (float)numero3[0];
-         printf("%d(?)%d * 20 / %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+         *resultado = ((float)numero1[0] + (float)numero2[0] / (float)numero3[0]) * n1_ajuda[0] - n2_ajuda[0];
+         printf("(%d(?)%d / %d) * %d - %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], n1_ajuda[0],n2_ajuda[0], *resultado);
       }
     }
     else{
@@ -682,8 +685,8 @@ void calculo (float *resultado,int *numero1, int *numero2, int *numero3, int *se
          printf("%d * %d(?)%d - %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0],*resultado);
       }
       else{
-         *resultado = (12 * (float)numero1[0] + (float)numero2[0] / (float)numero3[0] + (float)numero4[0] * 10) * 100;
-         printf("(12 * %d(?)%d / %d + %d * 10) * 100 = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0],*resultado);
+         *resultado = ((float)numero1[0] + (float)numero2[0] / (float)numero3[0] + (float)numero4[0]) * (float)n1_ajuda[0] * (float)n2_ajuda[0];;
+         printf("(%d(?)%d / %d + %d * 10) * %d * %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0],n1_ajuda[0],n2_ajuda[0],*resultado);
       }
     }
   }
@@ -702,8 +705,8 @@ void calculo (float *resultado,int *numero1, int *numero2, int *numero3, int *se
          printf("%d(?)%d * %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
       }
       else{
-         *resultado = ((float)numero1[0] - (float)numero2[0] / (float)numero3[0]) * 51 - 33;
-         printf("(%d(?)%d / %d) * 51 - 33 = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+         *resultado = ((float)numero1[0] - (float)numero2[0] / (float)numero3[0]) * n1_ajuda[0] - n2_ajuda[0];
+         printf("(%d(?)%d / %d) * %d - %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], n1_ajuda[0],n2_ajuda[0],*resultado);
       }
     }
     else{
@@ -720,8 +723,8 @@ void calculo (float *resultado,int *numero1, int *numero2, int *numero3, int *se
          printf("-%d(?)%d * %d + %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], *resultado);
       }
       else{
-         *resultado = (-(float)numero1[0] - (float)numero2[0]) * 10 / (float)numero3[0] * -(float)numero4[0];
-         printf("(-%d(?)%d) * 10 / %d * (-%d) = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], *resultado);
+         *resultado = ((-(float)numero1[0] - (float)numero2[0]) * (float)n1_ajuda[0] / (float)numero3[0] * -(float)numero4[0]) * (float)n2_ajuda[0];
+         printf("((-%d(?)%d) * %d / %d * (-%d)) * %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], *resultado);
       }
     }
   }
@@ -740,8 +743,8 @@ void calculo (float *resultado,int *numero1, int *numero2, int *numero3, int *se
          printf("%d(?)%d * %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
       }
       else{
-         *resultado = (float)numero1[0] * (float)numero2[0] / (float)numero3[0];
-         printf("%d(?)%d / %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+         *resultado = (float)numero1[0] * (float)numero2[0] / (float)numero3[0] - (float)n1_ajuda[0];
+         printf("%d(?)%d / %d - %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], n1_ajuda[0],*resultado);
       }
     }
     else{
@@ -758,46 +761,46 @@ void calculo (float *resultado,int *numero1, int *numero2, int *numero3, int *se
          printf("%d(?)%d * %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], *resultado);
       }
       else{
-         *resultado = ((float)numero1[0] * (float)numero2[0] / (float)numero3[0] - (float)numero4[0]) * 17 - 4;
-         printf("(%d(?)%d / %d - %d) * 17 - 4 = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], *resultado);
+         *resultado = ((float)numero1[0] * (float)numero2[0] / (float)numero3[0] - (float)numero4[0]) * (float)n1_ajuda[0] - (float)n2_ajuda[0];
+         printf("(%d(?)%d / %d - %d) * %d - %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], n1_ajuda[0],n2_ajuda[0],*resultado);
       }
     }
   }
   if (seleciona_operacao[0] == 4){
     if (*rodada < 7){
       if (operacao_secundaria[0] == 1){
-        *resultado = (float)numero1[0] / (float)numero2[0] + (float)numero3[0];
-         printf("%d(?)%d + %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+        *resultado = (float)n1_ajuda[0] + ((float)numero1[0] / (float)numero2[0] + (float)numero3[0]) * (float)n2_ajuda[0];
+         printf("%d + (%d(?)%d + %d) * %d = %.1f\n\n", n1_ajuda[0],numero1[0], numero2[0], numero3[0], n2_ajuda[0],*resultado);
       }
       else if (operacao_secundaria[0] == 2){
-         *resultado = (float)numero1[0] / (float)numero2[0] - (float)numero3[0];
-         printf("%d(?)%d - %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+         *resultado = (float)numero1[0] * (float)n1_ajuda[0] / (float)numero2[0] - (float)numero3[0];
+         printf("%d * %d(?)%d - %d = %.1f\n\n", numero1[0], n1_ajuda[0],numero2[0], numero3[0], *resultado);
       }
       else if (operacao_secundaria[0] == 3){
-         *resultado = (float)numero1[0] / (float)numero2[0] * (float)numero3[0];
-         printf("%d(?)%d * %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+         *resultado = (float)n1_ajuda[0]+(float)numero1[0] / (float)numero2[0] * (float)numero3[0];
+         printf("%d + %d(?)%d * %d = %.1f\n\n", n1_ajuda[0],numero1[0], numero2[0], numero3[0], *resultado);
       }
       else{
-         *resultado = ((float)numero1[0] / (float)numero2[0] / (float)numero3[0]) * 21;
-         printf("(%d(?)%d / %d) * 21 = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+         *resultado = ((float)numero1[0] / (float)numero2[0] / (float)numero3[0]) * (float)n1_ajuda[0];
+         printf("(%d(?)%d / %d) * %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], n1_ajuda[0],*resultado);
       }
     }
     else{
       if (operacao_secundaria[0] == 1){
-        *resultado = 30 * (float)numero1[0] / (float)numero2[0] + (float)numero3[0] + (float)numero4[0];
-         printf("30 * %d(?)%d + %d + %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0],*resultado);
+        *resultado = ((float)n1_ajuda[0] - (float)(n2_ajuda[0])) * (float)numero1[0] / (float)numero2[0] + (float)numero3[0] + (float)numero4[0];
+         printf("(%d - %d) * %d(?)%d + %d + %d = %.1f\n\n", n1_ajuda[0],n2_ajuda[0],numero1[0], numero2[0], numero3[0], numero4[0],*resultado);
       }
       else if (operacao_secundaria[0] == 2){
-         *resultado = ((float)numero1[0] / (float)numero2[0] - (float)numero3[0] + (float)numero4[0] * 10) * 11 - 1;
-         printf("(%d(?)%d - %d + %d * 10) * 11 - 1 = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], *resultado);
+         *resultado = ((float)numero1[0] / (float)numero2[0] - (float)numero3[0] + (float)numero4[0] * (float)n1_ajuda[0]) * (float)n2_ajuda[0];
+         printf("(%d(?)%d - %d + %d * %d) * %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], n1_ajuda[0],n2_ajuda[0],*resultado);
       }
       else if (operacao_secundaria[0] == 3){
          *resultado = (float)numero1[0] / (float)numero2[0] * (float)numero3[0] * (float)numero4[0];
          printf("%d(?)%d * %d * %d = %.1f\n\n", numero1[0], numero2[0], numero3[0],numero4[0], *resultado);
       }
       else{
-         *resultado = (float)numero1[0] * 60 / (float)numero2[0] / ((float)numero3[0] + (float)numero4[0]);
-         printf("%d * 60 (?)%d / (%d + %d) = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0],*resultado);
+         *resultado = (float)numero1[0] * (float)n1_ajuda[0] / (float)numero2[0] / ((float)n2_ajuda[0] - ((float)numero3[0] + (float)numero4[0]));
+         printf("%d * %d (?)%d / (%d-(%d + %d)) = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0],*resultado);
       }
     }
   }
