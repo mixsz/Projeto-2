@@ -605,6 +605,355 @@ void exibe_tutorial2(){
   puts("-Papel vence pedra");
   puts("\nObs: Caso o obeto escolhido seja o mesmo que o da casa, o jogo continua e ninguem pontuará na rodada.");
 }
+void exibe_tutorial3(){
+  puts("\nNeste jogo, seu objetivo é descobrir qual operador foi utilizado entre dois números:\nSoma (+)\nSubtração (-)\nMultiplicação (*)\nDivisão (/)\n");
+  puts("Dois números serão exibidos na tela, e o resultado de uma operação entre eles será mostrado!");
+  puts("Adivinhe corretamente o máximo de operações possível! Cada acerto equivale a 1 ponto!");
+}
+
+char verifica_resposta(){
+  char resposta_usuario[10];
+  while (1){
+     printf("Qual operação foi utilizada? ");
+     fgets(resposta_usuario,sizeof(resposta_usuario),stdin);
+     if (strlen(resposta_usuario) != 2 || resposta_usuario[0] != '+' && resposta_usuario[0] != '-' && resposta_usuario[0] != '*' && resposta_usuario[0] != '/'){
+       puts("Digite apenas a operação! Ex: +, -, *, /\n");
+     }
+    else{
+      return resposta_usuario[0];
+    }
+   }
+}
+
+void numero_conforme_rodada(int *rodada, int **numero1, int **numero2, int **numero3, int **numero4){
+  if (*rodada < 3){
+     *numero1 = gera_numeros(1,50);
+     *numero2 = gera_numeros(1,50);
+   }
+   else if(*rodada > 3 && *rodada > 7){
+     *numero1 = gera_numeros(1,75);
+     *numero2 = gera_numeros(1,50);
+     *numero3 = gera_numeros(1,60);
+   }
+   else{
+     *numero1 = gera_numeros(1,100);
+     *numero2 = gera_numeros(1,100);
+     *numero3 = gera_numeros(1,80);
+     *numero4 = gera_numeros(1,60);
+   }
+}
+
+void calculo (float *resultado,int *numero1, int *numero2, int *numero3, int *seleciona_operacao, int *numero4, int *rodada){
+  int *operacao_secundaria;
+  operacao_secundaria = gera_numeros(1,4);
+  if (seleciona_operacao[0] == 1){
+    if (*rodada < 7){
+      if (operacao_secundaria[0] == 1){
+        *resultado = numero1[0] + numero2[0] + numero3[0];
+         printf("%d(?)%d + %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+      }
+      else if (operacao_secundaria[0] == 2){
+         *resultado = numero1[0] + numero2[0] - numero3[0];
+         printf("%d(?)%d - %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+  
+      }
+      else if (operacao_secundaria[0] == 3){
+         *resultado = numero1[0] * numero2[0] + numero3[0];
+         printf("%d * %d(?)%d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+      }
+      else{
+         *resultado = (float)numero1[0] + (float)numero2[0] * 20 / (float)numero3[0];
+         printf("%d(?)%d * 20 / %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+      }
+    }
+    else{
+      if (operacao_secundaria[0] == 1){
+        *resultado = numero1[0] + numero2[0] + numero3[0] - numero4[0];
+         printf("%d(?)%d + %d - %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0],*resultado);
+      }
+      else if (operacao_secundaria[0] == 2){
+         *resultado = numero1[0] + numero2[0] - numero3[0] + numero4[0];
+         printf("%d(?)%d - %d + %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0],*resultado);
+
+      }
+      else if (operacao_secundaria[0] == 3){
+         *resultado = numero1[0] * numero2[0] + numero3[0] - numero4[0];
+         printf("%d * %d(?)%d - %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0],*resultado);
+      }
+      else{
+         *resultado = (12 * (float)numero1[0] + (float)numero2[0] / (float)numero3[0] + (float)numero4[0] * 10) * 100;
+         printf("(12 * %d(?)%d / %d + %d * 10) * 100 = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0],*resultado);
+      }
+    }
+  }
+  if (seleciona_operacao[0] == 2){
+    if (*rodada < 7){
+      if (operacao_secundaria[0] == 1){
+        *resultado = numero1[0] - numero2[0] + numero3[0];
+         printf("%d(?)%d + %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+      }
+      else if (operacao_secundaria[0] == 2){
+         *resultado = numero1[0] - numero2[0] - numero3[0];
+         printf("%d(?)%d - %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+      }
+      else if (operacao_secundaria[0] == 3){
+         *resultado = numero1[0] - numero2[0] * numero3[0];
+         printf("%d(?)%d * %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+      }
+      else{
+         *resultado = ((float)numero1[0] - (float)numero2[0] / (float)numero3[0]) * 51 - 33;
+         printf("(%d(?)%d / %d) * 51 - 33 = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+      }
+    }
+    else{
+      if (operacao_secundaria[0] == 1){
+        *resultado = numero1[0] - numero2[0] + numero3[0] * numero4[0];
+         printf("%d(?)%d + %d * %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0],*resultado);
+      }
+      else if (operacao_secundaria[0] == 2){
+         *resultado = numero1[0] - numero2[0] - numero3[0] + numero4[0];;
+         printf("%d(?)%d - %d + %d = %.1f\n\n", numero1[0], numero2[0], numero3[0],numero4[0],*resultado);
+      }
+      else if (operacao_secundaria[0] == 3){
+         *resultado = - numero1[0] - numero2[0] * numero3[0] + numero4[0];
+         printf("-%d(?)%d * %d + %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], *resultado);
+      }
+      else{
+         *resultado = (-(float)numero1[0] - (float)numero2[0]) * 10 / (float)numero3[0] * -(float)numero4[0];
+         printf("(-%d(?)%d) * 10 / %d * (-%d) = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], *resultado);
+      }
+    }
+  }
+  if (seleciona_operacao[0] == 3){
+    if (*rodada < 7){
+      if (operacao_secundaria[0] == 1){
+        *resultado = numero1[0] * numero2[0] + numero3[0];
+         printf("%d(?)%d + %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+      }
+      else if (operacao_secundaria[0] == 2){
+         *resultado = numero1[0] * numero2[0] - numero3[0];
+         printf("%d(?)%d - %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+      }
+      else if (operacao_secundaria[0] == 3){
+         *resultado = numero1[0] * numero2[0] * numero3[0];
+         printf("%d(?)%d * %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+      }
+      else{
+         *resultado = (float)numero1[0] * (float)numero2[0] / (float)numero3[0];
+         printf("%d(?)%d / %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+      }
+    }
+    else{
+      if (operacao_secundaria[0] == 1){
+        *resultado = numero1[0] * numero2[0] + numero3[0] - numero4[0];
+         printf("%d(?)%d + %d - %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], *resultado);
+      }
+      else if (operacao_secundaria[0] == 2){
+         *resultado = numero1[0] * numero2[0] - numero3[0] - numero4[0];
+         printf("%d(?)%d - %d - %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], *resultado);
+      }
+      else if (operacao_secundaria[0] == 3){
+         *resultado = numero1[0] * numero2[0] * numero3[0] * numero4[0];;
+         printf("%d(?)%d * %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], *resultado);
+      }
+      else{
+         *resultado = ((float)numero1[0] * (float)numero2[0] / (float)numero3[0] - (float)numero4[0]) * 17 - 4;
+         printf("(%d(?)%d / %d - %d) * 17 - 4 = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], *resultado);
+      }
+    }
+  }
+  if (seleciona_operacao[0] == 4){
+    if (*rodada < 7){
+      if (operacao_secundaria[0] == 1){
+        *resultado = (float)numero1[0] / (float)numero2[0] + (float)numero3[0];
+         printf("%d(?)%d + %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+      }
+      else if (operacao_secundaria[0] == 2){
+         *resultado = (float)numero1[0] / (float)numero2[0] - (float)numero3[0];
+         printf("%d(?)%d - %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+      }
+      else if (operacao_secundaria[0] == 3){
+         *resultado = (float)numero1[0] / (float)numero2[0] * (float)numero3[0];
+         printf("%d(?)%d * %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+      }
+      else{
+         *resultado = ((float)numero1[0] / (float)numero2[0] / (float)numero3[0]) * 21;
+         printf("(%d(?)%d / %d) * 21 = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
+      }
+    }
+    else{
+      if (operacao_secundaria[0] == 1){
+        *resultado = 30 * (float)numero1[0] / (float)numero2[0] + (float)numero3[0] + (float)numero4[0];
+         printf("30 * %d(?)%d + %d + %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0],*resultado);
+      }
+      else if (operacao_secundaria[0] == 2){
+         *resultado = ((float)numero1[0] / (float)numero2[0] - (float)numero3[0] + (float)numero4[0] * 10) * 11 - 1;
+         printf("(%d(?)%d - %d + %d * 10) * 11 - 1 = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], *resultado);
+      }
+      else if (operacao_secundaria[0] == 3){
+         *resultado = (float)numero1[0] / (float)numero2[0] * (float)numero3[0] * (float)numero4[0];
+         printf("%d(?)%d * %d * %d = %.1f\n\n", numero1[0], numero2[0], numero3[0],numero4[0], *resultado);
+      }
+      else{
+         *resultado = (float)numero1[0] * 60 / (float)numero2[0] / ((float)numero3[0] + (float)numero4[0]);
+         printf("%d * 60 (?)%d / (%d + %d) = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0],*resultado);
+      }
+    }
+  }
+}
+
+int operacao_misteriosa(int *fichas, int *pontuacao){
+  int catalogo = 1, i, rodada = 1, quantidade_numeros_rodada, resultado_conta, acerto, erro;
+  float resultado;
+  char selecionar[10], tutorial[10],resposta_usuario[10], continuar[5];
+  int *seleciona_operacao, *numero1, *numero2, *numero3, *numero4;
+   while(1){
+    if (catalogo == 1){
+      puts("\n1. Jogar");
+      puts("2. Como jogar?");
+      puts("3. Voltar\n");
+    }
+    printf("Digite a opção desejada: ");
+    fgets(selecionar,sizeof(selecionar),stdin);           
+    if (selecionar[0] != '1' && selecionar[0] != '2' && selecionar[0] != '3' || strlen(selecionar) > 2){
+      puts("Resposta inválida!\n");
+      catalogo = 0;
+    }
+    else if (selecionar[0] == '3'){
+      return 1;
+    }
+    else if(selecionar[0] == '2'){
+      exibe_tutorial3();
+       while(1){
+         printf("\nDeseja jogar? [S/N]: ");
+         fgets(tutorial,sizeof(tutorial),stdin);
+         if (strlen(tutorial) == 2 && tutorial[0] == 'n' || tutorial[0] == 'N'){
+           return 1;
+         }
+         else if (strlen(tutorial) == 2 && tutorial[0] == 's' || tutorial[0] == 'S'){
+           catalogo = 1;
+           break;
+         }
+         else{
+           puts("Resposta inválida!");
+         }
+       }
+     }
+     else if (selecionar[0] == '1'){
+       quantidade_numeros_rodada = 2;
+       rodada = 1;
+       acerto = 0;
+       erro = 0;
+       puts("\nComeçando o jogo...\nAdivinhe a operação matemática!\n");
+       while (rodada < 11){
+         printf("RODADA %d\n\n", rodada);
+         seleciona_operacao = gera_numeros(1,4);
+         if (seleciona_operacao[0] == 1){     
+           numero_conforme_rodada(&rodada,&numero1,&numero2,&numero3,&numero4);
+           if (rodada < 3){
+             resultado = numero1[0] + numero2[0];
+             printf("%d(?)%d = %.1f\n\n", numero1[0], numero2[0], resultado);
+           }
+           else{
+             calculo(&resultado, numero1, numero2, numero3, seleciona_operacao, numero4, &rodada);
+           }          
+           resposta_usuario[0] = verifica_resposta();
+           if (resposta_usuario[0] == '+'){
+             puts("Resposta correta!\n");
+             acerto++;
+           }
+           else{
+             puts("Você errou! A resposta correta era +\n");
+             erro++;
+           }
+         }   
+         if (seleciona_operacao[0] == 2){
+            numero_conforme_rodada(&rodada,&numero1,&numero2,&numero3,&numero4);
+           if (rodada < 3){
+              resultado = numero1[0] - numero2[0];
+              printf("%d(?)%d = %.1f\n\n", numero1[0], numero2[0], resultado);
+            }
+            else{
+              calculo(&resultado, numero1, numero2, numero3, seleciona_operacao, numero4, &rodada);
+            }       
+            resposta_usuario[0] = verifica_resposta();
+            if (resposta_usuario[0] == '-'){
+              puts("Resposta correta!\n");
+              acerto++;
+            }
+            else{
+              puts("Você errou! A resposta correta era -\n");
+              erro++;
+            }
+          }
+         if (seleciona_operacao[0] == 3){
+            numero_conforme_rodada(&rodada,&numero1,&numero2,&numero3,&numero4);
+           if (rodada < 3){
+             resultado = numero1[0] * numero2[0];
+             printf("%d(?)%d = %.1f\n\n", numero1[0], numero2[0], resultado);
+           }
+           else{
+             calculo(&resultado, numero1, numero2, numero3, seleciona_operacao, numero4, &rodada);
+           }             
+           resposta_usuario[0] = verifica_resposta();
+           if (resposta_usuario[0] == '*'){
+             puts("Resposta correta!\n");
+             acerto++;
+           }
+           else{
+             puts("Você errou! A resposta correta era *\n");
+             erro++;
+           }
+         }
+         if (seleciona_operacao[0] == 4){
+            numero_conforme_rodada(&rodada,&numero1,&numero2,&numero3,&numero4);
+           if (rodada < 3){
+              resultado = (float)numero1[0] / (float)numero2[0];
+              printf("%d(?)%d = %.1f\n\n", numero1[0], numero2[0], resultado);
+            }
+            else{
+              calculo(&resultado, numero1, numero2, numero3, seleciona_operacao, numero4, &rodada);
+            }           
+           resposta_usuario[0] = verifica_resposta();
+           if (resposta_usuario[0] == '/'){
+             puts("Resposta correta!\n");
+             acerto++;
+           }
+           else{
+             puts("Você errou! A resposta correta era /\n");
+             erro++;
+           }
+         }
+         rodada++;
+         printf("Acertos: %d\nErros: %d\n",acerto, erro);
+         strcpy(continuar, "0"); // reseta a variavel
+         if (rodada <= 10){
+           while (continuar[0] != '1'){
+            printf("\nDigite 1 para a próxima rodada começar: ");
+            fgets(continuar,sizeof(continuar),stdin);
+           }
+           puts("");
+         }
+       }
+        printf("\nNota: %d", acerto);
+       if (acerto > 5){
+         puts("\nPARABÉNS GÊNIO DA MATEMÁTICA! VOCÊ ALCANÇOU A MÉDIA!");
+         *fichas += 2;
+         *pontuacao += 1;
+         puts("Você recebeu 2 fichas como recompensa!");
+         return 0;
+       }
+       else{
+         puts("\nVOCÊ NÃO ALCANÇOU A MÉDIA. NÃO DESISTA!");
+         *fichas -= 1;
+          return 0;
+       }
+     }
+  }
+}
+
+
+
 // void binario(Cadastro *usuarios){
 //   FILE *file3;
 //   int numbers[15], i;

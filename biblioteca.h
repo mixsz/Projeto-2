@@ -28,6 +28,8 @@ int adivinhe_numero(int *fichas, int *pontuacao);
 void exibe_tutorial1();
 int pedra_papel_tesoura(int *fichas, int *pontuacao);
 void exibe_tutorial2();
-
-
+int operacao_misteriosa(int *fichas, int *pontuacao);
+void exibe_tutorial3();
+void calculo (float *resultado,int *numero1, int *numero2, int *numero3, int *seleciona_operacao, int *numero4, int *rodada);
+void numero_conforme_rodada(int *rodada, int **numero1, int **numero2, int **numero3, int **numero4);
 #endif

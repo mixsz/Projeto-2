@@ -130,7 +130,7 @@ int main() {
           while (menu == 1){
             puts("\n1. Adivinhe o número!");
             puts("2. Pedra, papel, tesoura");
-            puts("3. Slaaewf");
+            puts("3. Operaçao misteriosa");
             puts("4. Slweferg");
             puts("X. Guia de fichas");
             puts("X. Consultar fichas");
@@ -166,8 +166,9 @@ int main() {
           }
           if (opcao[0] == '3'){
             
-            puts("\nRAFAEL");
-            deseja_continuar(usuarios[id_usuario].username, &menu, &sair);
+            if(operacao_misteriosa(&usuarios[id_usuario].ficha,&usuarios[id_usuario].vitoria2) == 0){ // mudar vitoria2
+                deseja_continuar(usuarios[id_usuario].username, &menu, &sair);  
+            }
             
           }
           if (opcao[0] == '4'){
