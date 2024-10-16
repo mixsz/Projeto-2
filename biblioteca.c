@@ -612,7 +612,7 @@ void exibe_tutorial3(){
   puts("Obs: O jogo fica mais dificíl conforme as rodadas passam.");
 }
 
-char verifica_resposta(){
+char verifica_resposta(){ // verifica input do usuario no jogo 3 (operacao misteriosa)
   char resposta_usuario[10];
   while (1){
      printf("Qual operação foi utilizada? ");
@@ -627,7 +627,9 @@ char verifica_resposta(){
 }
 
 void numero_conforme_rodada(int *rodada, int **numero1, int **numero2, int **numero3, int **numero4){
-  if (*rodada < 3){ // gera numeros aleatorios conforme a rodada, no terceiro jogo (operacao misteriosa)
+  // gera numeros aleatorios conforme a rodada, no terceiro jogo (operacao misteriosa)
+  // utilizado ponteiro do ponteiro para poder alterar o valor da variavel diretamente dentro da funcao
+  if (*rodada < 3){ 
      *numero1 = gera_numeros(1,50);
      *numero2 = gera_numeros(1,50);
    }
