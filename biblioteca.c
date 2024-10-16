@@ -627,7 +627,7 @@ char verifica_resposta(){
 }
 
 void numero_conforme_rodada(int *rodada, int **numero1, int **numero2, int **numero3, int **numero4){
-  if (*rodada < 3){
+  if (*rodada < 3){ // gera numeros aleatorios conforme a rodada, no terceiro jogo (operacao misteriosa)
      *numero1 = gera_numeros(1,50);
      *numero2 = gera_numeros(1,50);
    }
@@ -644,9 +644,9 @@ void numero_conforme_rodada(int *rodada, int **numero1, int **numero2, int **num
    }
 }
 
-void calculo (float *resultado,int *numero1, int *numero2, int *numero3, int *seleciona_operacao, int *numero4, int *rodada){
+void calculo (float *resultado,int *numero1, int *numero2, int *numero3, int *seleciona_operacao, int *numero4, int *rodada){ // o calculo e gerado aleatorio e depende de duas variaveis: seleciona_operacao, operacao_secundaria
   int *operacao_secundaria;
-  int *n1_ajuda, *n2_ajuda; //numeros para o resultado nao ficar em decimal (se possivel) e dificultar a divisao
+  int *n1_ajuda, *n2_ajuda; // numeros que dificultam determinadas contas, principalmente divisoes
   operacao_secundaria = gera_numeros(1,4);
   n1_ajuda = gera_numeros(1,100);
   n2_ajuda = gera_numeros(1,100);
@@ -724,7 +724,7 @@ void calculo (float *resultado,int *numero1, int *numero2, int *numero3, int *se
       }
       else{
          *resultado = ((-(float)numero1[0] - (float)numero2[0]) * (float)n1_ajuda[0] / (float)numero3[0] * -(float)numero4[0]) * (float)n2_ajuda[0];
-         printf("((-%d(?)%d) * %d / %d * (-%d)) * %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], *resultado);
+         printf("((-%d(?)%d) * %d / %d * (-%d)) * %d = %.1f\n\n", numero1[0], numero2[0], n1_ajuda[0], numero3[0], numero4[0], n2_ajuda[0], *resultado);
       }
     }
   }
@@ -757,8 +757,8 @@ void calculo (float *resultado,int *numero1, int *numero2, int *numero3, int *se
          printf("%d(?)%d - %d - %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], *resultado);
       }
       else if (operacao_secundaria[0] == 3){
-         *resultado = numero1[0] * numero2[0] * numero3[0] * numero4[0];;
-         printf("%d(?)%d * %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], *resultado);
+         *resultado = ((float)numero1[0] * (float)numero2[0] *(float)numero3[0] - (float)numero4[0]) / (float)n1_ajuda[0] + (float)n2_ajuda[0];
+         printf("(%d(?)%d * %d - %d) / %d + %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0], n1_ajuda[0], n2_ajuda[0], *resultado);
       }
       else{
          *resultado = ((float)numero1[0] * (float)numero2[0] / (float)numero3[0] - (float)numero4[0]) * (float)n1_ajuda[0] - (float)n2_ajuda[0];
@@ -800,7 +800,7 @@ void calculo (float *resultado,int *numero1, int *numero2, int *numero3, int *se
       }
       else{
          *resultado = (float)numero1[0] * (float)n1_ajuda[0] / (float)numero2[0] / ((float)n2_ajuda[0] - ((float)numero3[0] + (float)numero4[0]));
-         printf("%d * %d (?)%d / (%d-(%d + %d)) = %.1f\n\n", numero1[0], numero2[0], numero3[0], numero4[0],*resultado);
+         printf("%d * %d(?)%d / (%d-(%d + %d)) = %.1f\n\n", numero1[0], n1_ajuda[0], numero2[0], n2_ajuda[0],numero3[0], numero4[0],*resultado);
       }
     }
   }
@@ -843,7 +843,7 @@ int operacao_misteriosa(int *fichas, int *pontuacao){
          }
        }
      }
-     else if (selecionar[0] == '1'){
+     else if (selecionar[0] == '1'){ // inicio do jogo
        quantidade_numeros_rodada = 2;
        rodada = 1;
        acerto = 0;
@@ -854,9 +854,9 @@ int operacao_misteriosa(int *fichas, int *pontuacao){
          seleciona_operacao = gera_numeros(1,4);
          if (seleciona_operacao[0] == 1){     
            numero_conforme_rodada(&rodada,&numero1,&numero2,&numero3,&numero4);
-           if (rodada < 3){
+           if (rodada <= 3){
              resultado = numero1[0] + numero2[0];
-             printf("%d(?)%d = %.1f\n\n", numero1[0], numero2[0], resultado);
+             printf("%d(?)%d = %.0f\n\n", numero1[0], numero2[0], resultado);
            }
            else{
              calculo(&resultado, numero1, numero2, numero3, seleciona_operacao, numero4, &rodada);
@@ -873,9 +873,9 @@ int operacao_misteriosa(int *fichas, int *pontuacao){
          }   
          if (seleciona_operacao[0] == 2){
             numero_conforme_rodada(&rodada,&numero1,&numero2,&numero3,&numero4);
-           if (rodada < 3){
+           if (rodada <= 3){
               resultado = numero1[0] - numero2[0];
-              printf("%d(?)%d = %.1f\n\n", numero1[0], numero2[0], resultado);
+              printf("%d(?)%d = %.0f\n\n", numero1[0], numero2[0], resultado);
             }
             else{
               calculo(&resultado, numero1, numero2, numero3, seleciona_operacao, numero4, &rodada);
@@ -892,9 +892,9 @@ int operacao_misteriosa(int *fichas, int *pontuacao){
           }
          if (seleciona_operacao[0] == 3){
             numero_conforme_rodada(&rodada,&numero1,&numero2,&numero3,&numero4);
-           if (rodada < 3){
+           if (rodada <= 3){
              resultado = numero1[0] * numero2[0];
-             printf("%d(?)%d = %.1f\n\n", numero1[0], numero2[0], resultado);
+             printf("%d(?)%d = %.0f\n\n", numero1[0], numero2[0], resultado);
            }
            else{
              calculo(&resultado, numero1, numero2, numero3, seleciona_operacao, numero4, &rodada);
@@ -911,7 +911,7 @@ int operacao_misteriosa(int *fichas, int *pontuacao){
          }
          if (seleciona_operacao[0] == 4){
             numero_conforme_rodada(&rodada,&numero1,&numero2,&numero3,&numero4);
-           if (rodada < 3){
+           if (rodada <= 3){
               resultado = (float)numero1[0] / (float)numero2[0];
               printf("%d(?)%d = %.1f\n\n", numero1[0], numero2[0], resultado);
             }
@@ -940,14 +940,21 @@ int operacao_misteriosa(int *fichas, int *pontuacao){
          }
        }
         printf("\nNota: %d", acerto);
-       if (acerto > 5){
-         puts("\nPARABÉNS GÊNIO DA MATEMÁTICA! VOCÊ ALCANÇOU A MÉDIA!");
+       if (acerto == 10){ // se acertar tudo ganha 3 fichas
+          puts("\nPARABÉNS GÊNIO DA MATEMÁTICA! VOCÊ TIROU A MAIOR NOTA!");
+          *fichas += 3;
+          *pontuacao += 1;
+          puts("Você recebeu 3 fichas como recompensa!");
+          return 0;
+        }
+       else if (acerto > 5 && acerto < 10){ // se acertar mais de 5 ganha 2 fichas
+         puts("\nPARABÉNS! VOCÊ ALCANÇOU A MÉDIA!");
          *fichas += 2;
          *pontuacao += 1;
          puts("Você recebeu 2 fichas como recompensa!");
          return 0;
        }
-       else{
+       else{ // perde uma ficha...
          puts("\nVOCÊ NÃO ALCANÇOU A MÉDIA. NÃO DESISTA!");
          *fichas -= 1;
           return 0;
