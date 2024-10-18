@@ -13,6 +13,7 @@ typedef struct cadastro {
   int vitoria1;
   int vitoria2;
   int vitoria3;
+  int vitoria4; // adicionar nas funcoes de binario
   int ficha;
 } Cadastro;
 
@@ -36,5 +37,6 @@ void numero_conforme_rodada(int *rodada, int **numero1, int **numero2, int **num
 void leitura_binaria(Cadastro *usuarios, int *counteudo_binario);
 void escritura_binaria(Cadastro *usuarios);
 void atualiza_binario(Cadastro *usuarios);
+int duelo_cartas(int *fichas, int *pontuacao);
 #endif
 

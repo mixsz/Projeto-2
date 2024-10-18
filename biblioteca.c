@@ -966,7 +966,6 @@ int operacao_misteriosa(int *fichas, int *pontuacao){
 }
 void leitura_binaria(Cadastro *usuarios, int *conteudo_binario){
  int numbers0[15], numbers1[15],  numbers2[15],  numbers3[15]; // array que armazena os numeros lidos do arquivo binario
-
  FILE *file3; // LE O BINARIO E ARMAZENA OS VALORES NO VETOR
  file3 = fopen("numbers.bin", "rb");
  if (file3 == NULL) {
@@ -994,10 +993,8 @@ void leitura_binaria(Cadastro *usuarios, int *conteudo_binario){
  fclose(file3);
 }
 
-void escritura_binaria(Cadastro *usuarios){
-  
-  int numbers0[15], numbers1[15],  numbers2[15],  numbers3[15], i;
-    
+void escritura_binaria(Cadastro *usuarios){  
+  int numbers0[15], numbers1[15],  numbers2[15],  numbers3[15], i;   
   FILE *escreve2 = fopen("numbers.bin", "wb");
     for (i = 0; i < 15; i++){
       numbers0[i] = 10;
@@ -1012,37 +1009,66 @@ void escritura_binaria(Cadastro *usuarios){
     fwrite(numbers0, sizeof(int), 15, escreve2);
     fwrite(numbers1, sizeof(int), 15, escreve2);
     fwrite(numbers2, sizeof(int), 15, escreve2);
-    fwrite(numbers3, sizeof(int), 15, escreve2);
-  
-  fclose(escreve2);
-    
+    fwrite(numbers3, sizeof(int), 15, escreve2);  
+  fclose(escreve2);    
 }
 
 void atualiza_binario(Cadastro *usuarios){
-  int numbers0[15], numbers1[15],  numbers2[15],  numbers3[15], i;
-  
-  FILE *file2;
-  
+  int numbers0[15], numbers1[15],  numbers2[15],  numbers3[15], i; 
+  FILE *file2; 
   for (i = 0; i < 15; i++){
     numbers0[i] = usuarios[i].ficha;
     numbers1[i] = usuarios[i].vitoria1;
     numbers2[i] = usuarios[i].vitoria2;
-    numbers3[i] = usuarios[i].vitoria3;
-  
-  
-  }
-  
+    numbers3[i] = usuarios[i].vitoria3; 
+  }  
   file2 = fopen("numbers.bin", "wb"); 
   if (file2 == NULL) {
-    perror("Erro ao abrir o arquivo");
-  
-  }
-  
+    perror("Erro ao abrir o arquivo");  
+  }  
   fwrite(numbers0, sizeof(int), 15, file2);
   fwrite(numbers1, sizeof(int), 15, file2);
   fwrite(numbers2, sizeof(int), 15, file2);
-  fwrite(numbers3, sizeof(int), 15, file2);
-  
-  
+  fwrite(numbers3, sizeof(int), 15, file2);  
   fclose(file2);
 }
+
+int duelo_cartas(int *fichas, int *pontuacao){
+  int catalogo = 1, i, rodada = 1;
+  float resultado;
+  char selecionar[10], tutorial[10];
+  while(1){
+    if (catalogo == 1){
+      puts("\n1. Jogar");
+      puts("2. Como jogar?");
+      puts("3. Voltar\n");
+    }
+    printf("Digite a opção desejada: ");
+    fgets(selecionar,sizeof(selecionar),stdin);           
+    if (selecionar[0] != '1' && selecionar[0] != '2' && selecionar[0] != '3' || strlen(selecionar) > 2){
+      puts("Resposta inválida!\n");
+      catalogo = 0;
+    }
+    else if (selecionar[0] == '3'){
+      return 1;
+    }
+    else if(selecionar[0] == '2'){
+      exibe_tutorial3();
+       while(1){
+         printf("\nDeseja jogar? [S/N]: ");
+         fgets(tutorial,sizeof(tutorial),stdin);
+         if (strlen(tutorial) == 2 && tutorial[0] == 'n' || tutorial[0] == 'N'){
+           return 1;
+         }
+         else if (strlen(tutorial) == 2 && tutorial[0] == 's' || tutorial[0] == 'S'){
+           catalogo = 1;
+           break;
+         }
+         else{
+           puts("Resposta inválida!");
+         }
+       }
+     }
+  }  
+}
+
