@@ -1045,8 +1045,4 @@ void atualiza_binario(Cadastro *usuarios){
   
   
   fclose(file2);
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> b361cdd (formando funcoes)
