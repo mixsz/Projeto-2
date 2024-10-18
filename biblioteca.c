@@ -965,6 +965,27 @@ int operacao_misteriosa(int *fichas, int *pontuacao){
   }
 }
 
+// void leitura_binaria(int *ficha, int *vitoria1, int *vitoria2, int *vitoria3, int *numbers1[], int *numbers2[],int *counteudo_binario){
+//   FILE *file3; // LE O BINARIO E ARMAZENA OS VALORES NO VETOR
+//    file3 = fopen("numbers.bin", "rb");
+//    if (file3 == NULL) {
+//        perror("Erro ao abrir a pasta");    
+//        return 1;
+//    }
+//     size_t result1 = fread(*numbers1, sizeof(int), 15, file3);
+//     size_t result2 = fread(*numbers2, sizeof(int), 15, file3);
+//     if (result1 != 15 || result2 != 15) {
+//       *conteudo_binario = 0; 
+//       puts("asasdasd");
+//     }
+//     for (int i = 0; i < 15; i++) {
+//       printf("NumberV1 %d: %d\n", i + 1, numbers1[i]);
+//       printf("NumberV2 %d: %d\n", i + 1, numbers2[i]);
+//       usuarios[i].vitoria1 = numbers1[i];
+//       usuarios[i].vitoria2 = numbers2[i];
+//    }
+//    fclose(file3);
+// }
 
 
 // void binario(Cadastro *usuarios){
@@ -1006,17 +1027,28 @@ int operacao_misteriosa(int *fichas, int *pontuacao){
 
 // ///////////////
 // FILE *file2;
-// int numbers[10];
-// for (i = 0; i < 10; i++){
-//   numbers[i] = usuarios[i].vitoria1;
+// int numbers1[15];
+// int numbers2[15;]
+// for (i = 0; i < 15; i++){
+//   numbers1[i] = usuarios[i].vitoria1;
+//   numbers2[i] = usuarios[i].vitoria2;
+  
 // }
+
 // file2 = fopen("numbers.bin", "wb"); 
 // if (file2 == NULL) {
-//     perror("Error opening file");
+//     for (i = 0; i < 15; i++){
+//       numbers1[i] = 0;
+//       numbers2[i] = 0;
+//     }
 //     return 1;
 // }
-// size_t result = fwrite(numbers, sizeof(int), 10, file2);
-// if (result != 10) {
+
+
+// size_t result = fwrite(numbers1, sizeof(int), 15, file2);
+// size_t result = fwrite(numbers2, sizeof(int), 15, file2);
+
+// if (result != 15) {
 //     perror("Error writing to file");
 //     return 1;
 // }
@@ -1030,12 +1062,15 @@ int operacao_misteriosa(int *fichas, int *pontuacao){
 //      return 1;
 //  }
 
-//  size_t result2 = fread(numbers, sizeof(int), 10, file);
-//  if (result2 != 10) {
+//  size_t result2 = fread(numbers1, sizeof(int), 15, file);
+//  size_t result2 = fread(numbers2, sizeof(int), 15, file);
+
+//  if (result2 != 15) {
 //      perror("Error reading file");
 //  } else {
-//      for (int i = 0; i < 10; i++) {
-//          printf("Number %d: %d\n", i + 1, numbers[i]);
+//      for (int i = 0; i < 15; i++) {
+//          printf("Number %d: %d\n", i + 1, numbers1[i]);
+//          printf("Number %d: %d\n", i + 1, numbers2[i]);
 //      }
 //  }
 
