@@ -964,115 +964,85 @@ int operacao_misteriosa(int *fichas, int *pontuacao){
      }
   }
 }
+void leitura_binaria(Cadastro *usuarios, int *conteudo_binario){
+ int numbers0[15], numbers1[15],  numbers2[15],  numbers3[15]; // array que armazena os numeros lidos do arquivo binario
 
-// void leitura_binaria(int *ficha, int *vitoria1, int *vitoria2, int *vitoria3, int *numbers1[], int *numbers2[],int *counteudo_binario){
-//   FILE *file3; // LE O BINARIO E ARMAZENA OS VALORES NO VETOR
-//    file3 = fopen("numbers.bin", "rb");
-//    if (file3 == NULL) {
-//        perror("Erro ao abrir a pasta");    
-//        return 1;
-//    }
-//     size_t result1 = fread(*numbers1, sizeof(int), 15, file3);
-//     size_t result2 = fread(*numbers2, sizeof(int), 15, file3);
-//     if (result1 != 15 || result2 != 15) {
-//       *conteudo_binario = 0; 
-//       puts("asasdasd");
-//     }
-//     for (int i = 0; i < 15; i++) {
-//       printf("NumberV1 %d: %d\n", i + 1, numbers1[i]);
-//       printf("NumberV2 %d: %d\n", i + 1, numbers2[i]);
-//       usuarios[i].vitoria1 = numbers1[i];
-//       usuarios[i].vitoria2 = numbers2[i];
-//    }
-//    fclose(file3);
-// }
-
-
-// void binario(Cadastro *usuarios){
-//   FILE *file3;
-//   int numbers[15], i;
-//   for (i = 0; i < 15; i++){
-//     numbers[i] = usuarios[i].vitoria1;
-//   }
-//   file3 = fopen("numbers.bin", "wb"); 
-//   if (file3 == NULL) {
-//       puts("Erro ao abrir o arquivo 'numbers.bin'!\n");
-//   }
-//   size_t result = fwrite(numbers, sizeof(int), 15, file3);
-//   if (result != 15) {
-//     puts("Erro ao abrir o arquivo 'numbers.bin'!\n");
-//   }
-//   fclose(file3);
+ FILE *file3; // LE O BINARIO E ARMAZENA OS VALORES NO VETOR
+ file3 = fopen("numbers.bin", "rb");
+ if (file3 == NULL) {
+     perror("Erro ao abrir a pasta");    
+ }
+  size_t result0 = fread(numbers0, sizeof(int), 15, file3);
+  size_t result1 = fread(numbers1, sizeof(int), 15, file3);
+  size_t result2 = fread(numbers2, sizeof(int), 15, file3);
+  size_t result3 = fread(numbers3, sizeof(int), 15, file3);
   
-//    FILE *file4;
+  if (result0 != 15 || result1 != 15 || result2 != 15 || result3 != 15) {
+    *conteudo_binario = 0; 
+  }
+  for (int i = 0; i < 15; i++) {
+    // printf("Ficha %d: %d\n", i + 1, numbers0[i]);
+    // printf("NumberV1 %d: %d\n", i + 1, numbers1[i]);
+    // printf("NumberV2 %d: %d\n", i + 1, numbers2[i]);
+    // printf("NumberV3 %d: %d\n", i + 1, numbers3[i]);
+    // puts("");
+    usuarios[i].ficha = numbers0[i];
+    usuarios[i].vitoria1 = numbers1[i];
+    usuarios[i].vitoria2 = numbers2[i];
+    usuarios[i].vitoria3 = numbers3[i];
+ }
+ fclose(file3);
+}
+
+void escritura_binaria(Cadastro *usuarios){
   
-//    file4 = fopen("numbers.bin", "rb");
-//    if (file4 == NULL) {
-//      puts("Erro ao abrir o arquivo 'numbers.bin'!\n");
-//    }
+  int numbers0[15], numbers1[15],  numbers2[15],  numbers3[15], i;
+    
+  FILE *escreve2 = fopen("numbers.bin", "wb");
+    for (i = 0; i < 15; i++){
+      numbers0[i] = 10;
+      numbers1[i] = 0;
+      numbers2[i] = 0;
+      numbers3[i] = 0;
+      usuarios[i].ficha = 10;
+      usuarios[i].vitoria1 = 0;
+      usuarios[i].vitoria2 = 0;
+      usuarios[i].vitoria3 = 0;
+    }
+    fwrite(numbers0, sizeof(int), 15, escreve2);
+    fwrite(numbers1, sizeof(int), 15, escreve2);
+    fwrite(numbers2, sizeof(int), 15, escreve2);
+    fwrite(numbers3, sizeof(int), 15, escreve2);
   
-//    size_t result2 = fread(numbers, sizeof(int), 15, file4);
-//    if (result2 != 15) {
-//      puts("Erro ao abrir o arquivo 'numbers.bin'!\n");
-//    } else {
-//        for (int i = 0; i < 15; i++) {
-//            printf("Number %d: %d\n", i + 1, numbers[i]);
-//        }
-//    }
+  fclose(escreve2);
+    
+}
+
+void atualiza_binario(Cadastro *usuarios){
+  int numbers0[15], numbers1[15],  numbers2[15],  numbers3[15], i;
   
-//    fclose(file4);
-// }
-
-// main:
-
-// ///////////////
-// FILE *file2;
-// int numbers1[15];
-// int numbers2[15;]
-// for (i = 0; i < 15; i++){
-//   numbers1[i] = usuarios[i].vitoria1;
-//   numbers2[i] = usuarios[i].vitoria2;
+  FILE *file2;
   
-// }
-
-// file2 = fopen("numbers.bin", "wb"); 
-// if (file2 == NULL) {
-//     for (i = 0; i < 15; i++){
-//       numbers1[i] = 0;
-//       numbers2[i] = 0;
-//     }
-//     return 1;
-// }
-
-
-// size_t result = fwrite(numbers1, sizeof(int), 15, file2);
-// size_t result = fwrite(numbers2, sizeof(int), 15, file2);
-
-// if (result != 15) {
-//     perror("Error writing to file");
-//     return 1;
-// }
-// fclose(file2);
-
-//  FILE *file;
-
-//  file = fopen("numbers.bin", "rb");
-//  if (file == NULL) {
-//      perror("Error opening file");
-//      return 1;
-//  }
-
-//  size_t result2 = fread(numbers1, sizeof(int), 15, file);
-//  size_t result2 = fread(numbers2, sizeof(int), 15, file);
-
-//  if (result2 != 15) {
-//      perror("Error reading file");
-//  } else {
-//      for (int i = 0; i < 15; i++) {
-//          printf("Number %d: %d\n", i + 1, numbers1[i]);
-//          printf("Number %d: %d\n", i + 1, numbers2[i]);
-//      }
-//  }
-
-//  fclose(file);
-// //////////////
+  for (i = 0; i < 15; i++){
+    numbers0[i] = usuarios[i].ficha;
+    numbers1[i] = usuarios[i].vitoria1;
+    numbers2[i] = usuarios[i].vitoria2;
+    numbers3[i] = usuarios[i].vitoria3;
+  
+  
+  }
+  
+  file2 = fopen("numbers.bin", "wb"); 
+  if (file2 == NULL) {
+    perror("Erro ao abrir o arquivo");
+  
+  }
+  
+  fwrite(numbers0, sizeof(int), 15, file2);
+  fwrite(numbers1, sizeof(int), 15, file2);
+  fwrite(numbers2, sizeof(int), 15, file2);
+  fwrite(numbers3, sizeof(int), 15, file2);
+  
+  
+  fclose(file2);
+}
