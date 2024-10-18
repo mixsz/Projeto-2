@@ -89,7 +89,7 @@ int confirma_cadastro(int NV, Cadastro *usuarios){
   while (1){
     printf("Deseja confirmar o cadastro? [S/N]: ");
     fgets(confirmar, sizeof(confirmar), stdin);
-    
+
     if (strlen(confirmar) > 2 ||confirmar[0] != 'S' && confirmar[0] != 's' && confirmar[0] != 'N' && confirmar[0] != 'n'){
       puts("Resposta inválida!\n");
     }
@@ -181,7 +181,7 @@ int* gera_numeros(int quantidade, int numero_maximo){
       printf("Erro ao alocar memória.\n");
       return NULL;
   }
-  
+
   for (i = 0; i < quantidade; i++){
     random[i] = rand() % numero_maximo + 1; // inclui o numero maximo
   }
@@ -196,7 +196,7 @@ void exibe_tutorial1(){ // apenas visual
   puts("-O impossível gera um número aleatório entre 1 e 1000.");
   puts("\nVocê possui 4 tentativas para acertar o número gerado no modo Normal e 5 no Difícil.");
   puts("No modo Impossível, você possui 8 tentativas.");
-  
+
 }
 int verifica_input(char palavra[]) { // verifica se o input e um numero
   for (int i = 0; i < strlen(palavra); i++) {
@@ -221,7 +221,7 @@ int adivinhe_numero(int *fichas, int *pontuacao){
     }
     printf("\nSelecione a dificuldade: ");
     fgets(selecionar,sizeof(selecionar),stdin);
-    
+
     if (strlen(selecionar) == 2 && selecionar[0] == '1'){ // modo normal
       vidas = 4;
       puts("\nVocê selecionou a dificuldade normal.");
@@ -661,7 +661,7 @@ void calculo (float *resultado,int *numero1, int *numero2, int *numero3, int *se
       else if (operacao_secundaria[0] == 2){
          *resultado = numero1[0] + numero2[0] - numero3[0];
          printf("%d(?)%d - %d = %.1f\n\n", numero1[0], numero2[0], numero3[0], *resultado);
-  
+
       }
       else if (operacao_secundaria[0] == 3){
          *resultado = numero1[0] * numero2[0] + numero3[0];
@@ -964,115 +964,85 @@ int operacao_misteriosa(int *fichas, int *pontuacao){
      }
   }
 }
+void leitura_binaria(Cadastro *usuarios, int *conteudo_binario){
+ int numbers0[15], numbers1[15],  numbers2[15],  numbers3[15]; // array que armazena os numeros lidos do arquivo binario
 
-// void leitura_binaria(int *ficha, int *vitoria1, int *vitoria2, int *vitoria3, int *numbers1[], int *numbers2[],int *counteudo_binario){
-//   FILE *file3; // LE O BINARIO E ARMAZENA OS VALORES NO VETOR
-//    file3 = fopen("numbers.bin", "rb");
-//    if (file3 == NULL) {
-//        perror("Erro ao abrir a pasta");    
-//        return 1;
-//    }
-//     size_t result1 = fread(*numbers1, sizeof(int), 15, file3);
-//     size_t result2 = fread(*numbers2, sizeof(int), 15, file3);
-//     if (result1 != 15 || result2 != 15) {
-//       *conteudo_binario = 0; 
-//       puts("asasdasd");
-//     }
-//     for (int i = 0; i < 15; i++) {
-//       printf("NumberV1 %d: %d\n", i + 1, numbers1[i]);
-//       printf("NumberV2 %d: %d\n", i + 1, numbers2[i]);
-//       usuarios[i].vitoria1 = numbers1[i];
-//       usuarios[i].vitoria2 = numbers2[i];
-//    }
-//    fclose(file3);
-// }
+ FILE *file3; // LE O BINARIO E ARMAZENA OS VALORES NO VETOR
+ file3 = fopen("numbers.bin", "rb");
+ if (file3 == NULL) {
+     perror("Erro ao abrir a pasta");    
+ }
+  size_t result0 = fread(numbers0, sizeof(int), 15, file3);
+  size_t result1 = fread(numbers1, sizeof(int), 15, file3);
+  size_t result2 = fread(numbers2, sizeof(int), 15, file3);
+  size_t result3 = fread(numbers3, sizeof(int), 15, file3);
 
+  if (result0 != 15 || result1 != 15 || result2 != 15 || result3 != 15) {
+    *conteudo_binario = 0; 
+  }
+  for (int i = 0; i < 15; i++) {
+    // printf("Ficha %d: %d\n", i + 1, numbers0[i]);
+    // printf("NumberV1 %d: %d\n", i + 1, numbers1[i]);
+    // printf("NumberV2 %d: %d\n", i + 1, numbers2[i]);
+    // printf("NumberV3 %d: %d\n", i + 1, numbers3[i]);
+    // puts("");
+    usuarios[i].ficha = numbers0[i];
+    usuarios[i].vitoria1 = numbers1[i];
+    usuarios[i].vitoria2 = numbers2[i];
+    usuarios[i].vitoria3 = numbers3[i];
+ }
+ fclose(file3);
+}
 
-// void binario(Cadastro *usuarios){
-//   FILE *file3;
-//   int numbers[15], i;
-//   for (i = 0; i < 15; i++){
-//     numbers[i] = usuarios[i].vitoria1;
-//   }
-//   file3 = fopen("numbers.bin", "wb"); 
-//   if (file3 == NULL) {
-//       puts("Erro ao abrir o arquivo 'numbers.bin'!\n");
-//   }
-//   size_t result = fwrite(numbers, sizeof(int), 15, file3);
-//   if (result != 15) {
-//     puts("Erro ao abrir o arquivo 'numbers.bin'!\n");
-//   }
-//   fclose(file3);
-  
-//    FILE *file4;
-  
-//    file4 = fopen("numbers.bin", "rb");
-//    if (file4 == NULL) {
-//      puts("Erro ao abrir o arquivo 'numbers.bin'!\n");
-//    }
-  
-//    size_t result2 = fread(numbers, sizeof(int), 15, file4);
-//    if (result2 != 15) {
-//      puts("Erro ao abrir o arquivo 'numbers.bin'!\n");
-//    } else {
-//        for (int i = 0; i < 15; i++) {
-//            printf("Number %d: %d\n", i + 1, numbers[i]);
-//        }
-//    }
-  
-//    fclose(file4);
-// }
+void escritura_binaria(Cadastro *usuarios){
 
-// main:
+  int numbers0[15], numbers1[15],  numbers2[15],  numbers3[15], i;
 
-// ///////////////
-// FILE *file2;
-// int numbers1[15];
-// int numbers2[15;]
-// for (i = 0; i < 15; i++){
-//   numbers1[i] = usuarios[i].vitoria1;
-//   numbers2[i] = usuarios[i].vitoria2;
-  
-// }
+  FILE *escreve2 = fopen("numbers.bin", "wb");
+    for (i = 0; i < 15; i++){
+      numbers0[i] = 10;
+      numbers1[i] = 0;
+      numbers2[i] = 0;
+      numbers3[i] = 0;
+      usuarios[i].ficha = 10;
+      usuarios[i].vitoria1 = 0;
+      usuarios[i].vitoria2 = 0;
+      usuarios[i].vitoria3 = 0;
+    }
+    fwrite(numbers0, sizeof(int), 15, escreve2);
+    fwrite(numbers1, sizeof(int), 15, escreve2);
+    fwrite(numbers2, sizeof(int), 15, escreve2);
+    fwrite(numbers3, sizeof(int), 15, escreve2);
 
-// file2 = fopen("numbers.bin", "wb"); 
-// if (file2 == NULL) {
-//     for (i = 0; i < 15; i++){
-//       numbers1[i] = 0;
-//       numbers2[i] = 0;
-//     }
-//     return 1;
-// }
+  fclose(escreve2);
+
+}
+
+void atualiza_binario(Cadastro *usuarios){
+  int numbers0[15], numbers1[15],  numbers2[15],  numbers3[15], i;
+
+  FILE *file2;
+
+  for (i = 0; i < 15; i++){
+    numbers0[i] = usuarios[i].ficha;
+    numbers1[i] = usuarios[i].vitoria1;
+    numbers2[i] = usuarios[i].vitoria2;
+    numbers3[i] = usuarios[i].vitoria3;
 
 
-// size_t result = fwrite(numbers1, sizeof(int), 15, file2);
-// size_t result = fwrite(numbers2, sizeof(int), 15, file2);
+  }
 
-// if (result != 15) {
-//     perror("Error writing to file");
-//     return 1;
-// }
-// fclose(file2);
+  file2 = fopen("numbers.bin", "wb"); 
+  if (file2 == NULL) {
+    perror("Erro ao abrir o arquivo");
 
-//  FILE *file;
+  }
 
-//  file = fopen("numbers.bin", "rb");
-//  if (file == NULL) {
-//      perror("Error opening file");
-//      return 1;
-//  }
+  fwrite(numbers0, sizeof(int), 15, file2);
+  fwrite(numbers1, sizeof(int), 15, file2);
+  fwrite(numbers2, sizeof(int), 15, file2);
+  fwrite(numbers3, sizeof(int), 15, file2);
 
-//  size_t result2 = fread(numbers1, sizeof(int), 15, file);
-//  size_t result2 = fread(numbers2, sizeof(int), 15, file);
 
-//  if (result2 != 15) {
-//      perror("Error reading file");
-//  } else {
-//      for (int i = 0; i < 15; i++) {
-//          printf("Number %d: %d\n", i + 1, numbers1[i]);
-//          printf("Number %d: %d\n", i + 1, numbers2[i]);
-//      }
-//  }
-
-//  fclose(file);
-// //////////////
+  fclose(file2);
+}
