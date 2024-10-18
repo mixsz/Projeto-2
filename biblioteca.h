@@ -36,4 +36,8 @@ void numero_conforme_rodada(int *rodada, int **numero1, int **numero2, int **num
 void leitura_binaria(Cadastro *usuarios, int *counteudo_binario);
 void escritura_binaria(Cadastro *usuarios);
 void atualiza_binario(Cadastro *usuarios);
+<<<<<<< HEAD
 #endif
+=======
+#endif
+>>>>>>> b361cdd (formando funcoes)
