@@ -76,12 +76,12 @@ int main() {
     while (sair != 1){
       printf("contador %d\n",contador_cadastros);
       printf("ponteiro %d\n",*NV);
-  
-  
+
+
       printf("1 - Criar conta \n");
       printf("2 - Acessar conta\n");
       printf("3 - Sair\n");
-  
+
       if (bemvindo == 0){
         printf("\nBem-vindo! Digite a opção desejada: ");
       }
@@ -89,14 +89,14 @@ int main() {
         printf("\nDigite a opção desejada: ");
       }
       fgets(resposta, sizeof(resposta), stdin);
-  
+
       if (resposta[0] != '1' && resposta[0] != '2' && resposta[0] != '3' || strlen(resposta) > 2){
         puts("Resposta inválida!\n");
         bemvindo = 1;
       }
       if (resposta[0] == '1'){ // Criar conta
         bemvindo = 1;
-  
+
         if (*NV >= 15){
           puts("Número máximo de contas atingido!\n");
         }
@@ -105,7 +105,7 @@ int main() {
               printf("\nDigite seu username (máximo 16 carácteres): ");
               fgets(usuarios[*NV].username, sizeof(usuarios[*NV].username), stdin);
               usuarios[*NV].username[strcspn(usuarios[*NV].username, "\n")] = '\0';
-  
+
               if (verifica_username(usuarios[*NV].username, *NV, usuarios) == 0) { // se for = 0 -> username valido
                 puts("Username cadastrado!\n");
                 break;
@@ -126,7 +126,7 @@ int main() {
           }
         }
       }
-  
+
       if (resposta[0] == '2'){
         id_usuario = -1; // o id sera iniciado como -1 pois n existira o indice -1 no vetor
         permissao_acesso = login(&bemvindo, &id_usuario, *NV, usuarios); // se for 1 significa que o user logou!
@@ -163,29 +163,28 @@ int main() {
             }
           }
           if (opcao[0] == '2'){
-            
+
             if(pedra_papel_tesoura(&usuarios[id_usuario].ficha,&usuarios[id_usuario].vitoria2) == 0){
                 deseja_continuar(usuarios[id_usuario].username, &menu, &sair);  
             }
-           
+
           }
           if (opcao[0] == '3'){
-            
-            if(operacao_misteriosa(&usuarios[id_usuario].ficha,&usuarios[id_usuario].vitoria2) == 0){ // mudar vitoria2
+
+            if(operacao_misteriosa(&usuarios[id_usuario].ficha,&usuarios[id_usuario].vitoria3) == 0){
                 deseja_continuar(usuarios[id_usuario].username, &menu, &sair);  
             }
-            
+
           }
           if (opcao[0] == '4'){
-              
-            puts("\nTESTA");
-            deseja_continuar(usuarios[id_usuario].username, &menu, &sair);
-              
+            if(duelo_cartas(&usuarios[id_usuario].ficha,&usuarios[id_usuario].vitoria4) == 0){ // mudar vitoria2
+                deseja_continuar(usuarios[id_usuario].username, &menu, &sair);  
+            } 
           }
         } // fim do loop menu
       } // fim do permissao = 1
     } // fim resposta = 2    
-  
+
     if (resposta[0] == '3'){ // sai do programa
       puts("\nTenha um ótimo dia!\n");
       sair = 1;
