@@ -12,6 +12,7 @@ typedef struct cadastro {
   char senha[25];
   int vitoria1;
   int vitoria2;
+  int vitoria3;
   int ficha;
 } Cadastro;
 
@@ -32,4 +33,7 @@ int operacao_misteriosa(int *fichas, int *pontuacao);
 void exibe_tutorial3();
 void calculo (float *resultado,int *numero1, int *numero2, int *numero3, int *seleciona_operacao, int *numero4, int *rodada);
 void numero_conforme_rodada(int *rodada, int **numero1, int **numero2, int **numero3, int **numero4);
+void leitura_binaria(Cadastro *usuarios, int *counteudo_binario);
+void escritura_binaria(Cadastro *usuarios);
+void atualiza_binario(Cadastro *usuarios);
 #endif
