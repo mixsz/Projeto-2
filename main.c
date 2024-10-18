@@ -136,7 +136,7 @@ int main() {
             puts("\n1. Adivinhe o número!");
             puts("2. Pedra, papel, tesoura");
             puts("3. Operaçao misteriosa");
-            puts("4. Slweferg");
+            puts("4. Duelo de cartas");
             puts("X. Guia de fichas");
             puts("X. Consultar fichas");
             puts("X. Sair");
