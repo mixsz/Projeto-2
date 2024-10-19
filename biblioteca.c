@@ -1276,8 +1276,6 @@ int verifica_input2(){ // so pra n sujar a funcao principal do jogo
     }
   }
 }
-
-
 char* verbo_ataque() {
      char* verbos_ataque[] = {
         "atacou com",

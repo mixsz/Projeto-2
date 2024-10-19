@@ -17,7 +17,7 @@ typedef struct cadastro {
   int ficha;
 } Cadastro;
 
-typedef struct {
+typedef struct { // utilizado no jogo 4
     char nome[20];
     char elemento[10];
     int nivel;
