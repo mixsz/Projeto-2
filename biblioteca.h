@@ -44,9 +44,9 @@ void leitura_binaria(Cadastro *usuarios, int *counteudo_binario);
 void escritura_binaria(Cadastro *usuarios);
 void atualiza_binario(Cadastro *usuarios);
 int duelo_cartas(int *fichas, int *pontuacao);
-Carta criar_carta(int nivel);
+Carta criar_carta(int nivel); // essa
 int verifica_input2();
-char *verbo_ataque(); //essas
-char *verbo_defesa(); //essas
+char *verbo_ataque();
+char *verbo_defesa(); 
 #endif
 
