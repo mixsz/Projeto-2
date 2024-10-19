@@ -562,20 +562,12 @@ int pedra_papel_tesoura(int *fichas, int *pontuacao){
               pt_casa += 1;
             }
             if (pt_casa != 2 && pt_user != 2){
-              while (1){
-                printf("PREPARADO PARA A PRÓXIMA RODADA? ");
-                fgets(qualquer_coisa,sizeof(qualquer_coisa),stdin);
-                if (qualquer_coisa[0] == 's' || qualquer_coisa[0] == 'S'){
-                  puts("PRÓXIMA RODADA COMEÇANDO...\n");
-                  break;
-                }
-                else if (qualquer_coisa[0] == 'n' || qualquer_coisa[0] == 'N'){
-                  puts("ENTÃO PREPARE-SE! PRÓXIMA RODADA COMEÇANDO...\n");
-                  break;
-                } 
-                else{
-                  puts("ISSO NÃO ESTÁ NO MEU VOCABULÁRIO!\n");                     
-                }// continuar a logica, falta implementar se o usuario perdeu ou ganhou!
+              while (1) {
+                  puts("Pressione ENTER para continuar...");
+                  fgets(qualquer_coisa, sizeof(qualquer_coisa), stdin);
+                  if (qualquer_coisa[0] == '\n') {
+                      break; 
+                  }
               }
             }
             else{
@@ -934,11 +926,13 @@ int operacao_misteriosa(int *fichas, int *pontuacao){
          printf("Acertos: %d\nErros: %d\n",acerto, erro);
          strcpy(continuar, "0"); // reseta a variavel
          if (rodada <= 10){
-           while (continuar[0] != '1'){
-            printf("\nDigite 1 para a próxima rodada começar: ");
-            fgets(continuar,sizeof(continuar),stdin);
+           while (1) {
+               puts("\nPressione ENTER para continuar...");
+               fgets(continuar, sizeof(continuar), stdin);
+               if (continuar[0] == '\n') {
+                   break;
+               }
            }
-           puts("");
          }
        }
         printf("\nNota: %d", acerto);
@@ -1032,15 +1026,23 @@ void atualiza_binario(Cadastro *usuarios){
   fwrite(numbers3, sizeof(int), 15, file2);  
   fclose(file2);
 }
+// typedef struct {
+//     char nome[20];
+//     char elemento[10];
+//     int nivel;
+// } Carta;
 
 int duelo_cartas(int *fichas, int *pontuacao){
-  int catalogo = 1, i, rodada = 1;
+
+  int catalogo = 1, i, rodada = 1, comeco = 1, opcao_carta_user, opcao_casa;
   float resultado;
-  char selecionar[10], tutorial[10];
+  char selecionar[10], tutorial[10],continuar[10], verbo_atk[25], verbo_def[25];
+  int *numeros_user, *numeros_casa;
+  Carta cartas_user[5], cartas_casa[5], nova_carta;
   while(1){
     if (catalogo == 1){
       puts("\n1. Jogar");
-      puts("2. Como jogar?");
+      puts("2. Como jogar? (Recomendado)");
       puts("3. Voltar\n");
     }
     printf("Digite a opção desejada: ");
@@ -1053,7 +1055,7 @@ int duelo_cartas(int *fichas, int *pontuacao){
       return 1;
     }
     else if(selecionar[0] == '2'){
-      exibe_tutorial3();
+       puts("FAZER TUTORIAL");
        while(1){
          printf("\nDeseja jogar? [S/N]: ");
          fgets(tutorial,sizeof(tutorial),stdin);
@@ -1061,14 +1063,250 @@ int duelo_cartas(int *fichas, int *pontuacao){
            return 1;
          }
          else if (strlen(tutorial) == 2 && tutorial[0] == 's' || tutorial[0] == 'S'){
-           catalogo = 1;
-           break;
+         catalogo = 1;
+         break;
          }
-         else{
+        else{
            puts("Resposta inválida!");
-         }
-       }
-     }
+        }
+      }
+    }
+    else if (selecionar[0] == '1'){
+      numeros_user = gera_numeros(5,8);
+      numeros_casa = gera_numeros(5,8);
+      for (i = 0; i < 5; i++){  // monta o deck user
+        int repetida = 0;
+        nova_carta = criar_carta(numeros_user[i]); 
+        for (int j = 0; j < i; j++){
+            if (strcmp(cartas_user[j].nome, nova_carta.nome) == 0){ // verifica se a carta ja esta no deck
+              repetida = 1;
+              break;
+            }
+        }
+        if (repetida == 0){
+          cartas_user[i] = nova_carta; // adiciona a carta no deck
+        }
+        else{
+          i--; // se ja estiver no deck, o indice continua o mesmo!!
+        }
+      }
+      for (i = 0; i < 5; i++){ // mesmo procedimento mas para o deck da casa
+        int repetida = 0;
+        nova_carta = criar_carta(numeros_casa[i]); 
+        for (int j = 0; j < i; j++){
+            if (strcmp(cartas_casa[j].nome, nova_carta.nome) == 0){
+              repetida = 1;
+              break;
+            }
+        }
+        if (repetida == 0){
+          cartas_casa[i] = nova_carta;
+        }
+        else{
+          i--;
+        }
+      }
+      srand(time(NULL)); // o programa gera a escolha de carta aleatoria diretamente nessa funcao
+      while(1){
+        strcpy(continuar,"pause"); // utilizada para pausar o output
+        if (comeco == 1){
+          puts("\nRodada inicial");
+          puts("As cartas foram distribuidas... Iniciem a PARTIDA!\n");
+          comeco = 0;
+        }
+        else{
+          printf("Rodada %d\n\n", rodada);
+        }
+        puts("Seu deck:");
+        for (i = 0; i < 5; i++){
+          printf("%d. %-15s %s (Nvl %d)\n",i+1,cartas_user[i].nome, cartas_user[i].elemento, cartas_user[i].nivel);
+        }       
+        if (rodada > 1){
+          printf("\nNew! '%s' %s (Nvl %d)\n", nova_carta.nome, nova_carta.elemento, nova_carta.nivel);
+        }
+        opcao_carta_user = verifica_input2();
+        opcao_casa =  rand() % 5 + 1;
+        if (rodada % 2 == 1){
+          printf("\nVocê %s a carta '%s' (%s Nvl %d)", verbo_ataque(),cartas_user[opcao_carta_user-1].nome,cartas_user[opcao_carta_user-1].elemento,cartas_user[opcao_carta_user-1].nivel);
+          printf("\nA casa %s a carta '%s' (%s Nvl %d)\n",verbo_defesa(),cartas_casa[opcao_casa-1].nome,cartas_casa[opcao_casa-1].elemento,cartas_casa[opcao_casa-1].nivel);         
+        }
+        //                          intercala os VERBOS e ATAQUE/DEFESA!
+        else{
+          printf("\nA casa %s a carta '%s' (%s Nvl %d)",verbo_ataque(),cartas_casa[opcao_casa-1].nome,cartas_casa[opcao_casa-1].elemento,cartas_casa[opcao_casa-1].nivel);
+           printf("\nVocê %s a carta '%s' (%s Nvl %d)\n", verbo_defesa(),cartas_user[opcao_carta_user-1].nome,cartas_user[opcao_carta_user-1].elemento,cartas_user[opcao_carta_user-1].nivel);
+        }
+      //                                 verifica quem venceu a rodadada 
+        
+        if (strcmp(cartas_user[opcao_carta_user - 1].elemento, "💧") == 0 && 
+            strcmp(cartas_casa[opcao_casa - 1].elemento, "🔥") == 0) {
+            printf("\nVOCÊ VENCEU A RODADA. SEU ELEMENTO DERROTOU FOGO!\n");
+        } else if (strcmp(cartas_user[opcao_carta_user - 1].elemento, "🔥") == 0 && 
+                   strcmp(cartas_casa[opcao_casa - 1].elemento, "❄️ ") == 0) {
+            printf("\nVOCÊ VENCEU A RODADA. SEU ELEMENTO DERROTOU NEVE!\n");
+        } else if (strcmp(cartas_user[opcao_carta_user - 1].elemento, "❄️ ") == 0 && 
+                   strcmp(cartas_casa[opcao_casa - 1].elemento, "💧") == 0) {
+            printf("\nVOCÊ VENCEU A RODADA. SEU ELEMENTO DERROTOU ÁGUA!\n");
+        }
+        else if (strcmp(cartas_user[opcao_carta_user - 1].elemento, cartas_casa[opcao_casa - 1].elemento) == 0) {
+          if (cartas_user[opcao_carta_user - 1].nivel > cartas_casa[opcao_casa - 1].nivel){
+            printf("\nVOCÊ VENCEU A RODADA. SUA CARTA POSSUI MAIS NÍVEL DE PODER!\n");
+          }
+          else if(cartas_user[opcao_carta_user - 1].nivel < cartas_casa[opcao_casa - 1].nivel){
+              printf("\nVOCÊ PERDEU A RODADA. SUA CARTA POSSUI MENOS NÍVEL DE PODER!\n");
+          }
+          else{
+            puts("\nEMPATE NA RODADA. AMBOS OS LADOS JOGARAM A MESMA CARTA!");
+          }
+        }
+        else{
+          printf("\nA CASA VENCEU A RODADA! ");
+          if(strcmp(cartas_casa[opcao_casa - 1].elemento, "🔥") == 0){
+            printf("O FOGO DERROTOU SEU ELEMENTO!\n");
+          }if(strcmp(cartas_casa[opcao_casa - 1].elemento, "❄️ ") == 0){
+            printf("A NEVE DERROTOU SEU ELEMENTO!\n");
+          }if(strcmp(cartas_casa[opcao_casa - 1].elemento, "💧") == 0){
+            printf("A ÁGUA DERROTOU SEU ELEMENTO!\n");
+          }
+        }
+        while (1) { // ATUALIZA A NOVA CARTA DO USER
+          int repetida = 0;
+          numeros_user = gera_numeros(1, 8);
+          nova_carta = criar_carta(numeros_user[0]);
+          for (int j = 0; j < 5; j++) {
+              if (strcmp(cartas_user[j].nome, nova_carta.nome) == 0) {
+                  repetida = 1;
+                  break;
+              }
+          }
+          if (repetida == 0) {
+              cartas_user[opcao_carta_user - 1] = nova_carta; 
+              break; 
+          }
+        }
+        while (1) { // ATUALIZA NOVA CARTA DA CASA
+          int repetida = 0;
+          numeros_casa = gera_numeros(1, 8);
+          nova_carta = criar_carta(numeros_casa[0]);
+          for (int j = 0; j < 5; j++) {
+              if (strcmp(cartas_casa[j].nome, nova_carta.nome) == 0) {
+                  repetida = 1;
+                  break;
+              }
+          }
+          if (repetida == 0) {
+              cartas_casa[opcao_casa - 1] = nova_carta;
+              break;
+          }
+        }
+        
+        rodada++;
+        while (1) {
+          puts("\nPressione ENTER para continuar...");
+          fgets(continuar, sizeof(continuar), stdin);
+          if (continuar[0] == '\n') {
+              break; 
+          }
+        }
+      }
+    }
   }  
+}
+
+Carta criar_carta(int nivel) {
+  Carta nova_carta;
+  nova_carta.nivel = nivel;
+  int *elemento;
+
+  elemento = gera_numeros(1,3);
+  if (elemento[0] == 1) { // Água
+    strcpy(nova_carta.elemento, "💧");
+    switch (nivel) {
+        case 1: strcpy(nova_carta.nome, "Gota"); break;
+        case 2: strcpy(nova_carta.nome, "Chuva"); break;
+        case 3: strcpy(nova_carta.nome, "Riacho"); break;
+        case 4: strcpy(nova_carta.nome, "Onda"); break;
+        case 5: strcpy(nova_carta.nome, "Tsunami"); break;
+        case 6: strcpy(nova_carta.nome, "Tempestade"); break;
+        case 7: strcpy(nova_carta.nome, "Maré Alta"); break;
+        case 8: strcpy(nova_carta.nome, "Cataratas"); break;
+        default: break;
+    }
+  } else if (elemento[0] == 2) { // Fogo
+    strcpy(nova_carta.elemento, "🔥");
+    switch (nivel) {
+        case 1: strcpy(nova_carta.nome, "Fagulha"); break;
+        case 2: strcpy(nova_carta.nome, "Flama"); break;
+        case 3: strcpy(nova_carta.nome, "Chama"); break;
+        case 4: strcpy(nova_carta.nome, "Incêndio"); break;
+        case 5: strcpy(nova_carta.nome, "Lava"); break;
+        case 6: strcpy(nova_carta.nome, "Explosão"); break;
+        case 7: strcpy(nova_carta.nome, "Inferno"); break;
+        case 8: strcpy(nova_carta.nome, "Fogo do Dragão"); break;
+        default: break;
+    }
+  } else { // Neve
+    strcpy(nova_carta.elemento, "❄️ ");
+    switch (nivel) {
+        case 1: strcpy(nova_carta.nome, "Floco de Neve"); break;
+        case 2: strcpy(nova_carta.nome, "Neve Leve"); break;
+        case 3: strcpy(nova_carta.nome, "Tempestade de Neve"); break;
+        case 4: strcpy(nova_carta.nome, "Gelo"); break;
+        case 5: strcpy(nova_carta.nome, "Gelo derretido"); break;
+        case 6: strcpy(nova_carta.nome, "Nevasca"); break;
+        case 7: strcpy(nova_carta.nome, "Avalanche"); break;
+        case 8: strcpy(nova_carta.nome, "Inverno Eterno"); break;
+        default: break;
+    }
+  }
+    return nova_carta;
+}
+
+int verifica_input2(){ // so pra n sujar a funcao principal do jogo
+  char opcao_carta[10];
+  int opcao;
+  while (1){
+    printf("\nEscolha sua carta: ");
+    fgets(opcao_carta,sizeof(opcao_carta),stdin);
+    if (strlen(opcao_carta) != 2 || opcao_carta[0] != '1' && opcao_carta[0] != '2' && opcao_carta[0] != '3' && opcao_carta[0] != '4' && opcao_carta[0] != '5'){
+      puts("Digite o número da carta!");
+    }
+    else{
+      opcao = atoi(opcao_carta);
+      return opcao;
+    }
+  }
+}
+
+
+char* verbo_ataque() {
+     char* verbos_ataque[] = {
+        "atacou com",
+        "atacou utilizando",
+        "lançou",
+        "utilizou",
+        "conjurou",
+        "aplicou um golpe com",
+        "liberou poder com",
+        "usou"
+    };
+    int indice = rand() % 8;
+    return verbos_ataque[indice]; 
+}
+
+char* verbo_defesa() {
+     char* verbos_defesa[] = {
+        "defendeu com",
+        "contra-atacou com",
+        "tentou evitar utilizando",
+        "bloqueou com",
+        "respondeu com",
+        "tentou parar com",
+        "refletiu com",
+        "se protegeu com",
+        "buscou se defender com",
+        "tentou se defender com"
+    };
+    int indice = rand() % 10;
+    return verbos_defesa[indice];
 }
 

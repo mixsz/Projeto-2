@@ -17,6 +17,12 @@ typedef struct cadastro {
   int ficha;
 } Cadastro;
 
+typedef struct {
+    char nome[20];
+    char elemento[10];
+    int nivel;
+} Carta;
+
 /*                                       Prototipo das funcoes                             */
 
 int verifica_username(char username[], int NV, Cadastro *usuarios);
@@ -38,5 +44,9 @@ void leitura_binaria(Cadastro *usuarios, int *counteudo_binario);
 void escritura_binaria(Cadastro *usuarios);
 void atualiza_binario(Cadastro *usuarios);
 int duelo_cartas(int *fichas, int *pontuacao);
+Carta criar_carta(int nivel);
+int verifica_input2();
+char *verbo_ataque(); 
+char *verbo_defesa();
 #endif
 
