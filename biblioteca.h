@@ -17,7 +17,7 @@ typedef struct cadastro {
   int ficha;
 } Cadastro;
 
-typedef struct {
+typedef struct { // jogo 4
     char nome[20];
     char elemento[10];
     int nivel;
@@ -46,7 +46,7 @@ void atualiza_binario(Cadastro *usuarios);
 int duelo_cartas(int *fichas, int *pontuacao);
 Carta criar_carta(int nivel);
 int verifica_input2();
-char *verbo_ataque(); 
-char *verbo_defesa();
+char *verbo_ataque(); //essas
+char *verbo_defesa(); //essas
 #endif
 
