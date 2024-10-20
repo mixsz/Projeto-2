@@ -286,6 +286,7 @@ int adivinhe_numero(int *fichas, int *pontuacao){
       if (vitoria == 0){
         printf("\nQUE PENA! VOCÊ PERDEU!\nO NÚMERO ERA %d :(\n", random[0]);
         *fichas -= 1;
+        puts("\n(Você perdeu 1 ficha)");
       }
       else{
         *fichas += 1;
@@ -358,6 +359,7 @@ int adivinhe_numero(int *fichas, int *pontuacao){
       if (vitoria == 0){
         printf("\nQUE PENA! VOCÊ PERDEU!\nO NÚMERO ERA %d :(\n", random[0]);
         *fichas -= 1;
+        puts("\n(Você perdeu 1 ficha)");
       }
       else{
         puts("Você recebeu 2 fichas como recompensa!");
@@ -430,6 +432,7 @@ int adivinhe_numero(int *fichas, int *pontuacao){
       if (vitoria == 0){
         printf("\nQUE PENA! VOCÊ PERDEU!\nO NÚMERO ERA %d :(\n", random[0]);
         *fichas -= 1;
+        puts("\n(Você perdeu 1 ficha)");
       }
       else{
         *fichas += 3;
@@ -574,6 +577,7 @@ int pedra_papel_tesoura(int *fichas, int *pontuacao){
               if (pt_casa == 2){
                 puts("OH NÃO! VOCÊ PERDEU O DUELO!");
                 *fichas -= 1;
+                puts("(Você perdeu 1 ficha)");
               }
               else{
                 puts("MUITO BEM! VOCÊ GANHOU O DUELO!");
@@ -953,6 +957,7 @@ int operacao_misteriosa(int *fichas, int *pontuacao){
        else{ // perde uma ficha...
          puts("\nVOCÊ NÃO ALCANÇOU A MÉDIA. NÃO DESISTA!");
          *fichas -= 1;
+         puts("(Você perdeu 1 ficha)");
           return 0;
        }
      }
@@ -1034,11 +1039,13 @@ void atualiza_binario(Cadastro *usuarios){
 
 int duelo_cartas(int *fichas, int *pontuacao){
 
-  int catalogo = 1, i, rodada = 1, comeco = 1, opcao_carta_user, opcao_casa;
+  int catalogo = 1, i, rodada = 1, comeco = 1, opcao_carta_user, opcao_casa, vitoria_user = -1;
   float resultado;
   char selecionar[10], tutorial[10],continuar[10], verbo_atk[25], verbo_def[25];
   int *numeros_user, *numeros_casa;
   Carta cartas_user[5], cartas_casa[5], nova_carta;
+  int ponto_user[3] = {0, 0, 0};
+  int ponto_casa[3] = {0, 0, 0}; // [0] = ponto de agua, [1] = ponto de fogo, [2] = ponto de neve
   while(1){
     if (catalogo == 1){
       puts("\n1. Jogar");
@@ -1127,60 +1134,60 @@ int duelo_cartas(int *fichas, int *pontuacao){
         opcao_carta_user = verifica_input2();
         opcao_casa =  rand() % 5 + 1;
         if (rodada % 2 == 1){
-          printf("\nVocê %s a carta '%s' (%s Nvl %d)", verbo_ataque(),cartas_user[opcao_carta_user-1].nome,cartas_user[opcao_carta_user-1].elemento,cartas_user[opcao_carta_user-1].nivel);
+          printf("\nVocê %s a carta '%s' (%s Nvl %d)\n", verbo_ataque(),cartas_user[opcao_carta_user-1].nome,cartas_user[opcao_carta_user-1].elemento,cartas_user[opcao_carta_user-1].nivel);
           printf("\nA casa %s a carta '%s' (%s Nvl %d)\n",verbo_defesa(),cartas_casa[opcao_casa-1].nome,cartas_casa[opcao_casa-1].elemento,cartas_casa[opcao_casa-1].nivel);         
         }
         //                          intercala os VERBOS e ATAQUE/DEFESA!
         else{
-          printf("\nA casa %s a carta '%s' (%s Nvl %d)",verbo_ataque(),cartas_casa[opcao_casa-1].nome,cartas_casa[opcao_casa-1].elemento,cartas_casa[opcao_casa-1].nivel);
+          printf("\nA casa %s a carta '%s' (%s Nvl %d)\n",verbo_ataque(),cartas_casa[opcao_casa-1].nome,cartas_casa[opcao_casa-1].elemento,cartas_casa[opcao_casa-1].nivel);
            printf("\nVocê %s a carta '%s' (%s Nvl %d)\n", verbo_defesa(),cartas_user[opcao_carta_user-1].nome,cartas_user[opcao_carta_user-1].elemento,cartas_user[opcao_carta_user-1].nivel);
         }
       //                                 verifica quem venceu a rodadada 
-        
-        if (strcmp(cartas_user[opcao_carta_user - 1].elemento, "💧") == 0 && 
-            strcmp(cartas_casa[opcao_casa - 1].elemento, "🔥") == 0) {
-            printf("\nVOCÊ VENCEU A RODADA. SEU ELEMENTO DERROTOU FOGO!\n");
-        } else if (strcmp(cartas_user[opcao_carta_user - 1].elemento, "🔥") == 0 && 
-                   strcmp(cartas_casa[opcao_casa - 1].elemento, "❄️ ") == 0) {
-            printf("\nVOCÊ VENCEU A RODADA. SEU ELEMENTO DERROTOU NEVE!\n");
-        } else if (strcmp(cartas_user[opcao_carta_user - 1].elemento, "❄️ ") == 0 && 
-                   strcmp(cartas_casa[opcao_casa - 1].elemento, "💧") == 0) {
-            printf("\nVOCÊ VENCEU A RODADA. SEU ELEMENTO DERROTOU ÁGUA!\n");
+        if (strcmp(cartas_user[opcao_carta_user - 1].elemento, "💧") == 0 && strcmp(cartas_casa[opcao_casa - 1].elemento, "🔥") == 0) {        
+          ponto_user[0] += 1;
+        } 
+        else if (strcmp(cartas_user[opcao_carta_user - 1].elemento, "🔥") == 0 && strcmp(cartas_casa[opcao_casa - 1].elemento, "❄️ ") == 0) {
+          ponto_user[1] += 1;
+        } 
+        else if (strcmp(cartas_user[opcao_carta_user - 1].elemento, "❄️ ") == 0 && strcmp(cartas_casa[opcao_casa - 1].elemento, "💧") == 0) {
+          ponto_user[2] += 1;
         }
-        else if (strcmp(cartas_user[opcao_carta_user - 1].elemento, cartas_casa[opcao_casa - 1].elemento) == 0) {
+        else if (strcmp(cartas_user[opcao_carta_user - 1].elemento, cartas_casa[opcao_casa - 1].elemento) == 0){
           if (cartas_user[opcao_carta_user - 1].nivel > cartas_casa[opcao_casa - 1].nivel){
-            printf("\nVOCÊ VENCEU A RODADA. SUA CARTA POSSUI MAIS NÍVEL DE PODER!\n");
+            if(strcmp(cartas_user[opcao_carta_user - 1].elemento, "💧") == 0){ // verificacao de ponto do elemento
+              ponto_user[0] += 1;
+            }
+            else if(strcmp(cartas_user[opcao_carta_user - 1].elemento, "🔥") == 0){
+              ponto_user[1] += 1;
+            }
+            else{
+              ponto_user[2] += 1;
+            }
           }
           else if(cartas_user[opcao_carta_user - 1].nivel < cartas_casa[opcao_casa - 1].nivel){
-              printf("\nVOCÊ PERDEU A RODADA. SUA CARTA POSSUI MENOS NÍVEL DE PODER!\n");
+            if(strcmp(cartas_casa[opcao_casa - 1].elemento, "💧") == 0){ // verificacao de ponto do elemento
+              ponto_casa[0] += 1;
+            }
+            else if(strcmp(cartas_casa[opcao_casa - 1].elemento, "🔥") == 0){
+              ponto_casa[1] += 1;
+            }
+            else{
+              ponto_casa[2] += 1;
+            }
           }
           else{
             puts("\nEMPATE NA RODADA. AMBOS OS LADOS JOGARAM A MESMA CARTA!");
           }
         }
         else{
-          printf("\nA CASA VENCEU A RODADA! ");
           if(strcmp(cartas_casa[opcao_casa - 1].elemento, "🔥") == 0){
-            printf("O FOGO DERROTOU SEU ELEMENTO!\n");
-          }if(strcmp(cartas_casa[opcao_casa - 1].elemento, "❄️ ") == 0){
-            printf("A NEVE DERROTOU SEU ELEMENTO!\n");
-          }if(strcmp(cartas_casa[opcao_casa - 1].elemento, "💧") == 0){
-            printf("A ÁGUA DERROTOU SEU ELEMENTO!\n");
+            ponto_casa[1] += 1;
           }
-        }
-        while (1) { // ATUALIZA A NOVA CARTA DO USER
-          int repetida = 0;
-          numeros_user = gera_numeros(1, 8);
-          nova_carta = criar_carta(numeros_user[0]);
-          for (int j = 0; j < 5; j++) {
-              if (strcmp(cartas_user[j].nome, nova_carta.nome) == 0) {
-                  repetida = 1;
-                  break;
-              }
+          if(strcmp(cartas_casa[opcao_casa - 1].elemento, "❄️ ") == 0){
+            ponto_casa[2] += 1;
           }
-          if (repetida == 0) {
-              cartas_user[opcao_carta_user - 1] = nova_carta; 
-              break; 
+          if(strcmp(cartas_casa[opcao_casa - 1].elemento, "💧") == 0){
+            ponto_casa[0] += 1;
           }
         }
         while (1) { // ATUALIZA NOVA CARTA DA CASA
@@ -1197,17 +1204,49 @@ int duelo_cartas(int *fichas, int *pontuacao){
               cartas_casa[opcao_casa - 1] = nova_carta;
               break;
           }
+        }   
+        while (1) { // ATUALIZA A NOVA CARTA DO USER
+          int repetida = 0;
+          numeros_user = gera_numeros(1, 8);
+          nova_carta = criar_carta(numeros_user[0]);
+          for (int j = 0; j < 5; j++) {
+              if (strcmp(cartas_user[j].nome, nova_carta.nome) == 0) {
+                  repetida = 1;
+                  break;
+              }
+          }
+          if (repetida == 0) {
+              cartas_user[opcao_carta_user - 1] = nova_carta; 
+              break; 
+          }
         }
-        
-        rodada++;
         while (1) {
           puts("\nPressione ENTER para continuar...");
           fgets(continuar, sizeof(continuar), stdin);
           if (continuar[0] == '\n') {
-              break; 
+             break; 
           }
+        }  
+        rodada++;
+        puts("💧| 🔥 | ❄️  |");
+        printf("%d | %2d | %2d | Você\n", ponto_user[0], ponto_user[1], ponto_user[2]);
+        printf("%d | %2d | %2d | Casa\n\n", ponto_casa[0], ponto_casa[1], ponto_casa[2]);
+        verifica_pontuacao(ponto_user,ponto_casa,&vitoria_user);
+        if (vitoria_user != -1){ // alguem alcancou a pontuacao
+          break;
         }
       }
+      if (vitoria_user == 1){
+        puts("Você recebeu 2 fichas como recompensa!");
+        *fichas += 2;
+        *pontuacao += 1;      }
+      else{
+        *fichas -= 1;
+        puts("(Você perdeu 1 ficha)");
+      }
+      return 0;
+      free(numeros_user); // liberando espaco...
+      free(numeros_casa);
     }
   }  
 }
@@ -1308,3 +1347,38 @@ char* verbo_defesa() {
     return verbos_defesa[indice];
 }
 
+
+void verifica_pontuacao(int ponto_user[], int ponto_casa[], int *vitoria_user){
+   if(ponto_user[0] == 3){
+     puts("Fim de partida! Você obteve 3 PONTOS DE ÁGUA!");
+     *vitoria_user = 1;
+   }
+   else if(ponto_user[1] == 3){
+     puts("Fim de partida! Você obteve 3 PONTOS DE FOGO!");
+     *vitoria_user = 1;
+   }
+   else if(ponto_user[2] == 3){
+     puts("Fim de partida! Você obteve 3 PONTOS DE NEVE!");
+     *vitoria_user = 1;
+   }
+   else if(ponto_user[0] >= 1 && ponto_user[1] >= 1 && ponto_user[2] >= 1){
+     puts("Fim de partida! Você obteve 1 PONTO DE CADA ELEMENTO!");
+     *vitoria_user = 1;
+   }
+   if(ponto_casa[0] == 3){
+     puts("Fim de partida! A casa conseguiu 3 PONTOS DE ÁGUA!");
+     *vitoria_user = 0;
+   }
+   else if(ponto_casa[1] == 3){
+     puts("Fim de partida! A casa fez 3 PONTOS DE FOGO!");
+     *vitoria_user = 0;
+   }
+   else if(ponto_casa[2] == 3){
+     puts("Fim de partida! A casa alcançou 3 PONTOS DE NEVE!");
+     *vitoria_user = 0;
+   }
+   else if(ponto_casa[0] >= 1 && ponto_casa[1] >= 1 && ponto_casa[2] >= 1){
+     puts("FIM DE PARTIDA! A casa conseguiu 1 PONTO DE CADA ELEMENTO!");
+     *vitoria_user = 0;
+   }
+ }

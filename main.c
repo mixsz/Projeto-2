@@ -178,7 +178,7 @@ int main() {
           }
           if (opcao[0] == '4'){
             if(duelo_cartas(&usuarios[id_usuario].ficha,&usuarios[id_usuario].vitoria4) == 0){ // colocar vitoria 4 no bi
-                deseja_continuar(usuarios[id_usuario].username, &menu, &sair);  
+                deseja_continuar(usuarios[id_usuario].username, &menu, &sair);                 // criar tutorial desse jogo
             } 
           }
         } // fim do loop menu
