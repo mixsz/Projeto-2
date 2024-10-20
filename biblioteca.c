@@ -1236,7 +1236,7 @@ int duelo_cartas(int *fichas, int *pontuacao){
           break;
         }
       }
-      if (vitoria_user == 1){
+      if (vitoria_user == 1){ // 1 = vitoria user, 0 = derrota user
         puts("Você recebeu 2 fichas como recompensa!");
         *fichas += 2;
         *pontuacao += 1;      }
