@@ -1126,21 +1126,52 @@ int duelo_cartas(int *fichas, int *pontuacao){
         }
         puts("Seu deck:");
         for (i = 0; i < 5; i++){
-          printf("%d. %-15s %s (Nvl %d)\n",i+1,cartas_user[i].nome, cartas_user[i].elemento, cartas_user[i].nivel);
+          if (cartas_user[i].nivel != 8){
+            printf("%d. %-15s %s (Nvl %d)\n",i+1,cartas_user[i].nome, cartas_user[i].elemento, cartas_user[i].nivel);
+          }
+          else{
+            printf("%d. %-15s %s (LEGENDARY)\n",i+1,cartas_user[i].nome, cartas_user[i].elemento);
+
+          }
         }       
         if (rodada > 1){
-          printf("\nNew! '%s' %s (Nvl %d)\n", nova_carta.nome, nova_carta.elemento, nova_carta.nivel);
+           if (nova_carta.nivel != 8){
+              printf("\nNew! '%s' %s (Nvl %d)\n", nova_carta.nome, nova_carta.elemento, nova_carta.nivel);
+           }
+          else{
+          printf("\nNew! '%s' %s (LEGENDARY)\n", nova_carta.nome, nova_carta.elemento);
+          }
         }
         opcao_carta_user = verifica_input2();
         opcao_casa =  rand() % 5 + 1;
         if (rodada % 2 == 1){
-          printf("\nVocê %s a carta '%s' (%s Nvl %d)\n", verbo_ataque(),cartas_user[opcao_carta_user-1].nome,cartas_user[opcao_carta_user-1].elemento,cartas_user[opcao_carta_user-1].nivel);
-          printf("\nA casa %s a carta '%s' (%s Nvl %d)\n",verbo_defesa(),cartas_casa[opcao_casa-1].nome,cartas_casa[opcao_casa-1].elemento,cartas_casa[opcao_casa-1].nivel);         
+          if (cartas_user[opcao_carta_user-1].nivel != 8){
+            printf("\nVocê %s a carta '%s' (%s Nvl %d)\n", verbo_ataque(),cartas_user[opcao_carta_user-1].nome,cartas_user[opcao_carta_user-1].elemento,cartas_user[opcao_carta_user-1].nivel);
+          }
+          else{
+             printf("\nVocê %s a carta '%s' (%s MAX)\n", verbo_ataque(),cartas_user[opcao_carta_user-1].nome,cartas_user[opcao_carta_user-1].elemento);
+          }
+          if (cartas_casa[opcao_casa-1].nivel != 8){
+            printf("\nA casa %s a carta '%s' (%s Nvl %d)\n",verbo_defesa(),cartas_casa[opcao_casa-1].nome,cartas_casa[opcao_casa-1].elemento,cartas_casa[opcao_casa-1].nivel); 
+          }
+          else{
+             printf("\nA casa %s a carta '%s' (%s MAX)\n",verbo_defesa(),cartas_casa[opcao_casa-1].nome,cartas_casa[opcao_casa-1].elemento); 
+          }
         }
         //                          intercala os VERBOS e ATAQUE/DEFESA!
         else{
-          printf("\nA casa %s a carta '%s' (%s Nvl %d)\n",verbo_ataque(),cartas_casa[opcao_casa-1].nome,cartas_casa[opcao_casa-1].elemento,cartas_casa[opcao_casa-1].nivel);
-           printf("\nVocê %s a carta '%s' (%s Nvl %d)\n", verbo_defesa(),cartas_user[opcao_carta_user-1].nome,cartas_user[opcao_carta_user-1].elemento,cartas_user[opcao_carta_user-1].nivel);
+          if (cartas_casa[opcao_casa-1].nivel != 8){
+            printf("\nA casa %s a carta '%s' (%s Nvl %d)\n",verbo_ataque(),cartas_casa[opcao_casa-1].nome,cartas_casa[opcao_casa-1].elemento,cartas_casa[opcao_casa-1].nivel);
+          }
+          else{
+             printf("\nA casa %s a carta '%s' (%s MAX)\n",verbo_ataque(),cartas_casa[opcao_casa-1].nome,cartas_casa[opcao_casa-1].elemento);
+          }
+          if (cartas_user[opcao_carta_user-1].nivel != 8){
+            printf("\nVocê %s a carta '%s' (%s Nvl %d)\n", verbo_defesa(),cartas_user[opcao_carta_user-1].nome,cartas_user[opcao_carta_user-1].elemento,cartas_user[opcao_carta_user-1].nivel);
+          }
+          else{
+            printf("\nVocê %s a carta '%s' (%s MAX)\n", verbo_defesa(),cartas_user[opcao_carta_user-1].nome,cartas_user[opcao_carta_user-1].elemento);
+          }
         }
       //                                 verifica quem venceu a rodadada 
         if (strcmp(cartas_user[opcao_carta_user - 1].elemento, "💧") == 0 && strcmp(cartas_casa[opcao_casa - 1].elemento, "🔥") == 0) {        
@@ -1260,40 +1291,40 @@ Carta criar_carta(int nivel) {
   if (elemento[0] == 1) { // Água
     strcpy(nova_carta.elemento, "💧");
     switch (nivel) {
-        case 1: strcpy(nova_carta.nome, "Gota"); break;
-        case 2: strcpy(nova_carta.nome, "Chuva"); break;
-        case 3: strcpy(nova_carta.nome, "Riacho"); break;
-        case 4: strcpy(nova_carta.nome, "Onda"); break;
-        case 5: strcpy(nova_carta.nome, "Tsunami"); break;
-        case 6: strcpy(nova_carta.nome, "Tempestade"); break;
-        case 7: strcpy(nova_carta.nome, "Maré Alta"); break;
-        case 8: strcpy(nova_carta.nome, "Cataratas"); break;
+        case 1: strcpy(nova_carta.nome, "Chuva dourada"); break;
+        case 2: strcpy(nova_carta.nome, "Chupisco"); break;
+        case 3: strcpy(nova_carta.nome, "Pacu"); break;
+        case 4: strcpy(nova_carta.nome, "Sabesp"); break;
+        case 5: strcpy(nova_carta.nome, "Baleia psíquica pré-histórica"); break;
+        case 6: strcpy(nova_carta.nome, "Fred desimpedidos do mar"); break;
+        case 7: strcpy(nova_carta.nome, "Geladeira Electrolux"); break;
+        case 8: strcpy(nova_carta.nome, "Câncer d'água"); break;
         default: break;
     }
   } else if (elemento[0] == 2) { // Fogo
     strcpy(nova_carta.elemento, "🔥");
     switch (nivel) {
-        case 1: strcpy(nova_carta.nome, "Fagulha"); break;
-        case 2: strcpy(nova_carta.nome, "Flama"); break;
-        case 3: strcpy(nova_carta.nome, "Chama"); break;
-        case 4: strcpy(nova_carta.nome, "Incêndio"); break;
-        case 5: strcpy(nova_carta.nome, "Lava"); break;
-        case 6: strcpy(nova_carta.nome, "Explosão"); break;
+        case 1: strcpy(nova_carta.nome, "Fogão"); break;
+        case 2: strcpy(nova_carta.nome, "Cachorro quente"); break;
+        case 3: strcpy(nova_carta.nome, "Mamagma"); break;
+        case 4: strcpy(nova_carta.nome, "Fireball"); break;
+        case 5: strcpy(nova_carta.nome, "Peidante de fogo"); break;
+        case 6: strcpy(nova_carta.nome, "Smilinguido"); break;
         case 7: strcpy(nova_carta.nome, "Inferno"); break;
-        case 8: strcpy(nova_carta.nome, "Fogo do Dragão"); break;
+        case 8: strcpy(nova_carta.nome, "Calor de Testa"); break;
         default: break;
     }
   } else { // Neve
     strcpy(nova_carta.elemento, "❄️ ");
     switch (nivel) {
-        case 1: strcpy(nova_carta.nome, "Floco de Neve"); break;
-        case 2: strcpy(nova_carta.nome, "Neve Leve"); break;
-        case 3: strcpy(nova_carta.nome, "Tempestade de Neve"); break;
-        case 4: strcpy(nova_carta.nome, "Gelo"); break;
-        case 5: strcpy(nova_carta.nome, "Gelo derretido"); break;
-        case 6: strcpy(nova_carta.nome, "Nevasca"); break;
-        case 7: strcpy(nova_carta.nome, "Avalanche"); break;
-        case 8: strcpy(nova_carta.nome, "Inverno Eterno"); break;
+        case 1: strcpy(nova_carta.nome, "Neve leve"); break;
+        case 2: strcpy(nova_carta.nome, "Cubo de grelo"); break;
+        case 3: strcpy(nova_carta.nome, "Sensei da neve"); break;
+        case 4: strcpy(nova_carta.nome, "Sentinela gelada"); break;
+        case 5: strcpy(nova_carta.nome, "Bola de neve"); break;
+        case 6: strcpy(nova_carta.nome, "Fumaça fria"); break;
+        case 7: strcpy(nova_carta.nome, "Penguin"); break;
+        case 8: strcpy(nova_carta.nome, "Urso hétero"); break;
         default: break;
     }
   }
