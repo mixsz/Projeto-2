@@ -49,5 +49,6 @@ int verifica_input2();
 char *verbo_ataque(); 
 char *verbo_defesa();
 void verifica_pontuacao(int ponto_user[], int ponto_casa[], int *vitoria_user);
+void exibe_tutorial4();
 #endif
 

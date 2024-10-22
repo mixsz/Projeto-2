@@ -94,7 +94,7 @@ int main() {
         puts("Resposta inválida!\n");
         bemvindo = 1;
       }
-      if (resposta[0] == '1'){ // Criar conta
+      else if (resposta[0] == '1'){ // Criar conta
         bemvindo = 1;
 
         if (*NV >= 15){
@@ -127,7 +127,7 @@ int main() {
         }
       }
 
-      if (resposta[0] == '2'){
+      else if (resposta[0] == '2'){
         id_usuario = -1; // o id sera iniciado como -1 pois n existira o indice -1 no vetor
         permissao_acesso = login(&bemvindo, &id_usuario, *NV, usuarios); // se for 1 significa que o user logou!
         if (permissao_acesso == 1){
@@ -136,7 +136,7 @@ int main() {
             puts("\n1. Adivinhe o número!");
             puts("2. Pedra, papel, tesoura");
             puts("3. Operaçao misteriosa");
-            puts("4. Duelo de cartas");
+            puts("4. Card duel");
             puts("X. Guia de fichas");
             puts("X. Consultar fichas");
             puts("X. Sair");
@@ -185,7 +185,7 @@ int main() {
       } // fim do permissao = 1
     } // fim resposta = 2    
 
-    if (resposta[0] == '3'){ // sai do programa
+    else if (resposta[0] == '3'){ // sai do programa
       puts("\nTenha um ótimo dia!\n");
       sair = 1;
     }

@@ -1031,11 +1031,6 @@ void atualiza_binario(Cadastro *usuarios){
   fwrite(numbers3, sizeof(int), 15, file2);  
   fclose(file2);
 }
-// typedef struct {
-//     char nome[20];
-//     char elemento[10];
-//     int nivel;
-// } Carta;
 
 int duelo_cartas(int *fichas, int *pontuacao){
 
@@ -1062,7 +1057,7 @@ int duelo_cartas(int *fichas, int *pontuacao){
       return 1;
     }
     else if(selecionar[0] == '2'){
-       puts("FAZER TUTORIAL");
+       exibe_tutorial4();
        while(1){
          printf("\nDeseja jogar? [S/N]: ");
          fgets(tutorial,sizeof(tutorial),stdin);
@@ -1413,3 +1408,32 @@ void verifica_pontuacao(int ponto_user[], int ponto_casa[], int *vitoria_user){
      *vitoria_user = 0;
    }
  }
+
+void exibe_tutorial4(){
+  char continuar[10];
+  puts("\nCard Duel é um jogo de duelo de cartas, onde você enfrenta a famosa casa em uma batalha estratégica.\n");
+  puts("O jogo começa com a distribuição de 5 cartas aleatórias para ambos os lados. A cada rodada, você e a casa escolhem uma carta para duelar.");
+  while (1) {
+    puts("\nPressione ENTER para continuar lendo...");
+    fgets(continuar, sizeof(continuar), stdin);
+    if (continuar[0] == '\n') {
+       break; 
+    }
+  } 
+  puts("As cartas são divididas em 3 atributos:");
+  puts("Nome da carta, elemento e nível de poder.\n");
+  puts("Cada elemento vence o outro, sendo assim:");
+  puts("Água --> Fogo\nFogo --> Neve\nNeve --> Água\n");
+  puts("Se o elemento de uma carta for igual ao outro, o nível de poder é utilizado para determinar o vencedor.");
+  puts("Ao início de uma nova rodada, você e a casa recebem uma nova carta, mantendo sempre um deck de 5 cartas.");
+  while (1) {
+    puts("\nPressione ENTER para continuar lendo...");
+    fgets(continuar, sizeof(continuar), stdin);
+    if (continuar[0] == '\n') {
+       break; 
+    }
+  } 
+  puts("Seu objetivo é vencer o duelo, e você possui 2 maneiras de vencer: fazendo 3 PONTOS com o mesmo elemento ou fazendo no mínimo 1 PONTO com cada elemento.");
+  puts("\nObs: Você não recebe uma carta repetida que já esteja no seu deck, mas tem chance de receber uma que pertence ao deck da casa, vice-versa.");
+  puts("\n Você recebe 2 fichas por vitória, porém perde 1 ficha por derrota.");
+}
