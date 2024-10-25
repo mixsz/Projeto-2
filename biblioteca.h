@@ -7,6 +7,7 @@
 #include <string.h>
 #include <ctype.h>
 
+
 typedef struct cadastro {
   char username[30];
   char senha[25];
@@ -14,6 +15,7 @@ typedef struct cadastro {
   int vitoria2;
   int vitoria3;
   int vitoria4; // adicionar nas funcoes de binario
+  int vitoria5;
   int ficha;
 } Cadastro;
 
@@ -50,5 +52,9 @@ char *verbo_ataque();
 char *verbo_defesa();
 void verifica_pontuacao(int ponto_user[], int ponto_casa[], int *vitoria_user);
 void exibe_tutorial4();
+
+int termo(int *fichas, int *pontuacao);
+void exibe_tutorial5();
+
 #endif
 

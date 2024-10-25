@@ -1,4 +1,4 @@
-      #include "biblioteca.h"
+#include "biblioteca.h"
 
 int verifica_username(char username[30], int NV, Cadastro *usuarios){ 
   int i, username_existente = 0; 
@@ -1319,7 +1319,7 @@ Carta criar_carta(int nivel) {
         case 5: strcpy(nova_carta.nome, "Bola de neve"); break;
         case 6: strcpy(nova_carta.nome, "Fumaça fria"); break;
         case 7: strcpy(nova_carta.nome, "Penguin"); break;
-        case 8: strcpy(nova_carta.nome, "Urso hétero"); break;
+        case 8: strcpy(nova_carta.nome, "Urso gay"); break;
         default: break;
     }
   }
@@ -1436,4 +1436,156 @@ void exibe_tutorial4(){
   puts("Seu objetivo é vencer o duelo, e você possui 2 maneiras de vencer: fazendo 3 PONTOS com o mesmo elemento ou fazendo no mínimo 1 PONTO com cada elemento.");
   puts("\nObs: Você não recebe uma carta repetida que já esteja no seu deck, mas tem chance de receber uma que pertence ao deck da casa, vice-versa.");
   puts("\n Você recebe 2 fichas por vitória, porém perde 1 ficha por derrota.");
+}
+
+int termo(int *fichas, int *pontuacao) {
+    char palavras[100][6]; // 100 é o numero maximo de palavras e 6 é o tamanho maximo de cada palavra.
+    int num_palavras = 0, indice, n_tentativa = 0, ganhou = 0;
+
+    // Lê as palavras do arquivo
+    FILE* arquivo = fopen("palavras.txt", "r");
+    if (!arquivo) {
+        perror("Erro ao abrir o arquivo");
+    }
+    while (fgets(palavras[num_palavras], 6, arquivo)) {
+        palavras[num_palavras][strcspn(palavras[num_palavras], "\n")] = 0; // Troca o \n por \0
+        num_palavras++;
+        
+    }
+    fclose(arquivo);
+
+
+   
+  
+    srand(time(NULL));
+
+   
+    indice = rand() % num_palavras;
+    printf("Palavra escolhida: %s\n", palavras[indice]);
+
+    if (indice % 2 == 1){
+        indice -= 1;
+        printf(" AAAAAAAAAA");
+    }   
+    printf("Palavra escolhida depois: %s\n", palavras[indice]);
+    char* palavra_secreta = palavras[indice];
+
+    char tentativa[20];
+    int tamanho_tentativa;
+    char resultado[12], tutorial[10], catalogo = 1, selecionar[10];
+    while (1){
+    if (catalogo == 1){
+      puts("\n1. Jogar");
+      puts("2. Como jogar? (Recomendado)");
+      puts("3. Voltar\n");
+    }
+
+      printf("Digite a opção desejada: ");
+      fgets(selecionar,sizeof(selecionar),stdin); 
+    
+      if (selecionar[0] != '1' && selecionar[0] != '2' && selecionar[0] != '3' || strlen(selecionar) > 2){
+        puts("Resposta inválida!\n");
+        catalogo = 0;
+      }
+      else if(selecionar[0] == '3'){
+        return 1;
+      }
+      else if(selecionar[0] == '2'){
+        puts("TUTORAS");
+        while(1){
+          printf("\nDeseja jogar? [S/N]: ");
+          fgets(tutorial,sizeof(tutorial),stdin);
+          if (strlen(tutorial) == 2 && tutorial[0] == 'n' || tutorial[0] == 'N'){
+            return 1;
+          }
+          else if (strlen(tutorial) == 2 && tutorial[0] == 's' || tutorial[0] == 'S'){
+            catalogo = 1;
+            break;
+          }
+          else{
+            puts("Resposta inválida!");
+          }
+        }
+      }
+      else if(selecionar[0] == '1'){
+        break;
+      }
+    }
+    
+      printf("\nBem-vindo ao Termo, tente adivinhar a palavra secreta.\n");
+      
+      while (n_tentativa < 7) {
+          n_tentativa ++;
+          printf("Digite sua tentativa: ");
+          fgets(tentativa, sizeof(tentativa), stdin);
+          tamanho_tentativa = strlen(tentativa) - 1;
+  
+          // Verifica se a tentativa tem 5 letras
+          if (tamanho_tentativa != 5) {
+              printf("A palavra deve ter exatamente 5 letras.\n\n");
+              continue;
+          }
+        else{
+  
+          tentativa[strcspn(tentativa, "\n")] = 0; //troca o \n por \0
+        for (int i = 0; tentativa[i] != '\0'; i++) {
+            tentativa[i] = tolower((unsigned char)tentativa[i]);
+        }
+
+          // Avalia a tentativa
+          int usadas[6] = {0}; // Para controlar letras já avaliadas
+          for (int i = 0; i < 5; i++) {
+              if (tentativa[i] == palavra_secreta[i]) {
+                  resultado[i] = 'C'; // Letra correta e na posição certa
+                  usadas[i] = 1; // Marca que essa letra foi usada
+              } else {
+                  resultado[i] = 'X'; // Presume que a letra não está na palavra
+              }
+          }
+  
+          for (int i = 0; i < 5; i++) {
+              if (resultado[i] == 'X') {
+                  for (int j = 0; j < 5; j++) {
+                      if (tentativa[i] == palavra_secreta[j] && !usadas[j]) {
+                          resultado[i] = 'O'; // Letra está na palavra, mas na posição errada
+                          usadas[j] = 1; // Marca que essa letra foi usada
+                          break;
+                      }
+                  }
+              }
+          }
+  
+          resultado[5] = '\0'; // Termina a string de resultado
+          for (int i = 0; i < 5; i++){
+            if (resultado[i] == 'C'){
+              printf("✅");
+            }
+            else if (resultado[i] == 'O'){
+              printf("⚠️ ");
+            }
+            else{
+              printf("❌");
+            }
+          }
+          printf("    (Tentativas restantes: %d)", 7 - n_tentativa);
+          //printf("Resultado: %s\n\n", resultado);
+        puts("\n");
+  
+          if (strcmp(tentativa, palavra_secreta) == 0) {
+              printf("Parabéns! Você adivinhou a palavra!\n");
+              printf("Você recebeu 1 ficha como recompensa!\n");
+              *fichas += 1;
+              *pontuacao += 1;
+              return 0;
+          }
+          if (n_tentativa == 7 && ganhou == 0){
+            printf("Você perdeu! A palavra era: %s\n", palavra_secreta);
+            *fichas -= 1;
+            printf("Você perdeu 1 ficha!\n");
+            return 0;
+            
+          }
+      }  
+    }  
+  
 }

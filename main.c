@@ -137,8 +137,7 @@ int main() {
             puts("2. Pedra, papel, tesoura");
             puts("3. Operaçao misteriosa");
             puts("4. Card duel");
-            puts("X. Guia de fichas");
-            puts("X. Consultar fichas");
+            puts("5. jogo");
             puts("X. Sair");
             puts("");
             while (1){
@@ -150,7 +149,7 @@ int main() {
               printf("Digite a opção desejada: ");
             }
             fgets(opcao,sizeof(opcao),stdin);
-            if (opcao[0] != '1' && opcao[0] != '2' && opcao[0] != '3' && opcao[0] != '4' || strlen(opcao) > 2){
+            if (opcao[0] != '1' && opcao[0] != '2' && opcao[0] != '3' && opcao[0] != '4' && opcao[0] != '5' || strlen(opcao) > 2){
                puts("Resposta inválida!\n");
             }
             else{
@@ -181,6 +180,11 @@ int main() {
                 deseja_continuar(usuarios[id_usuario].username, &menu, &sair);                 // criar tutorial desse jogo
             } 
           }
+          if (opcao[0] == '5'){
+            if(termo(&usuarios[id_usuario].ficha,&usuarios[id_usuario].vitoria5) == 0){ 
+                deseja_continuar(usuarios[id_usuario].username, &menu, &sair);                 
+            } 
+          }          
         } // fim do loop menu
       } // fim do permissao = 1
     } // fim resposta = 2    
