@@ -139,6 +139,8 @@ int main() {
             puts("4. Card duel");
             puts("5. jogo");
             puts("6. Ranking de Vitórias");
+            puts("X. Loja");
+            puts("X. Guia de fichas");
             puts("X. Sair");
             puts("");
             while (1){
