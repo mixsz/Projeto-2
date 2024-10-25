@@ -15,7 +15,7 @@ typedef struct cadastro {
   int vitoria2;
   int vitoria3;
   int vitoria4; // adicionar nas funcoes de binario
-  int vitoria5;
+  int vitoria5; // adicionar nas funcoes binario
   int ficha;
 } Cadastro;
 
@@ -25,6 +25,10 @@ typedef struct { // utilizado no jogo 4
     int nivel;
 } Carta;
 
+typedef struct{
+  char nome[30];
+  int total_vitoria;
+} Ranking;
 /*                                       Prototipo das funcoes                             */
 
 int verifica_username(char username[], int NV, Cadastro *usuarios);
@@ -52,9 +56,10 @@ char *verbo_ataque();
 char *verbo_defesa();
 void verifica_pontuacao(int ponto_user[], int ponto_casa[], int *vitoria_user);
 void exibe_tutorial4();
-
 int termo(int *fichas, int *pontuacao);
 void exibe_tutorial5();
+void ver_ranking(Cadastro *usuarios, int NV);
+void ordenar_ranking(Ranking rank[], int n);
 
 #endif
 

@@ -1608,5 +1608,33 @@ int termo(int *fichas, int *pontuacao) {
           }
       }  
     }  
-  
+}
+
+void ver_ranking(Cadastro *usuarios, int NV){
+  int i, total_vitoria;
+  Ranking rank[NV];
+  for(i = 0; i < NV; i++){
+    strcpy(rank[i].nome, usuarios[i].username);
+    total_vitoria = usuarios[i].vitoria1 + usuarios[i].vitoria2 + usuarios[i].vitoria3 + usuarios[i].vitoria4 + usuarios[i].vitoria5;
+    rank[i].total_vitoria = total_vitoria;
+  }
+  ordenar_ranking(rank, NV);
+  puts("\n                     RANKING");
+  puts("~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~");
+  for (int i = 0; i < NV; i++) {
+      printf("TOP %d: %s (%d WINS)\n", i + 1, rank[i].nome, rank[i].total_vitoria);
+  }
+  puts("~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~");
+}
+
+void ordenar_ranking(Ranking rank[], int n) {
+  for (int i = 0; i < n - 1; i++) {        
+    for (int j = 0; j < n - i - 1; j++) {
+      if (rank[j].total_vitoria < rank[j + 1].total_vitoria) { // compara
+          Ranking temp = rank[j];        // armazena o elemento atual
+          rank[j] = rank[j + 1];         // move o prox elemento para a posicao atual
+          rank[j + 1] = temp;            // Coloca o elemento armazenado na prox posicao
+      }
+    }
+  }
 }
