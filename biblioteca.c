@@ -1630,10 +1630,10 @@ void ver_ranking(Cadastro *usuarios, int NV){
 void ordenar_ranking(Ranking rank[], int n) {
   for (int i = 0; i < n - 1; i++) {        
     for (int j = 0; j < n - i - 1; j++) {
-      if (rank[j].total_vitoria < rank[j + 1].total_vitoria) { // compara
+      if (rank[j].total_vitoria < rank[j+1].total_vitoria) { // compara (j + 1 seria o proximo do i)
           Ranking temp = rank[j];        // armazena o elemento atual
-          rank[j] = rank[j + 1];         // move o prox elemento para a posicao atual
-          rank[j + 1] = temp;            // Coloca o elemento armazenado na prox posicao
+          rank[j] = rank[j+1];         // move o prox elemento para a posicao atual
+          rank[j+1] = temp;            // coloca o elemento armazenado na prox posicao
       }
     }
   }
