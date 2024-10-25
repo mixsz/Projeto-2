@@ -1455,7 +1455,7 @@ void exibe_tutorial4(){
 
 int termo(int *fichas, int *pontuacao) {
     char palavras[100][6]; // 100 é o numero maximo de palavras e 6 é o tamanho maximo de cada palavra.
-    int num_palavras = 0, indice, n_tentativa = 0, ganhou = 0;
+    int num_palavras = 0, indice, n_tentativa = 0;
 
     // Lê as palavras do arquivo
     FILE* arquivo = fopen("palavras.txt", "r");
@@ -1476,13 +1476,13 @@ int termo(int *fichas, int *pontuacao) {
 
    
     indice = rand() % num_palavras;
-    printf("Palavra escolhida: %s\n", palavras[indice]);
+    //printf("Palavra escolhida: %s\n", palavras[indice]);
 
     if (indice % 2 == 1){
         indice -= 1;
-        printf(" AAAAAAAAAA");
+  
     }   
-    printf("Palavra escolhida depois: %s\n", palavras[indice]);
+    //printf("Palavra escolhida depois: %s\n", palavras[indice]);
     char* palavra_secreta = palavras[indice];
 
     char tentativa[20];
@@ -1535,7 +1535,7 @@ int termo(int *fichas, int *pontuacao) {
     
       printf("\nBem-vindo ao Termo, tente adivinhar a palavra secreta.\n");
       
-      while (n_tentativa < 7) {
+      while (n_tentativa < 6) {
           n_tentativa ++;
           printf("Digite sua tentativa: ");
           fgets(tentativa, sizeof(tentativa), stdin);
@@ -1588,7 +1588,7 @@ int termo(int *fichas, int *pontuacao) {
               printf("❌");
             }
           }
-          printf("    (Tentativas restantes: %d)", 7 - n_tentativa);
+          printf("    (Tentativas restantes: %d)", 6 - n_tentativa);
           //printf("Resultado: %s\n\n", resultado);
         puts("\n");
   
@@ -1599,7 +1599,7 @@ int termo(int *fichas, int *pontuacao) {
               *pontuacao += 1;
               return 0;
           }
-          if (n_tentativa == 7 && ganhou == 0){
+          if (n_tentativa == 6){
             printf("Você perdeu! A palavra era: %s\n", palavra_secreta);
             *fichas -= 1;
             printf("Você perdeu 1 ficha!\n");
