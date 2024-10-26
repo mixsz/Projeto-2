@@ -213,9 +213,9 @@ int adivinhe_numero(int *fichas, int *pontuacao){
   int *random; // ponteiro que armazenara o numero gerado aleatoriamente
   while (1){
     if (catalogo == 1){
-      puts("\n1 - Normal (+1 ficha)");
-      puts("2 - Dificíl (+2 fichas)");
-      puts("3 - IMPOSSÍVEL (+3 fichas)");
+      puts("\n1 - Normal 🪙 ");
+      puts("2 - Dificíl 🪙  (2x)");
+      puts("3 - IMPOSSÍVEL 🪙  (3x)");
       puts("4 - Como jogar?");
       puts("5 - Voltar");    
     }
@@ -276,7 +276,7 @@ int adivinhe_numero(int *fichas, int *pontuacao){
           }
           else{
             puts("\nPARABÉNS! VOCÊ CONSEGUIU ADIVINHAR O NÚMERO! :D");
-            printf("Total de chutes: %d\n\n", 4 - vidas); 
+            printf("Total de chutes: %d\n", 4 - vidas); 
             vitoria = 1;
             *pontuacao += 1;
             break;
@@ -286,11 +286,11 @@ int adivinhe_numero(int *fichas, int *pontuacao){
       if (vitoria == 0){
         printf("\nQUE PENA! VOCÊ PERDEU!\nO NÚMERO ERA %d :(\n", random[0]);
         *fichas -= 1;
-        puts("\n(Você perdeu 1 ficha)");
+      puts("-1 🪙");
       }
       else{
         *fichas += 1;
-        puts("Você recebeu 1 ficha como recompensa!");
+        puts("+1 🪙");
       }
       free(random); // libera memoria
       return 0;
@@ -349,7 +349,7 @@ int adivinhe_numero(int *fichas, int *pontuacao){
           }
           else{
             puts("\nPARABÉNS! VOCÊ CONSEGUIU ADIVINHAR O NÚMERO! :D");
-            printf("Total de chutes: %d\n\n", 5 - vidas);            
+            printf("Total de chutes: %d\n", 5 - vidas);            
             vitoria = 1;
             *pontuacao += 1;
             break;
@@ -359,10 +359,10 @@ int adivinhe_numero(int *fichas, int *pontuacao){
       if (vitoria == 0){
         printf("\nQUE PENA! VOCÊ PERDEU!\nO NÚMERO ERA %d :(\n", random[0]);
         *fichas -= 1;
-        puts("\n(Você perdeu 1 ficha)");
+        puts("-1 🪙");
       }
       else{
-        puts("Você recebeu 2 fichas como recompensa!");
+        puts("+2 🪙");
         *fichas += 2;
       }
       free(random); // libera memoria
@@ -422,7 +422,7 @@ int adivinhe_numero(int *fichas, int *pontuacao){
           }
           else{
             puts("\nPARABÉNS! VOCÊ CONSEGUIU ADIVINHAR O NÚMERO! :D");
-            printf("Total de chutes: %d\n\n", 8 - vidas);   
+            printf("Total de chutes: %d\n", 8 - vidas);   
             vitoria = 1;
             *pontuacao += 1;
             break;
@@ -432,11 +432,11 @@ int adivinhe_numero(int *fichas, int *pontuacao){
       if (vitoria == 0){
         printf("\nQUE PENA! VOCÊ PERDEU!\nO NÚMERO ERA %d :(\n", random[0]);
         *fichas -= 1;
-        puts("\n(Você perdeu 1 ficha)");
+        puts("-1 🪙");
       }
       else{
         *fichas += 3;
-        puts("Você recebeu 3 fichas como recompensa!");
+        puts("+3 🪙");
       }
       free(random); // libera memoria
       return 0;
@@ -577,13 +577,13 @@ int pedra_papel_tesoura(int *fichas, int *pontuacao){
               if (pt_casa == 2){
                 puts("OH NÃO! VOCÊ PERDEU O DUELO!");
                 *fichas -= 1;
-                puts("(Você perdeu 1 ficha)");
+              puts("-1 🪙");
               }
               else{
                 puts("MUITO BEM! VOCÊ GANHOU O DUELO!");
                 *fichas += 1;
                 *pontuacao += 1;
-                puts("Você recebeu 1 ficha como recompensa!");
+                puts("+1 🪙");
               }
             }
           }
@@ -944,20 +944,20 @@ int operacao_misteriosa(int *fichas, int *pontuacao){
           puts("\nPARABÉNS GÊNIO DA MATEMÁTICA! VOCÊ TIROU A MAIOR NOTA!");
           *fichas += 3;
           *pontuacao += 1;
-          puts("Você recebeu 3 fichas como recompensa!");
+         puts("+3 🪙");
           return 0;
         }
        else if (acerto > 5 && acerto < 10){ // se acertar mais de 5 ganha 2 fichas
          puts("\nPARABÉNS! VOCÊ ALCANÇOU A MÉDIA!");
          *fichas += 2;
          *pontuacao += 1;
-         puts("Você recebeu 2 fichas como recompensa!");
+         puts("+2 🪙");
          return 0;
        }
        else{ // perde uma ficha...
          puts("\nVOCÊ NÃO ALCANÇOU A MÉDIA. NÃO DESISTA!");
          *fichas -= 1;
-         puts("(Você perdeu 1 ficha)");
+         puts("-1 🪙");
           return 0;
        }
      }
@@ -1278,12 +1278,13 @@ int duelo_cartas(int *fichas, int *pontuacao){
         }
       }
       if (vitoria_user == 1){ // 1 = vitoria user, 0 = derrota user
-        puts("Você recebeu 2 fichas como recompensa!");
+        puts("+2 🪙");
         *fichas += 2;
-        *pontuacao += 1;      }
+        *pontuacao += 1;
+      }
       else{
         *fichas -= 1;
-        puts("(Você perdeu 1 ficha)");
+        puts("-1 🪙");
       }
       return 0;
       free(numeros_user); // liberando espaco...
@@ -1334,7 +1335,7 @@ Carta criar_carta(int nivel) {
         case 5: strcpy(nova_carta.nome, "Bola de neve"); break;
         case 6: strcpy(nova_carta.nome, "Fumaça fria"); break;
         case 7: strcpy(nova_carta.nome, "Penguin"); break;
-        case 8: strcpy(nova_carta.nome, "Urso gay"); break;
+        case 8: strcpy(nova_carta.nome, "Urso hétero"); break;
         default: break;
     }
   }
@@ -1506,13 +1507,7 @@ int termo(int *fichas, int *pontuacao) {
         return 1;
       }
       else if(selecionar[0] == '2'){
-        puts("Voce escolheu jogar o TERMO, o termo é um jogo de adivinhação, onde você tem que adivinhar uma palavra de 5 letras, simples, né?");
-        puts("\n--Você tem 6 tentativas para acertar a palavra");
-        puts("--A cada tentativa o console que informa se a letra que você digitou está ou não na palavra e se ela está ou não na posição correta");
-        puts("--O símbolo ✅ , indica que você a certou a letra na posição correta");
-        puts("--O símbolo ⚠️ , indica que a letra que você digitou está na palavra, mas não na posição correta");
-        puts("--O símbolo ❌ , indica que a letra que você digitou não está na palavra");
-        puts("\nBoa Jogatina!\n");
+        exibe_tutorial5();
         while(1){
           printf("\nDeseja jogar? [S/N]: ");
           fgets(tutorial,sizeof(tutorial),stdin);
@@ -1594,7 +1589,7 @@ int termo(int *fichas, int *pontuacao) {
   
           if (strcmp(tentativa, palavra_secreta) == 0) {
               printf("Parabéns! Você adivinhou a palavra!\n");
-              printf("Você recebeu 1 ficha como recompensa!\n");
+              puts("+1 🪙");
               *fichas += 1;
               *pontuacao += 1;
               return 0;
@@ -1602,12 +1597,22 @@ int termo(int *fichas, int *pontuacao) {
           if (n_tentativa == 6){
             printf("Você perdeu! A palavra era: %s\n", palavra_secreta);
             *fichas -= 1;
-            printf("Você perdeu 1 ficha!\n");
+            puts("-1 🪙");
             return 0;
             
           }
       }  
     }  
+}
+
+void exibe_tutorial5(){
+  puts("\nVoce escolheu jogar o TERMO, o termo é um jogo de adivinhação, onde você tem que adivinhar uma palavra de 5 letras, simples, né?");
+  puts("\n--Você tem 6 tentativas para acertar a palavra.");
+  puts("--A cada tentativa o console que informa se a letra que você digitou está ou não na palavra e se ela está ou não na posição correta.");
+  puts("--O símbolo ✅ indica que você a certou a letra na posição correta.");
+  puts("--O símbolo ⚠️  indica que a letra que você digitou está na palavra, mas não na posição correta.");
+  puts("--O símbolo ❌ indica que a letra que você digitou não está na palavra.");
+  puts("\nBoa Jogatina!");
 }
 
 void ver_ranking(Cadastro *usuarios, int NV){

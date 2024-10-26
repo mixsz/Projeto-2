@@ -140,9 +140,9 @@ int main() {
             puts("5. Palavra");
             puts("6. Meu perfil");
             puts("7. Ranking de Vitórias");
-            puts("X. Loja");
-            puts("X. Guia de fichas");
-            puts("X. Sair");
+            puts("X. Loja"); // falta
+            puts("X. Guia de fichas"); // falta 
+            puts("X. Sair"); // falta
             puts("");
             while (1){
               if (oi == 1) { // dar oi na primeira vez da mensagem
