@@ -137,8 +137,9 @@ int main() {
             puts("2. Pedra, papel, tesoura");
             puts("3. Operaçao misteriosa");
             puts("4. Card duel");
-            puts("5. jogo");
-            puts("6. Ranking de Vitórias");
+            puts("5. Palavra");
+            puts("6. Meu perfil");
+            puts("7. Ranking de Vitórias");
             puts("X. Loja");
             puts("X. Guia de fichas");
             puts("X. Sair");
@@ -152,7 +153,7 @@ int main() {
               printf("Digite a opção desejada: ");
             }
             fgets(opcao,sizeof(opcao),stdin);
-            if (opcao[0] != '1' && opcao[0] != '2' && opcao[0] != '3' && opcao[0] != '4' && opcao[0] != '5' && opcao[0] != '6' || strlen(opcao) > 2){
+            if (opcao[0] != '1' && opcao[0] != '2' && opcao[0] != '3' && opcao[0] != '4' && opcao[0] != '5' && opcao[0] != '6' && opcao[0] != '7' || strlen(opcao) > 2){
                puts("Resposta inválida!\n");
             }
             else{
@@ -187,8 +188,12 @@ int main() {
             if(termo(&usuarios[id_usuario].ficha,&usuarios[id_usuario].vitoria5) == 0){  // vitoria 5 no binario
                 deseja_continuar(usuarios[id_usuario].username, &menu, &sair);                 
             } 
-          }    
+          }
           if (opcao[0] == '6'){
+            meu_perfil(usuarios[id_usuario].username, usuarios[id_usuario].ficha,usuarios[id_usuario].vitoria1,usuarios[id_usuario].vitoria2,usuarios[id_usuario].vitoria3,usuarios[id_usuario].vitoria4,usuarios[id_usuario].vitoria5);
+            deseja_continuar(usuarios[id_usuario].username, &menu, &sair);    
+          }
+          if (opcao[0] == '7'){
             ver_ranking(usuarios, *NV);
             deseja_continuar(usuarios[id_usuario].username, &menu, &sair);    
           }    

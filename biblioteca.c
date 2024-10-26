@@ -1638,3 +1638,21 @@ void ordenar_ranking(Ranking rank[], int n) {
     }
   }
 }
+
+void meu_perfil(char username[], int fichas, int vitoria1, int vitoria2, int vitoria3, int vitoria4, int vitoria5){
+  printf("\nPerfil de %s\n",username);
+  printf("Fichas: %d\n\n",fichas);
+    puts("       Tabela de Vitórias");
+  puts("|---------------------------------|");
+  printf("|Adivinhe o número: 🏆 (%dx)       |\n",vitoria1);
+  puts("|---------------------------------|");
+  printf("|Pedra, papel, tesoura: 🏆 (%dx)   |\n",vitoria2);
+  puts("|---------------------------------|");
+  printf("|Operação misteriosa: 🏆 (%dx)     |\n",vitoria3);
+  puts("|---------------------------------|");
+  printf("|Card duel: 🏆 (%dx)               |\n",vitoria4);
+  puts("|---------------------------------|");
+  printf("|Palavra: 🏆 (%dx)                 |\n",vitoria5);
+  puts("|---------------------------------|");
+
+}

@@ -60,6 +60,7 @@ int termo(int *fichas, int *pontuacao);
 void exibe_tutorial5();
 void ver_ranking(Cadastro *usuarios, int NV);
 void ordenar_ranking(Ranking rank[], int n);
+void meu_perfil(char username[], int fichas, int vitoria1, int vitoria2, int vitoria3, int vitoria4, int vitoria5);
 
 #endif
 
