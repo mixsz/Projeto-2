@@ -1641,7 +1641,7 @@ void ordenar_ranking(Ranking rank[], int n) {
 
 void meu_perfil(char username[], int fichas, int vitoria1, int vitoria2, int vitoria3, int vitoria4, int vitoria5){
   printf("\nPerfil de %s\n",username);
-  printf("Fichas: %d\n\n",fichas);
+  printf("%d 🪙\n",fichas);
     puts("       Tabela de Vitórias");
   puts("|---------------------------------|");
   printf("|Adivinhe o número: 🏆 (%dx)       |\n",vitoria1);
@@ -1654,5 +1654,4 @@ void meu_perfil(char username[], int fichas, int vitoria1, int vitoria2, int vit
   puts("|---------------------------------|");
   printf("|Palavra: 🏆 (%dx)                 |\n",vitoria5);
   puts("|---------------------------------|");
-
 }
