@@ -132,7 +132,6 @@ int login(int *bemvindo,int *id_usuario, int NV, Cadastro *usuarios){
       return 0;              // ele volta ao menu principal 
     }
     for (i = 0; i < NV; i++){
-      printf("%s\n", usuarios[i].username);
       if (strcmp(usernamelogin, usuarios[i].username) == 0) { 
         *id_usuario = i;          // pega o i e passa para o id pra facilitar no rastreamento de senha
         verif_username = 1;
@@ -1657,7 +1656,7 @@ void meu_perfil(char username[], int fichas, int vitoria1, int vitoria2, int vit
   puts("|---------------------------------|");
   printf("|Card duel: 🏆 (%dx)               |\n",vitoria4);
   puts("|---------------------------------|");
-  printf("|Termo: 🏆 (%dx)                 |\n",vitoria5);
+  printf("|Termo: 🏆 (%dx)                   |\n",vitoria5);
   puts("|---------------------------------|");
 }
 
@@ -1702,4 +1701,286 @@ void guia_moeda(int *ficha){
       }
     }
   }  
+}
+
+int loja(int *ficha){
+  int catalogo = 1;
+  char resp[15];
+  
+  while (1){
+    resp[0] = '\0';
+    if (catalogo == 1){
+      puts("\nBem-vindo à Loja Aleatória! OS ITENS SÃO TOTALMENTE ALEATÓRIOS E TEM CHANCE DE SEREM REPETIDOS!\n");
+      catalogo = 0;
+    }
+    printf("Saldo: %d 🪙\n\n", *ficha);
+    puts("1. Curiosidade 🤔 (3 🪙 )");
+    puts("2. Desenho 🎨 (5 🪙 )");
+    puts("3. Piadinha 😂 (3 🪙 )");
+    puts("4. Voltar\n");
+    while (1){
+      printf("O que deseja comprar? ");
+      fgets(resp, sizeof(resp), stdin);
+      if (strlen(resp) != 2 || (resp[0] != '1' && resp[0] != '2' && resp[0] != '3' && resp[0] != '4')){
+        puts("Resposta inválida!\n");
+      }
+      else{
+        break;
+      }
+    }
+    if (resp[0] == '1'){
+      if (*ficha >= 3){
+        puts("");
+        curiosidade();
+        *ficha -= 3;
+        if (comprar_novamente() == 0){
+          return 0;
+        }
+      }
+      else{
+        puts("\nParece que você não possui moedas suficiente! Visite o Guia de Moedas ou vença os jogos para obter mais moedas!");
+        return 0;
+      }
+    }
+    else if (resp[0] == '2'){
+      if (*ficha >= 5){
+        puts("");
+        desenho();
+        *ficha -= 3;
+        if (comprar_novamente() == 0){
+          return 0;
+        }
+      }
+      else{
+        puts("\nParece que você não possui moedas suficiente! Visite o Guia de Moedas ou vença os jogos para obter mais moedas!");
+        return 0;
+      }
+    }
+  }
+}
+
+int comprar_novamente(){
+  char resp2[15];
+  resp2[0] = '\0';
+  while (1){
+    printf("Deseja comprar mais alguma coisa? [S/N]: ");
+    fgets(resp2,sizeof(resp2),stdin);
+    if (strlen(resp2) == 2 && resp2[0] == 'S' || resp2[0] == 'N' || resp2[0] == 's' || resp2[0] == 'n'){
+      break;
+    }
+    else{
+      puts("Resposta inválida!\n");
+    }
+  }
+  if (resp2[0] == 'n' || resp2[0] == 'N'){
+    return 0;
+  }
+  else{
+    return 1;
+  }
+}
+
+void curiosidade(){
+  const char *curiosidades[] = {
+    "Os humanos têm mais de 1000 tipos de bactérias na boca. Essas bactérias ajudam na digestão e na proteção contra patógenos. 🦷",
+    "O chocolate foi usado como moeda na civilização maia. Os maias e astecas valorizavam tanto o cacau que o usavam para transações comerciais. 🍫",
+    "O maior deserto do mundo não é o Saara, mas a Antártica. Embora a Antártica seja coberta de gelo, é considerada um deserto porque recebe muito pouca precipitação. ❄️",
+    "As formigas não têm ouvidos. Elas sentem vibrações e sons através de sensores em suas pernas e corpo. 🐜",
+    "Os corvos podem viver até 20 anos ou mais. Eles são conhecidos por sua inteligência e habilidades sociais complexas. 🦅",
+    "O primeiro programador do mundo foi uma mulher. Ada Lovelace, uma matemática britânica, é considerada a primeira programadora por seu trabalho com a máquina analítica de Charles Babbage na década de 1800. 👩‍💻",
+    "O primeiro vírus de computador foi criado em 1986. Chamado de 'Brain', ele foi desenvolvido por dois programadores paquistaneses e tinha como objetivo proteger software contra cópias ilegais. 🦠",
+    "A primeira linguagem de programação de alto nível foi a Fortran, criada em 1957. Fortran (Formula Translation) foi desenvolvida para computação científica e ainda é usada em alguns campos hoje. 💻",
+    "Existem mais estrelas no universo do que grãos de areia em todas as praias da Terra. Estima-se que haja cerca de 100 bilhões de galáxias, cada uma contendo bilhões de estrelas. 🌠",
+    "O maior vulcão do sistema solar é Olympus Mons, em Marte. Ele é três vezes mais alto que o Monte Everest e possui uma base que é mais extensa que o estado do Arizona. 🏔️",
+    "Os planetas do sistema solar não são sólidos como pensamos. Júpiter e Netuno, por exemplo, são compostos principalmente de gases e não têm uma superfície sólida como a Terra. 🌪️",
+    "Os cientistas acreditam que cerca de 85% do universo é composto de matéria escura, que não emite luz e não pode ser vista diretamente, mas exerce influência gravitacional sobre a matéria visível. 🌑",
+    "Os golfinhos têm nomes próprios. Eles usam um tipo de assobio específico para se identificarem, semelhante a como os humanos usam nomes. 🐬",
+    "O coração de um polvo tem três corações. Dois corações bombeiam sangue para as brânquias, enquanto o terceiro bombeia para o resto do corpo. 🐙❤️",
+    "Os humanos compartilham cerca de 60% do seu DNA com as bananas. Isso mostra como todos os organismos vivos na Terra estão interconectados em algum nível, mesmo que pareçam muito diferentes! 🍌",
+    "O coração de uma andorinha bate até 1.000 vezes por minuto. Isso permite que elas sejam extremamente ágeis e rápidas em voo. 🐦",
+    "As estrelas-do-mar têm a capacidade de 'comer' através de seus corpos. Elas podem ejetar seu estômago para fora e envolver suas presas, digerindo-as externamente antes de puxar o estômago de volta para o corpo. ⭐",
+    "A luz do Sol leva cerca de 8 minutos e 20 segundos para chegar à Terra. Isso significa que quando olhamos para o Sol, estamos vendo a luz que ele emitiu mais de 8 minutos atrás. ☀️",
+    "O nome 'C' vem da linguagem anterior chamada 'B'. A linguagem B foi desenvolvida por Ken Thompson e Dennis Ritchie na década de 1960, e quando Ritchie começou a trabalhar em uma nova linguagem que adicionava mais recursos, ele a chamou de 'C', simplesmente porque ela veio depois da linguagem B. Essa escolha de nome é um exemplo da simplicidade e da continuidade no desenvolvimento de linguagens de programação! 🖥️",
+  "Cachorro mordido por cobra tem medo de linguiça. 🐍🐶"
+  };
+  int numero_de_curiosidades = sizeof(curiosidades) / sizeof(curiosidades[0]); // calcula o total
+  int aleatorio = rand() % numero_de_curiosidades; // escolhe aleatoriamente
+  printf("%s\n\n", curiosidades[aleatorio]);
+  puts("                    😱😲😮🤯😳\n");
+
+}
+
+void desenho(){
+  const char *desenhos[] = {
+      "     .-\"\"\"\"\"-.\n"
+      "   .'          '.\n"
+      "  /   O      O   \\\n"
+      " :           `    :\n"
+      " |                |\n"
+      " :    .------.    :\n"
+      "  \\  '        '  /\n"
+      "   '.          .'\n"
+      "     '-......-'\n",
+
+  "     ******       ******\n"
+    "   **      **   **      **\n"
+    "  **        ** **        **\n"
+    "  **         ***         **\n"
+    "   **                   **\n"
+    "    **                 **\n"
+    "      **             **\n"
+    "        **         **\n"
+    "          **     **\n"
+    "            ** **\n"
+    "              *\n",
+    "    / \\__\n"
+      "   (    @\\___\n"
+      "   /         O\n"
+      "  /   (_____/\n"
+      " /_____/   U\n",
+
+      "     .--.\n"
+      "    |o_o |\n"
+      "    |:_/ |\n"
+      "   //   \\ \\\n"
+      "  (|     | )\n"
+      " /'\\_   _/`\\\n"
+      " \\___)=(___/\n",
+
+      "   /\\_/\\\n"
+      "  ( o.o )\n"
+      "   > ^ <\n",
+  "   .-\"\"\"\"\"-.\n"
+    "  /          \\\n"
+    " |   O    O   |\n"
+    " |   \\____/   |\n"
+    "  \\          /\n"
+    "   '-......-'\n",
+  "   , _\n"
+  "   (o,o)\n"
+  "   |)__)  \n"
+  "   -\"-\"- \n",
+  "        /\\\n"
+  "       /  \\\n"
+  "      /    \\\n"
+  "     /      \\\n"
+  "    /        \\\n"
+  "   /          \\\n"
+  "  /____________\\\n"
+  "      |    |\n"
+  "      |____|\n",
+  "         ccee88oo\n"
+  "      C8O8O8Q8PoOb o8oo\n"
+  "   dOB69QO8PdUOpugoO9bD\n"
+  "  CgggbU8OU qOp qOdoUOdcb\n"
+  "    6OuU  /p u gcoUodpP\n"
+  "      \\\\//  /douUP\n"
+  "        \\\\////\n"
+  "          |||    \n"
+  "          |||    \n"
+  "          |||    \n"
+  "          |||    \n"
+  "          |||    \n"
+  "         /|||\\   \n"
+  "        / ||| \\  \n"
+  "       /  |||  \\ \n",
+  "        \\   |   /\n"
+  "          .-'-.\n"
+  "     --  /     \\  --\n"
+  "        |       |\n"
+  "     --  \\     /  --\n"
+  "          `-.-'\n"
+  "        /   |   \\\n",
+  "              __====-_  _-====__\n"
+  "          _--^^^#####//      \\#####^^^--_\n"
+  "       _-^##########// (    ) \\##########^-_\n"
+  "      -############//  |\\^^/|  \\############-\n"
+  "    _/############//   (@::@)   \\############\\_\n"
+  "   /#############((      \\//      ))#############\\\n"
+  "  -###############\\    (oo)    //###############-\n"
+  " -#################\\  / '' \\  //#################-\n"
+  " -###################\\/  |  \\/###################-\n"
+  "  -##################(   |   )##################-\n"
+  "   -##################\\  |  //##################-\n"
+  "    -##################\\ | //##################-\n"
+  "     -##################\\|//##################-\n"
+  "      -###################-###################-\n"
+  "       -#################-#################-\n"
+  "         -###############-###############-\n",
+  "         .-.\n"
+  "        (o o)\n"
+  "        | O |\n"
+  "        |   |\n"
+  "       _|   |_\n"
+  "      /       \\\n"
+  "     |         |\n"
+  "      \\       /\n"
+  "       `-._.-'\n",
+  "        , - ~ ~ ~ - ,\n"
+  "    , '               ' ,\n"
+  "   ,                       ,\n"
+  "  ,                         ,\n"
+  "  ,                         ,\n"
+  "   ,                       ,\n"
+  "    ' ,                 , '\n"
+  "        ' - , _ _ _ ,  '\n",
+  "              _  \n"
+  "         _.-' `'-._  \n"
+  "      .-'           '-.  \n"
+  "    .'                 '.  \n"
+  "   /                     \\  \n"
+  "  ;                       ;  \n"
+  "   \\                     /  \n"
+  "    '.                 .'  \n"
+  "      '-._         _.-'  \n"
+  "          '-.___.-'  \n",
+  "          /\\\n"
+  "         /  \\\n"
+  "        /    \\\n"
+  "       /      \\\n"
+  "      /________\\\n"
+  "     /\\        /\\\n"
+  "    /  \\      /  \\\n"
+  "   /    \\    /    \\\n"
+  "  /      \\  /      \\\n"
+  " /________\\/________\\\n",
+  "      /\\     /\\\n"
+    "     {  `---'  }\n"
+    "     {  O   O  }\n"
+    "     ~~>  V  <~~\n"
+    "      \\  \\|/  /\n"
+    "       `-----'____\n"
+    "       /     \\    \\_ \n"
+    "      {       }\\  )_  )\n"
+    "      |  \\_/  |/ /  /  \n"
+    "       \\__/  /(_/  \n"
+    "         (__/\n",
+  "     ______\n"
+  "  __//_||__\\___\n"
+  " |  _   _     _  |\n"
+  "'-(_)-------(_)--'\n",
+  "     ,   ,   ,   ,\n"
+  "    /|\\ /|\\ /|\\ /|\\\n"
+  "   | o o o o o o o |\n"
+  "    \\    `-'      /\n"
+  "     `-__________-'\n",
+  "       .-^-.\n"
+  "     .'     '.\n"
+  "    /   _ _   \\\n"
+  "   /   (o o)   \\\n"
+  "   |    \\_/    |\n"
+  "   |           |\n"
+  "    \\  \\___/  /\n"
+  "     '._____.'\n",
+      "    /\\\n"
+      "   /  \\\n"
+      "  /____\\\n"
+      "  |    |\n"
+      "  |____|\n"
+                 // Os desenhos foram retirados do site: https://ascii.co.uk/art
+  };
+  int desenho_aleatorio = sizeof(desenhos) / sizeof(desenhos[0]); // calcula o total
+  int aleatorio = rand() % desenho_aleatorio; // escolhe aleatoriamente
+  printf("%s\n\n", desenhos[aleatorio]);
+  puts("                  ✨🎨🖌️ 🖼️ ✨\n");
 }

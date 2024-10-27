@@ -57,8 +57,7 @@ int main() {
         }   
       }
     }
-    printf( "%s\n", usuarios[0].username);
-    printf( "%s\n", usuarios[0].senha);  
+
     fclose(ler);
 
     FILE *escreve1 = fopen("usuarios.txt", "a"); // APLICA UM \N INICIAL CASO NÃO TENHA NADA NO ARQUIVO
@@ -74,9 +73,6 @@ int main() {
   }
     NV = &contador_cadastros; // Novo Cadastro
     while (sair != 1){
-      printf("contador %d\n",contador_cadastros);
-      printf("ponteiro %d\n",*NV);
-
 
       printf("1 - Criar conta \n");
       printf("2 - Acessar conta\n");
@@ -140,7 +136,7 @@ int main() {
             puts("5. Termo");
             puts("6. Meu perfil");
             puts("7. Ranking de Vitórias");
-            puts("X. Loja"); // falta
+            puts("8. Loja"); // falta
             puts("9. Guia de Moedas");
             puts("0. Sair"); // falta
             puts("");
@@ -180,12 +176,12 @@ int main() {
 
           }
           if (opcao[0] == '4'){
-            if(duelo_cartas(&usuarios[id_usuario].ficha,&usuarios[id_usuario].vitoria4) == 0){ // colocar vitoria 4 no bi
-                deseja_continuar(usuarios[id_usuario].username, &menu, &sair);                 // criar tutorial desse jogo
+            if(duelo_cartas(&usuarios[id_usuario].ficha,&usuarios[id_usuario].vitoria4) == 0){
+                deseja_continuar(usuarios[id_usuario].username, &menu, &sair);                 
             } 
           }
           if (opcao[0] == '5'){
-            if(termo(&usuarios[id_usuario].ficha,&usuarios[id_usuario].vitoria5) == 0){  // vitoria 5 no binario
+            if(termo(&usuarios[id_usuario].ficha,&usuarios[id_usuario].vitoria5) == 0){ 
                 deseja_continuar(usuarios[id_usuario].username, &menu, &sair);                 
             } 
           }
@@ -195,11 +191,21 @@ int main() {
           }
           if (opcao[0] == '7'){
             ver_ranking(usuarios, *NV);
-            deseja_continuar(usuarios[id_usuario].username, &menu, &sair);    
+            deseja_continuar(usuarios[id_usuario].username, &menu, &sair);             
           }    
+          if (opcao[0] == '8'){
+            if(loja(&usuarios[id_usuario].ficha) == 0){ 
+              deseja_continuar(usuarios[id_usuario].username, &menu, &sair);                 
+            } 
+          }   
           if (opcao[0] == '9'){
             guia_moeda(&usuarios[id_usuario].ficha);
             deseja_continuar(usuarios[id_usuario].username, &menu, &sair);    
+          }   
+          if (opcao[0] == '0'){
+            printf("\nAté breve %s!\n", usuarios[id_usuario].username);
+            menu = 0;
+            sair = 1;
           }    
         } // fim do loop menu
       } // fim do permissao = 1
@@ -210,4 +216,5 @@ int main() {
       sair = 1;
     }
   }
+  atualiza_binario(usuarios); // atualiza as vitorias e fichas QUANDO ENCERRA O PROGRAMA
 }
