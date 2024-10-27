@@ -14,8 +14,8 @@ typedef struct cadastro {
   int vitoria1;
   int vitoria2;
   int vitoria3;
-  int vitoria4; // adicionar nas funcoes de binario
-  int vitoria5; // adicionar nas funcoes binario
+  int vitoria4; 
+  int vitoria5;
   int ficha;
 } Cadastro;
 
@@ -64,8 +64,9 @@ void meu_perfil(char username[], int fichas, int vitoria1, int vitoria2, int vit
 void guia_moeda(int *ficha);
 int loja(int *ficha);
 int comprar_novamente();
-void curiosidade();
+void curiosidade(); // As curiosidades foram retiradas do gpt
 void desenho(); // Os desenhos foram retirados do site: https://ascii.co.uk/art
+void piadoca();
 
 #endif
 

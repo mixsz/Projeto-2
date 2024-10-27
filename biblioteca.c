@@ -1716,7 +1716,7 @@ int loja(int *ficha){
     printf("Saldo: %d 🪙\n\n", *ficha);
     puts("1. Curiosidade 🤔 (3 🪙 )");
     puts("2. Desenho 🎨 (5 🪙 )");
-    puts("3. Piadinha 😂 (3 🪙 )");
+    puts("3. Piadinha 😂 (4 🪙 )");
     puts("4. Voltar\n");
     while (1){
       printf("O que deseja comprar? ");
@@ -1746,7 +1746,21 @@ int loja(int *ficha){
       if (*ficha >= 5){
         puts("");
         desenho();
-        *ficha -= 3;
+        *ficha -= 5;
+        if (comprar_novamente() == 0){
+          return 0;
+        }
+      }
+      else{
+        puts("\nParece que você não possui moedas suficiente! Visite o Guia de Moedas ou vença os jogos para obter mais moedas!");
+        return 0;
+      }
+    }
+    else if (resp[0] == '3'){
+      if (*ficha >= 3){
+        puts("");
+        piadoca();
+        *ficha -= 4;
         if (comprar_novamente() == 0){
           return 0;
         }
@@ -1984,3 +1998,31 @@ void desenho(){
   printf("%s\n\n", desenhos[aleatorio]);
   puts("                  ✨🎨🖌️ 🖼️ ✨\n");
 }
+
+void piadoca(){
+  const char *piada[] = {
+      "Por que o computador foi ao médico?\nPorque ele tinha um vírus!",
+      "O que um zero disse para o oito?\n'Belo cinto!'",
+      "pc: redefina sua senha\neu: fazoLdasilva123\npc: a senha deve conter acentos\neu: carro123",
+      "Gênio: Vc tem 3 desejos\nEu: faça todas as palavras terem 6 letras\nGênnio: desejo conceb\nEeeuuu: faaçaa ttodas aaasss palavr ccoomm rec\nRecnio: recejo recebi\nReceuu: recçaa recnas recass recarv recmin recon eba\nReceba: Receba\nReceba: Receba",
+      "*Na padaria*\n\n- tem pão?\n- não\n- tem pães?\n- nães",
+      "*Na padaria*\n\n- bom dia meu nome é lucas philipi vou querer 200g de queijo e 6 pão\n- francês?\n- bonjour je mapelle lucas philipi je veux 200g du fromage e 6 pains",
+      "*Um capiria pergunta ao outro que assiste TV*\n\n- E aí, firme?\n- Não, futebor!"
+      "*Numa conversa entre duas galinhas fazendo café*\n\n– Pó pô pó? (Pode pôr pó?)\n– Pó pô (Pode pôr)",
+      "Perguntaram para o cachorro qual é o cantor favorito dele.\nEle respondeu Latino.",
+      "*Na farmácia*\n\n- Tem shampoo?\n- Pra qual tipo de cabelo?\n- Molhado",
+      "*Na guerra*\n\n– Capitão, vejo pelo binóculo a aproximação de uma tropa.\n– São amigos ou inimigos?\n– Devem ser amigos, capitão. Vêm todos juntos.",
+      "– Alô, é do Guinness?\n– É, sim. O que gostaria?\n– Gostaria de informar que eu quebrei um recorde. Montei um quebra-cabeça de mil peças.\n– O senhor vai me desculpar, mas isso qualquer um faz.\n– Mas eu montei o quebra-cabeça em 10 dias!\n– Senhor, isso qualquer um faz. Nem se o senhor tivesse montado em 10 horas seria um recorde.\n– Mas é que na capa está escrito 'de 3 a 5 anos'...",
+      "– Pai, o senhor pode me ajudar a encontrar o máximo divisor comum de 210?\n– Como é? Não acharam isso até hoje? Estão procurando desde que eu tinha a sua idade.",
+      "– O que o Aquaman faz para salvar o mundo?\n- Nada",
+      "Por que os programadores sempre confundem Natal com Halloween?\nPorque OCT 31 == DEC 25!",
+      "Qual é a comida que liga e desliga?\nO Strog-ON-off.",
+      "*No sexy shop*\n\n- Qual brinquedo de borracha a senhora quer?\n- Aquele vermelho!\n- Senhora, aquilo é um extintor!",
+      "*Em um chat*\n\n- EU TO PRESO NO CAPS KKKK\n- Cara que piada idiota viu. O caps não é um manocômio e esse tipo de comentário não...\n- VOCÊ NÃO ENTENDEU, EU NÃO TO CONSEGUINDO DIMIUIR AS LETRAS"      
+    };
+    int qntd = sizeof(piada) / sizeof(piada[0]); // calcula o total
+    int aleatorio = rand() % qntd; // escolhe aleatoriamente
+    printf("%s\n\n", piada[aleatorio]);
+    puts("                   😂🤣😄😆😅😹\n");
+
+  }
