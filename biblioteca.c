@@ -1606,7 +1606,7 @@ int termo(int *fichas, int *pontuacao) {
 }
 
 void exibe_tutorial5(){
-  puts("\nVoce escolheu jogar o TERMO, o termo é um jogo de adivinhação, onde você tem que adivinhar uma palavra de 5 letras, simples, né?");
+  puts("\nVoce escolheu jogar o TERMO. Termo é um jogo de adivinhação, onde você tem que adivinhar uma palavra de 5 letras, simples, né?");
   puts("\n--Você tem 6 tentativas para acertar a palavra.");
   puts("--A cada tentativa o console que informa se a letra que você digitou está ou não na palavra e se ela está ou não na posição correta.");
   puts("--O símbolo ✅ indica que você a certou a letra na posição correta.");
@@ -1657,6 +1657,49 @@ void meu_perfil(char username[], int fichas, int vitoria1, int vitoria2, int vit
   puts("|---------------------------------|");
   printf("|Card duel: 🏆 (%dx)               |\n",vitoria4);
   puts("|---------------------------------|");
-  printf("|Palavra: 🏆 (%dx)                 |\n",vitoria5);
+  printf("|Termo: 🏆 (%dx)                 |\n",vitoria5);
   puts("|---------------------------------|");
+}
+
+void guia_moeda(int *ficha){
+  char resposta[15], resposta2[15]; strcpy(resposta, "index");
+  int vez = 1;
+  puts("\n                Guia de Moedas 🪙\n");
+  puts("1. Como funciona a moeda?");
+  puts("Saldo inicial: Toda conta começa com 10 moedas. Esse é o ponto de partida para você explorar e se divertir com os jogos.");
+  puts("Ganhando moeda(s): Cada vitória nos games garante mais moedas para a sua conta, mas saiba que você perde uma moeda se perder no jogo. Você precisa jogar para descobrir em quais jogos você pode obter mais moedas.");
+  puts("~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~\n");
+  puts("2. Onde usar as moedas?");
+  puts("A moeda pode ser usada na loja para desbloquear pequenas premiações como surpresas ou curiosidades.");
+  puts("~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~-~~~\n");
+  puts("3. E se eu zerar minhas moedas?");
+  puts("Caso você esteja numa situação crítica, você pode receber 10 moedas acertando uma única pergunta.");
+  while(strlen(resposta) != 0 && strcmp(resposta, "PERGUNTA") != 0){
+    if (vez == 1){
+      printf("\nPara isso digite 'PERGUNTA' ou, se quiser continuar, pressione ENTER... ");
+      vez = 2;
+    }
+    else{
+      printf("\nDigite 'PERGUNTA' ou pressione ENTER para continuar... ");
+    }
+    fgets(resposta, sizeof(resposta), stdin);
+    resposta[strcspn(resposta, "\n")] = '\0'; // TIRANDO O \n PRA PODER COMPARAR AS SENHAS
+
+  }
+  if (strcmp(resposta, "PERGUNTA") == 0){
+    puts("");
+    while (1){
+      printf("Qual a nota do projeto? ");
+      fgets(resposta2, sizeof(resposta2), stdin);
+      resposta2[strcspn(resposta2, "\n")] = '\0';
+      if (strcmp(resposta2, "10") == 0){
+        printf("Parabéns! Você ganhou 10 moedas! 🪙\n");
+        *ficha += 10;
+        break;
+      }
+      else{
+        puts("Incorreto! Tente novamente.\n");
+      }
+    }
+  }  
 }

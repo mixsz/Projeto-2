@@ -137,12 +137,12 @@ int main() {
             puts("2. Pedra, papel, tesoura");
             puts("3. Operaçao misteriosa");
             puts("4. Card duel");
-            puts("5. Palavra");
+            puts("5. Termo");
             puts("6. Meu perfil");
             puts("7. Ranking de Vitórias");
             puts("X. Loja"); // falta
-            puts("X. Guia de fichas"); // falta 
-            puts("X. Sair"); // falta
+            puts("9. Guia de Moedas");
+            puts("0. Sair"); // falta
             puts("");
             while (1){
               if (oi == 1) { // dar oi na primeira vez da mensagem
@@ -153,7 +153,7 @@ int main() {
               printf("Digite a opção desejada: ");
             }
             fgets(opcao,sizeof(opcao),stdin);
-            if (opcao[0] != '1' && opcao[0] != '2' && opcao[0] != '3' && opcao[0] != '4' && opcao[0] != '5' && opcao[0] != '6' && opcao[0] != '7' || strlen(opcao) > 2){
+            if (opcao[0] != '0' && opcao[0] != '1' && opcao[0] != '2' && opcao[0] != '3' && opcao[0] != '4' && opcao[0] != '5' && opcao[0] != '6' && opcao[0] != '7' && opcao[0] != '8' && opcao[0] != '9' || strlen(opcao) > 2){
                puts("Resposta inválida!\n");
             }
             else{
@@ -195,6 +195,10 @@ int main() {
           }
           if (opcao[0] == '7'){
             ver_ranking(usuarios, *NV);
+            deseja_continuar(usuarios[id_usuario].username, &menu, &sair);    
+          }    
+          if (opcao[0] == '9'){
+            guia_moeda(&usuarios[id_usuario].ficha);
             deseja_continuar(usuarios[id_usuario].username, &menu, &sair);    
           }    
         } // fim do loop menu
