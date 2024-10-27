@@ -1770,6 +1770,9 @@ int loja(int *ficha){
         return 0;
       }
     }
+    else{
+      return 1;
+    }
   }
 }
 
