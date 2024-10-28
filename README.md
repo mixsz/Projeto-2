@@ -9,13 +9,13 @@ Objetivo do Projeto:
 Este projeto tem como objetivo fornecer entretenimento ao usuário através de mini jogos, incluindo um sistema de moedas, ranking de pontuação e uma loja com prêmios virtuais.
 
 Arquivos Necessários para Execução
-main.c
-biblioteca.c
-biblioteca.h
-usuario.txt (apenas a criação)
-palavras.txt
-numbers.bin
-.replit
+* main.c
+* biblioteca.c
+* biblioteca.h
+* usuario.txt (apenas a criação)
+* palavras.txt
+* numbers.bin
+* .replit
 Observação: Caso o programa não execute corretamente, ajuste o arquivo .replit para conter o seguinte:
 run = "gcc main.c biblioteca.c -o main && ./main"
 language = "c"
@@ -85,9 +85,9 @@ Exibe, em ordem decrescente, o nome e a quantidade de vitórias de cada usuário
 
 8. Loja
 Oferece prêmios virtuais e a opção de retornar ao menu:
-Curiosidade
-Desenho
-Humor
+* Curiosidade
+* Desenho
+* Humor
 Voltar
 Observação: As curiosidades foram retiradas do ChatGPT, desenhos do site ASCII Art, e as piadas foram inventadas ou retirada de redes sociais.
 
@@ -101,11 +101,12 @@ Encerra o programa com a mensagem: Até breve [nome do usuário]!
 Informações Adicionais
 
 Formas de Finalizar o Programa:
-Ação "8" (Sair).
-Função de confirmação, caso o input seja "n/N".
+* Ação "8" (Sair).
+* Função de confirmação, caso o input seja "n/N".
+
 Username Único: O sistema impede usernames duplicados, notificando o usuário.
 
-Tutorials: Cada jogo possui uma função exibe_tutorialX (onde X é o número do jogo) para manter o código principal organizado.
+Tutoriais: Cada jogo possui uma função exibe_tutorialX (onde X é o número do jogo) para manter o código principal organizado.
 
 Jogabilidade: O usuário pode jogar independente da quantidade de moedas que possuir. Por exemplo: 
 Se o usuário tiver 0 moeda e perder um jogo, ele ficará com -1 moeda. 
