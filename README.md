@@ -106,10 +106,13 @@ Encerra o programa com a mensagem: Até breve [nome do usuário]!
 * Ação "8" (Sair).
 * Função de confirmação, caso o input seja "n/N".
 
-### Username Único: O sistema impede usernames duplicados, notificando o usuário.
+### Username Único:
+O sistema impede usernames duplicados, notificando o usuário.
 
-### Tutoriais: Cada jogo possui uma função exibe_tutorialX (onde X é o número do jogo) para manter o código principal organizado.
+### Tutoriais:
+Cada jogo possui uma função exibe_tutorialX (onde X é o número do jogo) para manter o código principal organizado.
 
-### Jogabilidade: O usuário pode jogar independente da quantidade de moedas que possuir. Por exemplo: 
+### Jogabilidade:
+O usuário pode jogar independente da quantidade de moedas que possuir. Por exemplo: 
 Se o usuário tiver 0 moeda e perder um jogo, ele ficará com -1 moeda. 
 A única coisa que ele não conseguirá fazer é receber os prêmios na loja. Porém no Guia de fichas (opção 9) ele poderá receber 10 fichas (sem limite) se responder corretamente a pergunta proposta.
