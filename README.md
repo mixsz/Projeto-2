@@ -41,7 +41,7 @@ Cada conta é armazenada em dois arquivos: no arquivo TXT (nome e senha do usuá
 ### Login
 Após o cadastro, o usuário será redirecionado ao menu principal e poderá acessar sua conta inserindo nome de usuário e senha. O programa prosseguirá apenas se as informações estiverem corretas.
 
-### Menu Principal
+## Menu Principal
 Após o login, o menu apresenta dez opções, numeradas de 0 a 9, incluindo jogos, informações, uma loja e a opção de sair. Entradas fora desse intervalo são inválidas. As opções são:
 
 ### 1. Adivinhe o Número
