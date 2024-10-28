@@ -90,8 +90,7 @@ Oferece prêmios virtuais e a opção de retornar ao menu:
 * Curiosidade
 * Desenho
 * Humor
-  
-Voltar
+
 Observação: As curiosidades foram retiradas do ChatGPT, desenhos do site ASCII Art (link: https://ascii.co.uk/art), e as piadas foram inventadas ou retirada de redes sociais.
 
 ### 9. Guia de Moedas
