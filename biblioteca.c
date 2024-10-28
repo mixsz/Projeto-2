@@ -1538,6 +1538,7 @@ int termo(int *fichas, int *pontuacao) {
           // Verifica se a tentativa tem 5 letras
           if (tamanho_tentativa != 5) {
               printf("A palavra deve ter exatamente 5 letras.\n\n");
+              n_tentativa --;
               continue;
           }
         else{
