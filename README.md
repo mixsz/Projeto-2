@@ -16,6 +16,7 @@ Arquivos Necessários para Execução
 * palavras.txt
 * numbers.bin
 * .replit
+  
 Observação: Caso o programa não execute corretamente, ajuste o arquivo .replit para conter o seguinte:
 run = "gcc main.c biblioteca.c -o main && ./main"
 language = "c"
